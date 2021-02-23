@@ -1,5 +1,35 @@
 # Contributing
 
+* [git](#git)
+    + [Branches](#branches)
+        - [Switching Branches](#switching-branches)
+        - [Creating a branch](#creating-a-branch)
+    + [Making a commit](#making-a-commit)
+    + [Pushing commits](#pushing-commits)
+        - [Make commits often](#make-commits-often)
+    * [Code Style](#code-style)
+        + [Classes and Interfaces](#classes-and-interfaces)
+        + [Methods](#methods)
+        + [Fields and Attributes](#fields-and-attributes)
+        + [Variables and Parameters](#variables-and-parameters)
+        + [Acronyms](#acronyms)
+            - [Bad](#bad)
+            - [Good](#good)
+        + [Declarations](#declarations)
+            - [Bad](#bad-1)
+            - [Good](#good-1)
+        + [Classes](#classes)
+        + [Spacing](#spacing)
+            - [Bad](#bad-2)
+            - [Good](#good-2)
+        + [Brace Style](#brace-style)
+            - [Bad](#bad-3)
+            - [Good](#good-3)
+        + [Conditional Statements](#conditional-statements)
+            - [Bad](#bad-4)
+            - [Good](#good-4)
+        + [Switch Statements](#switch-statements)
+
 ## git
 
 ### Branches
