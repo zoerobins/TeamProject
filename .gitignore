@@ -41,3 +41,11 @@ hs_err_pid*
 # IntelliJ
 .idea
 *.iml
+
+# eclipse project file
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
