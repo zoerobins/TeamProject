@@ -45,6 +45,20 @@ To switch to a different branch, you can run `git checkout branch-name`. E.g.:
 
 The `*` indicates that the current branch is indeed now `networking`.
 
+#### Creating a branch
+You **must not** work on the `master` or `dev` branch.
+
+If a branch for your part doesn't exist already e.g. `networking`, then create one **off the dev branch**.
+
+E.g.
+```shell
+> git checkout dev
+> git branch networking
+> git checkout networking
+```
+
+You'll now be on the `networking` branch. Check this by running `git branch` again.
+
 ### Making a commit
 First, run `git status`. This outputs which files are staged for a commit and which are not. 
 
