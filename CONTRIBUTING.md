@@ -1,12 +1,14 @@
 # Contributing
 
+## Contents
 * [git](#git)
+    + [TLDR](#tldr)
     + [Branches](#branches)
         - [Switching Branches](#switching-branches)
         - [Creating a branch](#creating-a-branch)
+        - [Checkout for Remote Branches](#checkout-for-remote-branches)
     + [Making a commit](#making-a-commit)
     + [Pushing commits](#pushing-commits)
-        - [Make commits often](#make-commits-often)
     * [Code Style](#code-style)
         + [Classes and Interfaces](#classes-and-interfaces)
         + [Methods](#methods)
@@ -31,14 +33,23 @@
         + [Switch Statements](#switch-statements)
 
 ## git
+Our development follows the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
+It is recommended to read and understand this before contributing.
+
+### TLDR
+Work on your own feature branch (ideally branching off the main feature branch to create your sub-feature). 
+Merge your sub-feature branch into the feature branch. Merge your feature branch into `dev` when stable.
+When `dev` is stable, it can be merged into `master`. To fix bugs, create a hotfix branch.
+
 
 ### Branches
 
-Before writing any code, please make sure that you are on the correct git branch. 
+- [3.1 Git Branching - Branches in a Nutshell](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
+- [Using Branches](https://www.atlassian.com/git/tutorials/using-branches)
 
-You can check which branch you are on by running `git branch` (which displays all the project's branches):
+`git branch` lists all the branches in the local version of your repository:
 
-```shell
+```
 > git branch
   ai
   audio
@@ -51,15 +62,14 @@ You can check which branch you are on by running `git branch` (which displays al
   renderer
 ```
 
-The current branch is indicated with an `*`. 
+The current branch is indicated with an `*`.
 
-After cloning this project for the first time, the current branch is most likely `master`.
 
 #### Switching Branches
 
 To switch to a different branch, you can run `git checkout branch-name`. E.g.:
 
-```shell
+```
 > git checkout networking
 > git branch 
   ai
@@ -76,49 +86,57 @@ To switch to a different branch, you can run `git checkout branch-name`. E.g.:
 The `*` indicates that the current branch is indeed now `networking`.
 
 #### Creating a branch
-You **must not** work on the `master` or `dev` branch.
+**Do not** work on the `master` or `dev` branch.
 
-If a branch for your part doesn't exist already e.g. `networking`, then create one **off the dev branch**.
+If a feature branch does not exist, create a new branch **off the dev branch**.
 
 E.g.
-```shell
+```
 > git checkout dev
 > git branch networking
 > git checkout networking
 ```
 
-You'll now be on the `networking` branch. Check this by running `git branch` again.
+Create a sub-feature branch **off the feature branch**.
+
+E.g. 
+```
+> git checkout renderer
+> git branch display-shapes
+> git checkout display-shapes
+```
+
+When a sub-feature branch is complete, it is merged into the feature branch.
+
+When a feature branch is stable (i.e. ready to be merged), it is merged into the `dev` branch.
+
+#### Checkout for Remote Branches
+[git checkout a Remote Branch](https://www.git-tower.com/learn/git/faq/checkout-remote-branch/)
+
+List remote branches with `git ls-remote`.
+
+To checkout a remote branch, add the `--track` flag, and the remote branch's ref:
+```
+> git checkout --flag origin/ai
+Branch ai set up to track remote branch ai from origin.
+Switched to a new branch 'ai'
+```
 
 ### Making a commit
-First, run `git status`. This outputs which files are staged for a commit and which are not. 
-
-To stage a file (or an entire directory) for a commit, use `git add file_name_1, file_name_2, dir_name_1, dir_name_2, ...`.
-
-Please avoid using `git add --all` because it might add something unexpected.
-
-After adding the desired files, run `git status` again to make sure that the desired files are staged for a commit.
-
-When ready to commit, run the `git commit` command as follows:
-
-```shell
-> git commit -m "commit message goes here"
-```
+[git commit](https://www.atlassian.com/git/tutorials/saving-changes/git-commit)
 
 Please use a sensible commit message that tells the rest of the team what change or feature has been added.
 
 E.g. `git commit -m "renderer can now display shapes"`.
 
-### Pushing commits
-
-```shell
-> git push origin your-current-branch
-```
-
-Please do not push to master; push to your own branch instead!
-
-#### Make commits often
 Please make commits often. This ensures that the rest of the team can see the steps you've taken to implement
 a new feature, and it makes it easier to reset to a previous version of your code.
+
+### Pushing commits
+[git push](https://www.atlassian.com/git/tutorials/saving-changes/git-commit)
+
+**Do not push to `master` or `dev`**. Branch off them and merge instead.
+
 
 ## Code Style
 
