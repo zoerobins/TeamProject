@@ -7,6 +7,7 @@
     + [Making a commit](#making-a-commit)
     + [Pushing commits](#pushing-commits)
 * [Code Style](#code-style)
+  + [Packages](#packages)
   + [Classes and Interfaces](#classes-and-interfaces)
   + [Methods](#methods)
   + [Fields and Attributes](#fields-and-attributes)
@@ -126,6 +127,16 @@ a new feature, and it makes it easier to reset to a previous version of your cod
 
 
 ## Code Style
+
+### Packages
+Each feature should be contained in its own package. 
+ 
+```java
+org.nightshade.renderer
+org.nightshade.networking
+org.nightshade.gui
+// etc.
+```
 
 ### Classes and Interfaces
 Written in **UpperCamelCase**. E.g. `ClientController`.
