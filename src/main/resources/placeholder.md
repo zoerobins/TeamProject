@@ -1,0 +1,1 @@
+By default, Maven will look for your project's resources under `src/main/resources`.
