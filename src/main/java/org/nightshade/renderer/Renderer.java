@@ -29,14 +29,6 @@ public class Renderer {
         return group;
     }
 
-    public void renderImage(Image image, int x, int y) {
-        graphicsContext.drawImage(image, x, y);
-    }
-
-    public void renderImage(Image image, int x, int y, int w, int h) {
-        graphicsContext.drawImage(image, x, y, w, h);
-    }
-
     public void setWidth(int x) {
         canvas.setWidth(x);
     }
@@ -44,4 +36,13 @@ public class Renderer {
     public void setHeight(int x) {
         canvas.setHeight(x);
     }
+
+    public void drawImage(Image image, int x, int y) {
+        graphicsContext.drawImage(image, x, y);
+    }
+
+    public void drawImage(Image image, int x, int y, int w, int h) {
+        graphicsContext.drawImage(image, x, y, w, h);
+    }
+
 }

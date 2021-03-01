@@ -30,8 +30,8 @@ public class RendererTest {
     public void testRenderImage() {
         Image cat = new Image("cat.png");
         Image circle = new Image("circle.png");
-        renderer.renderImage(cat, 100, 100);
-        renderer.renderImage(circle, 10, 10, 50, 50);
+        renderer.drawImage(cat, 100, 100);
+        renderer.drawImage(circle, 10, 10, 50, 50);
     }
 
     @Test
