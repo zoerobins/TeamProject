@@ -1,4 +1,4 @@
-package org.nightshade;
+package org.nightshade.networking;
 
 public class GameLogic {
 }

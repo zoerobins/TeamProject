@@ -1,4 +1,4 @@
-package org.nightshade;
+package org.nightshade.networking;
 
 import java.io.IOException;
 import java.net.ServerSocket;
