@@ -4,6 +4,8 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Renderer {
 
@@ -43,6 +45,11 @@ public class Renderer {
 
     public void drawImage(Image image, int x, int y, int w, int h) {
         graphicsContext.drawImage(image, x, y, w, h);
+    }
+
+    public void drawRectangle(int x, int y, int w, int h, Color color) {
+        graphicsContext.setFill(color);
+        graphicsContext.fillRect(x, y, w, h);
     }
 
 }

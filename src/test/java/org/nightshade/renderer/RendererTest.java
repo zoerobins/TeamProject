@@ -2,6 +2,7 @@ package org.nightshade.renderer;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +33,13 @@ public class RendererTest {
         Image circle = new Image("circle.png");
         renderer.drawImage(cat, 100, 100);
         renderer.drawImage(circle, 10, 10, 50, 50);
+    }
+
+    @Test
+    public void testDrawRectangle() {
+        renderer.setWidth(1000);
+        renderer.setHeight(1000);
+        renderer.drawRectangle(100, 100, 200, 200, Color.BLUE);
     }
 
     @Test
