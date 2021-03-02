@@ -52,4 +52,9 @@ public class RendererTest {
         renderer.setHeight(1000);
         renderer.setWidth(100);
     }
+
+    @Test
+    public void testDrawTriangle() {
+        renderer.drawTriangle(new double[]{150, 250, 350}, new double[]{250, 150, 250}, Color.RED);
+    }
 }

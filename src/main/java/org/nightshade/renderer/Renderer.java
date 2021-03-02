@@ -57,4 +57,9 @@ public class Renderer {
         graphicsContext.fillOval(x, y, c, c);
     }
 
+    public void drawTriangle(double[] xs, double[] ys, Color color) {
+        graphicsContext.setFill(color);
+        graphicsContext.fillPolygon(xs, ys, 3);
+    }
+
 }
