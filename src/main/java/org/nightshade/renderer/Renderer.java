@@ -52,4 +52,9 @@ public class Renderer {
         graphicsContext.fillRect(x, y, w, h);
     }
 
+    public void drawCircle(int x, int y, int c, Color color) {
+        graphicsContext.setFill(color);
+        graphicsContext.fillOval(x, y, c, c);
+    }
+
 }

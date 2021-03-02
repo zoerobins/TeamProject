@@ -43,6 +43,11 @@ public class RendererTest {
     }
 
     @Test
+    public void testDrawCircle() {
+        renderer.drawCircle(100, 100, 200, Color.RED);
+    }
+
+    @Test
     public void testSetHeightWidth() {
         renderer.setHeight(1000);
         renderer.setWidth(100);
