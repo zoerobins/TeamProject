@@ -28,7 +28,7 @@ public class RendererTest {
     }
 
     @Test
-    public void testRenderImage() {
+    public void testDrawImage() {
         Image cat = new Image("cat.png");
         Image circle = new Image("circle.png");
         renderer.drawImage(cat, 100, 100);
