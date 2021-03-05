@@ -17,7 +17,6 @@ import java.util.logging.Level;
 public class SpriteTest {
 
     Renderer renderer;
-    Cloud cloud;
     LevelGen level;
     Game game;
     Stage tempStage;
@@ -30,7 +29,6 @@ public class SpriteTest {
         level = new LevelGen(120);
         tempStage = stage;
         Image image = new Image("Grass.png");
-       // sprite = new Sprite(image);
     }
 
     @Test

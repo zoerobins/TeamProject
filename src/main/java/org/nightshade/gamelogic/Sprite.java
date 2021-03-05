@@ -4,15 +4,13 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import org.nightshade.renderer.Renderer;
 
-import java.awt.image.BufferedImage;
-
 public class Sprite {
 
-    private Image image;
+    private final Image image;
     private double positionX;
     private double positionY;
-    private double width;
-    private double height;
+    private final double width;
+    private final double height;
 
     public Sprite(Image image, int x, int y) {
         this.image = image;
