@@ -16,12 +16,15 @@ public class Game {
     private LevelGen level;
     private int cloudXPos = 0;
     private Image background = new Image ("view/background.png");
+    private final ArrayList<String> input = new ArrayList<>();
+
     public Game(){
 
     }
 
 
     public void initGame(Stage stage){
+
         cloud = new Cloud();
         level = new LevelGen(120);
         renderer = new Renderer();
@@ -31,9 +34,8 @@ public class Game {
         stage.setScene(scene);
         stage.show();
         ArrayList<Sprite> platformSprites = level.createPlatformSprites();
+        checkForInput(scene);
         Image img = new Image("view/Grass.png");
-
-
 
         System.nanoTime();
         new AnimationTimer() {
@@ -43,6 +45,24 @@ public class Game {
             }
         }.start();
 
+    }
+
+    private void checkForInput(Scene scene){
+
+        scene.setOnKeyPressed(
+                e -> {
+                    String code = e.getCode().toString();
+
+                    // only add once... prevent duplicates
+                    if ( !input.contains(code) )
+                        input.add( code );
+                });
+
+        scene.setOnKeyReleased(
+                e -> {
+                    String code = e.getCode().toString();
+                    input.remove( code );
+                });
     }
 
     private void gameLoop(int cloudXPos,ArrayList<Sprite> platformSprites,Image img){
