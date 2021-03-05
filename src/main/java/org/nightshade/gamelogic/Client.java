@@ -8,6 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.nightshade.renderer.Renderer;
 
+import java.util.ArrayList;
+
 public class Client {
 
     private boolean isLive;
@@ -15,12 +17,11 @@ public class Client {
     private Point2D velocity;
     private final Sprite clientSprite;
 
-
     public Client() {
         this.isLive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
-        clientSprite = createCharacter();
+        clientSprite = createSprite();
     }
 
     public void setVelocity(Point2D velocity) {
@@ -59,14 +60,49 @@ public class Client {
         isLive=false;
     }
 
-    private Sprite createCharacter() {
+    public Sprite createSprite() {
         Sprite sprite = new Sprite(new Image("view/Body.png"),300,50);
      return sprite;
     }
 
 
 
+    public void moveX(int value,ArrayList<Sprite> platformSprites){
+        boolean movingRight = value > 0;
 
+        for (int i = 0; i < Math.abs(value); i++) {
+            for (Sprite platform : platformSprites) {
+                if (platform.intersects(clientSprite)){
+                    if (movingRight) {
+                        if (getClientSprite().getPositionX() + 40 == platform.getPositionX()) {
+                            return;
+                        }
+                    } else {
+                        if (getClientSprite().getPositionX() == platform.getPositionX() + 60) {
+                            return;
+                        }
+                    }
+                }
+            }
+            getClientSprite().setPositionX(getClientSprite().getPositionX() + (movingRight ? 1 : -1));
+        }
+    }
+    public void moveY(int value,ArrayList<Sprite> platformSprites){
+
+        boolean movingDown = value > 0;
+
+        for (int i = 0; i < Math.abs(value); i++) {
+            for (Sprite platform : platformSprites) {
+                if (platform.intersects(clientSprite) && movingDown) {
+                    getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
+                    setCanJump(true);
+                    return;
+                }
+            }
+            getClientSprite().setPositionY(getClientSprite().getPositionY() + (movingDown ? 1 : -1));
+        }
+
+    }
 
 
 }

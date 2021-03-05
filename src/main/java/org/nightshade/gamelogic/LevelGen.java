@@ -54,7 +54,6 @@ public class LevelGen {
 
     private NodeType getRandomNode(int i,int j){
         int number = ThreadLocalRandom.current().nextInt(0, 100 + 1);
-        int randomOut;
 
         if(i==6&&j==5||i==6&&j==6||i==6&&j==7){
             return NodeType.PLATFORM;

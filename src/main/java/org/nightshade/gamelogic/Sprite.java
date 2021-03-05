@@ -24,6 +24,13 @@ public class Sprite {
         positionX = x;
         positionY = y;
     }
+    public void setPositionX(double x) {
+        positionX = x;
+    }
+    public void setPositionY(double y) {
+        positionY = y;
+    }
+
 
     public void render(Renderer renderer,int x, int y) {
         renderer.drawImage(image, x, y);
