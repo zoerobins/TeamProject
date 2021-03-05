@@ -26,9 +26,12 @@ public class SpriteTest {
     @Start
     public void start(Stage stage) {
         game = new Game();
+        renderer=new Renderer();
         level = new LevelGen(120);
         tempStage = stage;
         Image image = new Image("Grass.png");
+        sprite = new Sprite(image,20,20);
+
     }
 
     @Test

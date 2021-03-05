@@ -1,33 +1,18 @@
 package org.nightshade.gamelogic;
 
 import javafx.scene.image.Image;
-import org.nightshade.renderer.Renderer;
-
-//import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LevelGen {
     private final int width;
-    private final int height;
-    Renderer renderer = new Renderer();
-    ArrayList<ArrayList<NodeType>> level= new ArrayList<>();
+    ArrayList<ArrayList<NodeType>> level = new ArrayList<>();
     ArrayList<Sprite> platformSprites = new ArrayList<>();
     Image img = new Image("view/Grass.png");
 
     public LevelGen(int width1) {
         this.width = width1;
         this.level = createLevel(width);
-        this.height = 12;
-    }
-
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
     }
 
     private ArrayList<ArrayList<NodeType>> createLevel(int width) {
@@ -42,7 +27,8 @@ public class LevelGen {
     }
 
     public ArrayList<Sprite> createPlatformSprites(){
-        for (int i=0 ; i <12 ; i++){
+        //12 is the amount of blocks vertically (12*60=720, the canvas height) - using a variable gave an error for some reason?
+        for (int i=0 ; i < 12 ; i++){
             for(int j=0 ; j < width ; j++){
                 if(level.get(i).get(j)==NodeType.PLATFORM) {
                     platformSprites.add(new Sprite(img, j * 60, i * 60));
@@ -75,7 +61,7 @@ public class LevelGen {
                 return NodeType.END;
             } else if(number<20) {
                 return NodeType.PLATFORM;
-            } else if(number>=20&&number<22){
+            } else if(number<22){
                 return NodeType.ENEMY;
             } else{
                 return NodeType.AIR;

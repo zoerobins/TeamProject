@@ -1,18 +1,14 @@
 package org.nightshade.gamelogic;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import org.nightshade.renderer.Renderer;
 
 import java.util.ArrayList;
 
 public class Client {
 
-    private boolean isLive;
+    private final boolean isLive;
     private boolean canJump;
     private Point2D velocity;
     private final Sprite clientSprite;
@@ -56,13 +52,14 @@ public class Client {
         }
     }
 
+
+    /*TODO
     public void kill(Group root, Node node) {
         isLive=false;
-    }
+    }*/
 
     public Sprite createSprite() {
-        Sprite sprite = new Sprite(new Image("view/Body.png"),300,50);
-     return sprite;
+        return new Sprite(new Image("view/Body.png"),300,50);
     }
 
 
