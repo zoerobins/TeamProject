@@ -17,16 +17,18 @@ import java.util.logging.Level;
 public class LevelGenTest {
 
     Renderer renderer;
-    Cloud cloud;
     LevelGen level;
     Game game;
     Stage tempStage;
+    Sprite sprite;
 
     @Start
     public void start(Stage stage) {
         game = new Game();
-        level = new LevelGen();
+        sprite = new Sprite(new Image("Grass.png"),20,20);
+        level = new LevelGen(120);
         tempStage = stage;
+        renderer = new Renderer();
     }
 
     @Test
@@ -36,7 +38,7 @@ public class LevelGenTest {
 
     @Test
     public void drawPlatformTest(){
-        level.drawPlatform(0,0,120,60, Color.BLACK);
+        renderer.drawImage(new Image("Grass.png"), sprite.getPositionX(), sprite.getPositionY());
     }
 
 }
