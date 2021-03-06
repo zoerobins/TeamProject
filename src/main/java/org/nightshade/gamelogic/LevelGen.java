@@ -6,12 +6,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class LevelGen {
     private final int width;
+    //intelij lies - the initializer IS NOT redundant, don't remove it!!!
     ArrayList<ArrayList<NodeType>> level = new ArrayList<>();
     ArrayList<Sprite> platformSprites = new ArrayList<>();
     Image img = new Image("view/Grass.png");
 
-    public LevelGen(int width1) {
-        this.width = width1;
+    public LevelGen(int width) {
+        this.width = width;
         this.level = createLevel(width);
     }
 

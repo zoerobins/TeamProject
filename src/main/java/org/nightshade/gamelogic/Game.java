@@ -3,6 +3,7 @@ package org.nightshade.gamelogic;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.nightshade.renderer.Renderer;
 
@@ -11,17 +12,13 @@ import java.util.ArrayList;
 public class Game {
 
     private final int levelWidth = 120;
+    private final int blockWidth = 60;
     private Renderer renderer;
     private Cloud cloud;
-    private int cloudXPos = 0;
+    private int cloudXPos = -400;
     private final Image background = new Image ("view/background.png");
     private final ArrayList<String> input = new ArrayList<>();
     private Client client;
-
-    public Game(){
-
-    }
-
 
     public void initGame(Stage stage){
 
@@ -29,8 +26,9 @@ public class Game {
         LevelGen level = new LevelGen(levelWidth);
         renderer = new Renderer();
         renderer.setHeight(720);
-        renderer.setWidth(1280);
-        Scene scene = new Scene(renderer.getGroup());
+        renderer.setWidth(levelWidth*blockWidth);
+        Pane pane = new Pane(renderer.getGroup());
+        Scene scene = new Scene(pane,1280,720);
         stage.setScene(scene);
         stage.show();
         ArrayList<Sprite> platformSprites = level.createPlatformSprites();
@@ -39,6 +37,7 @@ public class Game {
         checkForInput(scene);
         Image grass = new Image("view/Grass.png");
         Image clientImg = new Image("view/Body.png");
+
 
         System.nanoTime();
         new AnimationTimer() {
@@ -78,7 +77,7 @@ public class Game {
                 client.moveX(-5, platformSprites);
             }
 
-            if (input.contains("RIGHT") && client.getClientSprite().getPositionX() <= (levelWidth*60) - 5) {
+            if (input.contains("RIGHT") && client.getClientSprite().getPositionX() <= (levelWidth*blockWidth) - 5) {
                 client.moveX(5,platformSprites);
             }
 
@@ -107,9 +106,10 @@ public class Game {
             renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
 
         }
-        cloud.showCloud(renderer,cloudXPos,30);
+        cloud.showCloud(renderer, cloudXPos,30);
         moveClient(platformSprites);
         client.displaySprite(renderer,clientImg,client.getClientSprite());
+        renderer.moveCanvas((int) (renderer.getTransLateX()-1));
     }
 
 }

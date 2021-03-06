@@ -31,6 +31,14 @@ public class Renderer {
         return group;
     }
 
+    public double getTransLateX(){
+        return canvas.getTranslateX();
+    }
+
+    public void moveCanvas(int x){
+        canvas.setTranslateX(x);
+    }
+
     public void setWidth(int x) {
         canvas.setWidth(x);
     }
