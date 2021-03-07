@@ -70,15 +70,12 @@ public class Client {
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(clientSprite)){
-                    if (movingRight) {
-                        if (getClientSprite().getPositionX() + 40 == platform.getPositionX()) {
-                            return;
-                        }
+                    if(movingRight){
+                        getClientSprite().setPositionX(getClientSprite().getPositionX() - 1);
                     } else {
-                        if (getClientSprite().getPositionX() == platform.getPositionX() + 60) {
-                            return;
-                        }
+                        getClientSprite().setPositionX(getClientSprite().getPositionX() + 1);
                     }
+                    return;
                 }
             }
             getClientSprite().setPositionX(getClientSprite().getPositionX() + (movingRight ? 1 : -1));
