@@ -2,6 +2,7 @@ package org.nightshade.gamelogic;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ public class Game {
     Parallax background;
     private final ArrayList<String> input = new ArrayList<>();
     private Client client;
+
 
     public void initGame(Stage stage){
 
@@ -45,6 +47,7 @@ public class Game {
             public void handle(long currentNanoTime) {
                 cloudXPos++;
                 gameLoop(cloudXPos,platformSprites,grass,clientImg);
+
             }
         }.start();
 
@@ -106,7 +109,7 @@ public class Game {
         for (Sprite platformSprite : platformSprites) {
             renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
         }
-        cloud.showCloud(renderer, cloudXPos,30);
+        cloud.showCloud(renderer, client, cloudXPos,30);
         moveClient(platformSprites);
         client.displaySprite(renderer,clientImg,client.getClientSprite());
         renderer.moveCanvas((int) (renderer.getTransLateX()-1));

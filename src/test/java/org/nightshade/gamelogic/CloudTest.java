@@ -14,9 +14,11 @@ public class CloudTest {
     Renderer renderer;
     Cloud cloud;
     Game game;
+    Client client;
 
     @Start
     public void start(Stage stage) {
+        client = new Client();
         renderer = new Renderer();
         game = new Game();
         cloud = new Cloud();
@@ -32,7 +34,7 @@ public class CloudTest {
 
     @Test
     public void testShowCloud() {
-        cloud.showCloud(renderer,0,0,80,300);
+        cloud.showCloud(renderer,client,0,0);
     }
 
 }

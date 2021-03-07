@@ -1,6 +1,5 @@
 package org.nightshade.gamelogic;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import org.nightshade.renderer.Renderer;
 
@@ -14,17 +13,13 @@ public class Cloud {
 
     }
 
-    private final Image cloudImage = new Image( "view/cloud.png");
+    private final Image cloudImage = new Image("view/dark.png");
 
-    public void showCloud(Renderer renderer, int x, int y){
+    public void showCloud(Renderer renderer,Client client,  int x, int y){
+        if(x<client.getClientSprite().getPositionX()-1200){
+            x=client.getClientSprite().getPositionX()-1200;
+        }
         renderer.drawImage(cloudImage,x,y);
-        renderer.drawImage(cloudImage,x,y-220);
-        renderer.drawImage(cloudImage,x,y+220);
-
-    }
-
-    public void showCloud(Renderer renderer, int x, int y, int w, int h){
-        renderer.drawImage(cloudImage,x,y,w,h);
     }
 
 }
