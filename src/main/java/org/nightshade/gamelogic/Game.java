@@ -16,12 +16,13 @@ public class Game {
     private Renderer renderer;
     private Cloud cloud;
     private int cloudXPos = -400;
-    private final Image background = new Image ("view/background.png");
+    Parallax background;
     private final ArrayList<String> input = new ArrayList<>();
     private Client client;
 
     public void initGame(Stage stage){
 
+        background = new Parallax();
         cloud = new Cloud();
         LevelGen level = new LevelGen(levelWidth);
         renderer = new Renderer();
@@ -99,17 +100,15 @@ public class Game {
 
     }
 
-
     private void gameLoop(int cloudXPos, ArrayList<Sprite> platformSprites, Image grass, Image clientImg){
-        renderer.drawImage(background, 0,0);
+        background.moveParallax();
+        background.drawParallax(renderer);
         for (Sprite platformSprite : platformSprites) {
             renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
-
         }
         cloud.showCloud(renderer, cloudXPos,30);
         moveClient(platformSprites);
         client.displaySprite(renderer,clientImg,client.getClientSprite());
         renderer.moveCanvas((int) (renderer.getTransLateX()-1));
     }
-
 }
