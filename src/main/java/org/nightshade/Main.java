@@ -2,7 +2,7 @@ package org.nightshade;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.nightshade.gamelogic.Game;
+import org.nightshade.game.Game;
 
 public class Main extends Application {
 

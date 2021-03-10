@@ -1,7 +1,6 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
-
-import javafx.scene.image.Image;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,21 +9,22 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 @ExtendWith(ApplicationExtension.class)
-public class LevelGenTest {
+public class CloudTest {
 
     Renderer renderer;
-    LevelGen level;
+    Cloud cloud;
     Game game;
-    Stage tempStage;
-    Sprite sprite;
+    Client client;
 
     @Start
     public void start(Stage stage) {
-        game = new Game();
-        sprite = new Sprite(new Image("Grass.png"),20,20);
-        level = new LevelGen(120);
-        tempStage = stage;
+        client = new Client();
         renderer = new Renderer();
+        game = new Game();
+        cloud = new Cloud();
+        Scene scene = new Scene(renderer.getGroup());
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Test
@@ -33,8 +33,8 @@ public class LevelGenTest {
     }
 
     @Test
-    public void drawPlatformTest(){
-        renderer.drawImage(new Image("Grass.png"), sprite.getPositionX(), sprite.getPositionY());
+    public void testShowCloud() {
+       // cloud.showCloud(renderer,client,0,0);
     }
 
 }

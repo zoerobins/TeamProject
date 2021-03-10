@@ -1,6 +1,5 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,22 +8,17 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 @ExtendWith(ApplicationExtension.class)
-public class CloudTest {
+public class GameTest {
 
     Renderer renderer;
     Cloud cloud;
     Game game;
-    Client client;
+    Stage tempStage;
 
     @Start
     public void start(Stage stage) {
-        client = new Client();
-        renderer = new Renderer();
-        game = new Game();
-        cloud = new Cloud();
-        Scene scene = new Scene(renderer.getGroup());
-        stage.setScene(scene);
-        stage.show();
+        game=new Game();
+        tempStage=stage;
     }
 
     @Test
@@ -32,9 +26,5 @@ public class CloudTest {
         System.out.println("Hello World");
     }
 
-    @Test
-    public void testShowCloud() {
-        cloud.showCloud(renderer,client,0,0);
-    }
 
 }

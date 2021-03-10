@@ -1,8 +1,7 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -20,10 +19,16 @@ public class Game {
     Parallax background;
     private final ArrayList<String> input = new ArrayList<>();
     private Client client;
+    private AI ai;
+    private ArrayList<Sprite> platformSprites;
+    private AILogic AILogic;
 
+
+    public ArrayList<Sprite> getPlatformSprites() {
+        return platformSprites;
+    }
 
     public void initGame(Stage stage){
-
         background = new Parallax();
         cloud = new Cloud();
         LevelGen level = new LevelGen(levelWidth);
@@ -34,13 +39,15 @@ public class Game {
         Scene scene = new Scene(pane,1280,720);
         stage.setScene(scene);
         stage.show();
-        ArrayList<Sprite> platformSprites = level.createPlatformSprites();
+        platformSprites = level.createPlatformSprites();
+        AILogic=new AILogic();
         client = new Client();
+        ai = new AI(3);
         client.createSprite();
+        ai.createSprite();
         checkForInput(scene);
         Image grass = new Image("view/Grass.png");
         Image clientImg = new Image("view/Body.png");
-
 
         System.nanoTime();
         new AnimationTimer() {
@@ -103,6 +110,7 @@ public class Game {
 
     }
 
+
     private void gameLoop(int cloudXPos, ArrayList<Sprite> platformSprites, Image grass, Image clientImg){
         background.moveParallax();
         background.drawParallax(renderer);
@@ -112,6 +120,8 @@ public class Game {
         cloud.showCloud(renderer, client, cloudXPos,30);
         moveClient(platformSprites);
         client.displaySprite(renderer,clientImg,client.getClientSprite());
+        ai.displaySprite(renderer,clientImg,ai.getAISprite());
         renderer.moveCanvas((int) (renderer.getTransLateX()-1));
+        AILogic.moveChar(ai, platformSprites);
     }
 }

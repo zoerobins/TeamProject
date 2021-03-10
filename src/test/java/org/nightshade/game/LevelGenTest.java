@@ -1,7 +1,6 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
-import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
+
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
@@ -11,17 +10,21 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 @ExtendWith(ApplicationExtension.class)
-public class GameTest {
+public class LevelGenTest {
 
     Renderer renderer;
-    Cloud cloud;
+    LevelGen level;
     Game game;
     Stage tempStage;
+    Sprite sprite;
 
     @Start
     public void start(Stage stage) {
-        game=new Game();
-        tempStage=stage;
+        game = new Game();
+        sprite = new Sprite(new Image("Grass.png"),20,20);
+        level = new LevelGen(120);
+        tempStage = stage;
+        renderer = new Renderer();
     }
 
     @Test
@@ -29,5 +32,9 @@ public class GameTest {
         System.out.println("Hello World");
     }
 
+    @Test
+    public void drawPlatformTest(){
+        renderer.drawImage(new Image("Grass.png"), sprite.getPositionX(), sprite.getPositionY());
+    }
 
 }

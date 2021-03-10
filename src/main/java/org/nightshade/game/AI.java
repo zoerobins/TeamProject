@@ -1,25 +1,45 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import org.nightshade.renderer.Renderer;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class Client {
+public class AI{
 
     private final boolean isLive;
     private boolean canJump;
     private Point2D velocity;
-    private final Sprite clientSprite;
+    private final Sprite AISprite = new Sprite(new Image("view/Body.png"),300,50);
+    private final int speed;
 
-    public Client() {
+    int startX = ThreadLocalRandom.current().nextInt(250, (350) + 1);
+    int startY = ThreadLocalRandom.current().nextInt(30, (80) + 1);
+
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public AI(int speed) {
         this.isLive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
-        clientSprite = createSprite();
+        this.speed = speed;
+    }
+    public Sprite createSprite() {
+        return new Sprite(new Image("view/Body.png"),startX,startY);
     }
 
+    public double getWidth(){
+        return AISprite.getWidth();
+    }
+
+    public void displaySprite(Renderer renderer, Image image, Sprite sprite){
+        renderer.drawImage(image, sprite.getPositionX(), sprite.getPositionY());
+    }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
@@ -36,13 +56,8 @@ public class Client {
         return velocity;
     }
 
-
-    public Sprite getClientSprite() {
-        return clientSprite;
-    }
-
-    public void displaySprite(Renderer renderer, Image image, Sprite sprite){
-        renderer.drawImage(image, sprite.getPositionX(), sprite.getPositionY());
+    public Sprite getAISprite() {
+        return AISprite;
     }
 
     public void jump() {
@@ -52,33 +67,21 @@ public class Client {
         }
     }
 
-
-    /*TODO
-    public void kill(Group root, Node node) {
-        isLive=false;
-    }*/
-
-    public Sprite createSprite() {
-        return new Sprite(new Image("view/Body.png"),300,50);
-    }
-
-
-
     public void moveX(int value,ArrayList<Sprite> platformSprites){
         boolean movingRight = value > 0;
 
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
-                if (platform.intersects(clientSprite)){
+                if (platform.intersects(AISprite)){
                     if(movingRight){
-                        getClientSprite().setPositionX(getClientSprite().getPositionX() - 1);
+                        getAISprite().setPositionX(getAISprite().getPositionX() - 1);
                     } else {
-                        getClientSprite().setPositionX(getClientSprite().getPositionX() + 1);
+                        getAISprite().setPositionX(getAISprite().getPositionX() + 1);
                     }
                     return;
                 }
             }
-            getClientSprite().setPositionX(getClientSprite().getPositionX() + (movingRight ? 1 : -1));
+            getAISprite().setPositionX(getAISprite().getPositionX() + (movingRight ? 1 : -1));
         }
     }
     public void moveY(int value,ArrayList<Sprite> platformSprites){
@@ -87,16 +90,15 @@ public class Client {
 
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
-                if (platform.intersects(clientSprite) && movingDown) {
-                    getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
+                if (platform.intersects(AISprite) && movingDown) {
+                    getAISprite().setPositionY(getAISprite().getPositionY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
-            getClientSprite().setPositionY(getClientSprite().getPositionY() + (movingDown ? 1 : -1));
+            getAISprite().setPositionY(getAISprite().getPositionY() + (movingDown ? 1 : -1));
         }
 
     }
-
 
 }

@@ -1,4 +1,4 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
 import javafx.scene.image.Image;
 import java.util.ArrayList;
