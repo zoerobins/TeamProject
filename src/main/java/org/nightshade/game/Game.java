@@ -22,6 +22,7 @@ public class Game {
     private AI ai;
     private ArrayList<Sprite> platformSprites;
     private AILogic AILogic;
+    private int framecount = 0;
 
 
     public ArrayList<Sprite> getPlatformSprites() {
@@ -107,9 +108,7 @@ public class Game {
             client.moveY((int)client.getVelocity().getY(),platformSprites);
 
         }
-
     }
-
 
     private void gameLoop(int cloudXPos, ArrayList<Sprite> platformSprites, Image grass, Image clientImg){
         background.moveParallax();
@@ -121,7 +120,12 @@ public class Game {
         moveClient(platformSprites);
         client.displaySprite(renderer,clientImg,client.getClientSprite());
         ai.displaySprite(renderer,clientImg,ai.getAISprite());
-        renderer.moveCanvas((int) (renderer.getTransLateX()-1));
+        if ((-1*renderer.getTransLateX())+700<client.getClientSprite().getPositionX()){
+            System.out.println((-1*renderer.getTransLateX())+700-client.getClientSprite().getPositionX());
+            renderer.setTransLateX((int) (renderer.getTransLateX()+((-1*renderer.getTransLateX())+700-client.getClientSprite().getPositionX())));
+        } else{
+            renderer.setTransLateX((int) (renderer.getTransLateX()-1));
+        }
         AILogic.moveChar(ai, platformSprites);
     }
 }
