@@ -13,6 +13,7 @@ public class Game {
 
     private final int levelWidth = 120;
     private final int blockWidth = 60;
+    public static int xViewCoordinate = 0;
 
     private final ArrayList<String> input = new ArrayList<>();
     private ArrayList<Sprite> platformSprites;
@@ -142,6 +143,7 @@ public class Game {
         } else{
             renderer.setTransLateX((int) (renderer.getTransLateX()));
         }
+        xViewCoordinate= (int) (-1*renderer.getTransLateX());
         AILogic.moveChar(ai, platformSprites);
     }
 

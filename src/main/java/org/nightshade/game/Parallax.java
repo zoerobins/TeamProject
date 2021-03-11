@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Parallax {
     private final int levelWidth = 120;
     private final int blockWidth = 60;
-
     public Parallax() {
         initArrays();
     }
@@ -21,7 +20,6 @@ public class Parallax {
     private final Image parallaxSix = new Image ("view/parallax/666.png");
     private final Image parallaxSeven = new Image ("view/parallax/7.png");
 
-    private final ArrayList<Integer> parallax1X = new ArrayList<>();
     private final ArrayList<Integer> parallax2X = new ArrayList<>();
     private final ArrayList<Integer> parallax3X = new ArrayList<>();
     private final ArrayList<Integer> parallax4X = new ArrayList<>();
@@ -32,7 +30,6 @@ public class Parallax {
     public void initArrays(){
         int i = 0;
         while (i*1280<levelWidth*blockWidth){
-            parallax1X.add(i*1280);
             parallax2X.add(i*1280);
             parallax3X.add(i*1280);
             parallax4X.add(i*1280);
@@ -44,8 +41,8 @@ public class Parallax {
     }
 
     public void drawParallax(Renderer renderer){
-        for(int i = 0; i < parallax1X.size(); i++){
-            renderer.drawImage(parallaxOne,parallax1X.get(i),0,1280,720);
+        renderer.drawImage(parallaxOne, Game.xViewCoordinate ,0,1280,720);
+        for(int i = 0; i < parallax2X.size(); i++){
             renderer.drawImage(parallaxTwo,parallax2X.get(i),0,1280,720);
             renderer.drawImage(parallaxThree,parallax3X.get(i),0,1280,720);
             renderer.drawImage(parallaxFour,parallax4X.get(i),0,1280,720);
@@ -59,8 +56,7 @@ public class Parallax {
 
 
     public void moveParallax() {
-        for (int i = 0 ; i < parallax1X.size() ; i++){
-            parallax1X.set(i, parallax1X.get(i)+1);
+        for (int i = 0 ; i < parallax2X.size() ; i++){
             if (parallax2X.get(i)>-1280){
                 parallax2X.set(i,parallax2X.get(i)-1);
             } else{
