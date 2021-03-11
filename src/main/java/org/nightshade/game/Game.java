@@ -93,11 +93,11 @@ public class Game {
             }
 
             if (input.contains("LEFT") && client.getClientSprite().getPositionX() >= 5) {
-                client.moveX(-5, platformSprites);
+                client.moveX(-5, platformSprites,enemySprites);
             }
 
             if (input.contains("RIGHT") && client.getClientSprite().getPositionX() <= (levelWidth*blockWidth) - 5) {
-                client.moveX(5,platformSprites);
+                client.moveX(5,platformSprites,enemySprites);
             }
 
             if (client.getVelocity().getY() < 10) {
@@ -112,7 +112,7 @@ public class Game {
                 }
             }
             */
-            client.moveY((int)client.getVelocity().getY(),platformSprites);
+            client.moveY((int)client.getVelocity().getY(),platformSprites,enemySprites);
 
         }
     }
@@ -127,7 +127,6 @@ public class Game {
         for (Sprite enemySprite : enemySprites) {
             renderer.drawImage(enemy,enemySprite.getPositionX(),enemySprite.getPositionY());
         }
-
 
         cloudXPos=moveCloud(cloudXPos);
         renderer.drawImage(cloudImage,cloudXPos,0);
