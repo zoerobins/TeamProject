@@ -13,7 +13,6 @@ public class Game {
 
     private final int levelWidth = 120;
     private final int blockWidth = 60;
-    private int cloudXPos;
 
     private final ArrayList<String> input = new ArrayList<>();
     private ArrayList<Sprite> platformSprites;
@@ -31,11 +30,9 @@ public class Game {
 
     private final Image cloudImage = new Image("view/dark.png");
 
-
-
     public void initGame(Stage stage){
-        cloudXPos=-400;
         cloud = new Sprite(new Image("view/dark.png"),-300,50);
+        cloud.setPositionX(-400);
         background = new Parallax();
         LevelGen level = new LevelGen(levelWidth);
         renderer = new Renderer();
@@ -128,13 +125,17 @@ public class Game {
             renderer.drawImage(enemy,enemySprite.getPositionX(),enemySprite.getPositionY());
         }
 
-        cloudXPos=moveCloud(cloudXPos);
-        renderer.drawImage(cloudImage,cloudXPos,0);
+        moveCloud();
+        renderer.drawImage(cloudImage,cloud.getPositionX(),0);
 
         if(client.isLive()) {
             moveClient(platformSprites);
             client.displaySprite(renderer, clientImg, client.getClientSprite());
+            if (client.getClientSprite().intersects(cloud.getPositionX()-200,cloud.getPositionY(),(int)cloud.getWidth(),(int)cloud.getHeight())){
+                client.kill();
+            }
         }
+
         ai.displaySprite(renderer,clientImg,ai.getAISprite());
         if ((-1*renderer.getTransLateX())+700<client.getClientSprite().getPositionX()){
             renderer.setTransLateX((int) (renderer.getTransLateX()+((-1*renderer.getTransLateX())+700-client.getClientSprite().getPositionX())));
@@ -144,15 +145,13 @@ public class Game {
         AILogic.moveChar(ai, platformSprites);
     }
 
-    private int moveCloud(int cloudXPos){
-        int cloudXPosNew=cloudXPos+2;
+    private void moveCloud(){
+        int cloudXPosNew=cloud.getPositionX()+2;
 
-        if (client.getClientSprite().getPositionX()-cloudXPos>1000){
+        if (client.getClientSprite().getPositionX()-cloud.getPositionX()>1000){
             cloudXPosNew = client.getClientSprite().getPositionX()-1000;
         }
-
-        return cloudXPosNew;
-
+        cloud.setPositionX(cloudXPosNew);
     }
 
 

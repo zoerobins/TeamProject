@@ -21,6 +21,9 @@ public class Sprite {
         positionY = y;
     }
 
+    public double getHeight() {
+        return height;
+    }
 
     public double getWidth() {
         return width;
