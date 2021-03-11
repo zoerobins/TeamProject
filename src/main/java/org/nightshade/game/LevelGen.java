@@ -6,9 +6,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class LevelGen {
     private final int width;
-    ArrayList<ArrayList<NodeType>> level = new ArrayList<>();
+    ArrayList<ArrayList<NodeType>> level;
     ArrayList<Sprite> platformSprites = new ArrayList<>();
     ArrayList<Sprite> enemySprites = new ArrayList<>();
+
+    Game game = new Game();
 
     Image grass = new Image("view/Grass.png");
     Image enemy = new Image("view/enemy.png");
@@ -19,7 +21,7 @@ public class LevelGen {
     }
 
     private ArrayList<ArrayList<NodeType>> createLevel(int width) {
-
+        level=new ArrayList<>();
         for (int i=0;i<12;i++){
             level.add(new ArrayList<>());
             for (int j=0;j<width;j++){
@@ -36,7 +38,14 @@ public class LevelGen {
                 if(level.get(i).get(j)==NodeType.PLATFORM) {
                     platformSprites.add(new Sprite(grass, j * 60, i * 60));
                 } else if(level.get(i).get(j)==NodeType.ENEMY) {
+                    int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
+                    int direction = ThreadLocalRandom.current().nextInt(0, (1) + 1);
                     enemySprites.add(new Sprite(enemy, j * 60, i * 60));
+                    if (direction==1) {
+                        game.addEnemy(speed, true);
+                    } else{
+                        game.addEnemy(speed,false);
+                    }
                 }
             }
         }

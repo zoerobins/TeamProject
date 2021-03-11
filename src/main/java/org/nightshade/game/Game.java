@@ -14,16 +14,24 @@ public class Game {
     private final int levelWidth = 120;
     private final int blockWidth = 60;
     private int cloudXPos;
-    private Parallax background;
+
     private final ArrayList<String> input = new ArrayList<>();
     private ArrayList<Sprite> platformSprites;
     private ArrayList<Sprite> enemySprites;
+    private static final ArrayList<Integer> enemySpeed = new ArrayList<>();
+    private static final ArrayList<Integer> enemyOffset= new ArrayList<>();
+    private static final ArrayList<Boolean> enemyDirection= new ArrayList<>();
+
     private Renderer renderer;
     private Client client;
     private AI ai;
     private AILogic AILogic;
     private Sprite cloud;
+    private Parallax background;
+
     private final Image cloudImage = new Image("view/dark.png");
+
+
 
     public void initGame(Stage stage){
         cloudXPos=-400;
@@ -58,6 +66,7 @@ public class Game {
         }.start();
 
     }
+
 
     private void checkForInput(Scene scene){
 
@@ -114,6 +123,7 @@ public class Game {
         for (Sprite platformSprite : platformSprites) {
             renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
         }
+        moveEnemies();
         for (Sprite enemySprite : enemySprites) {
             renderer.drawImage(enemy,enemySprite.getPositionX(),enemySprite.getPositionY());
         }
@@ -143,6 +153,52 @@ public class Game {
         return cloudXPosNew;
 
     }
+
+
+    public void addEnemy(int speed, boolean direction){
+        enemySpeed.add(speed);
+        enemyDirection.add(direction);
+        enemyOffset.add(0);
+    }
+
+
+    private void moveEnemies() {
+
+        int index = 0;
+        for (Sprite enemy : enemySprites) {
+            int speed = enemySpeed.get(index);
+            int offset = enemyOffset.get(index);
+            Boolean direction = enemyDirection.get(index);
+
+            if (direction) {
+                if (offset > 180) {
+                    enemyDirection.set(index, false);
+                }
+                else {
+                    enemyOffset.set(index, enemyOffset.get(index)+speed);
+                    enemy.setPositionX(enemy.getPositionX()+speed);
+
+                }
+            }
+            else {
+                if (offset < -180) {
+                    enemyDirection.set(index, true);
+                }
+                else {
+                    enemyOffset.set(index, enemyOffset.get(index)-speed);
+                    enemy.setPositionX(enemy.getPositionX()-(speed));
+                }
+            }
+
+            index++;
+        }
+
+
+    }
+
+
+
+
 
 
 }
