@@ -14,24 +14,24 @@ public class Game {
     private final int levelWidth = 120;
     private final int blockWidth = 60;
     private Renderer renderer;
-    private Cloud cloud;
-    private int cloudXPos = -400;
+    private int cloudXPos;
     Parallax background;
     private final ArrayList<String> input = new ArrayList<>();
     private Client client;
     private AI ai;
     private ArrayList<Sprite> platformSprites;
     private AILogic AILogic;
-    private int framecount = 0;
-
+    private Sprite cloud;
+    private Image cloudImage = new Image("view/dark.png");
 
     public ArrayList<Sprite> getPlatformSprites() {
         return platformSprites;
     }
 
     public void initGame(Stage stage){
+        cloudXPos=-400;
+        cloud = new Sprite(new Image("view/dark.png"),-300,50);
         background = new Parallax();
-        cloud = new Cloud();
         LevelGen level = new LevelGen(levelWidth);
         renderer = new Renderer();
         renderer.setHeight(720);
@@ -53,8 +53,7 @@ public class Game {
         System.nanoTime();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                cloudXPos++;
-                gameLoop(cloudXPos,platformSprites,grass,clientImg);
+                gameLoop(platformSprites,grass,clientImg);
 
             }
         }.start();
@@ -110,22 +109,39 @@ public class Game {
         }
     }
 
-    private void gameLoop(int cloudXPos, ArrayList<Sprite> platformSprites, Image grass, Image clientImg){
+    private void gameLoop(ArrayList<Sprite> platformSprites, Image grass, Image clientImg){
         background.moveParallax();
         background.drawParallax(renderer);
         for (Sprite platformSprite : platformSprites) {
             renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
         }
-        cloud.showCloud(renderer, client, cloudXPos,30);
+
+        cloudXPos=moveCloud(cloudXPos);
+        renderer.drawImage(cloudImage,cloudXPos,0);
+
         moveClient(platformSprites);
         client.displaySprite(renderer,clientImg,client.getClientSprite());
         ai.displaySprite(renderer,clientImg,ai.getAISprite());
         if ((-1*renderer.getTransLateX())+700<client.getClientSprite().getPositionX()){
-            System.out.println((-1*renderer.getTransLateX())+700-client.getClientSprite().getPositionX());
             renderer.setTransLateX((int) (renderer.getTransLateX()+((-1*renderer.getTransLateX())+700-client.getClientSprite().getPositionX())));
         } else{
-            renderer.setTransLateX((int) (renderer.getTransLateX()-1));
+            renderer.setTransLateX((int) (renderer.getTransLateX()));
         }
         AILogic.moveChar(ai, platformSprites);
     }
+
+    private int moveCloud(int cloudXPos){
+        int cloudXPosNew=cloudXPos+2;
+        System.out.println(cloudXPos);
+        System.out.println(client.getClientSprite().getPositionX());
+
+        if (client.getClientSprite().getPositionX()-cloudXPos>1000){
+            cloudXPosNew = client.getClientSprite().getPositionX()-1000;
+        }
+
+        return cloudXPosNew;
+
+    }
+
+
 }

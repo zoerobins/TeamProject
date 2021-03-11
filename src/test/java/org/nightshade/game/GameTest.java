@@ -11,7 +11,6 @@ import org.testfx.framework.junit5.Start;
 public class GameTest {
 
     Renderer renderer;
-    Cloud cloud;
     Game game;
     Stage tempStage;
 
