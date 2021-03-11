@@ -13,20 +13,17 @@ public class Game {
 
     private final int levelWidth = 120;
     private final int blockWidth = 60;
-    private Renderer renderer;
     private int cloudXPos;
-    Parallax background;
+    private Parallax background;
     private final ArrayList<String> input = new ArrayList<>();
+    private ArrayList<Sprite> platformSprites;
+    private ArrayList<Sprite> enemySprites;
+    private Renderer renderer;
     private Client client;
     private AI ai;
-    private ArrayList<Sprite> platformSprites;
     private AILogic AILogic;
     private Sprite cloud;
-    private Image cloudImage = new Image("view/dark.png");
-
-    public ArrayList<Sprite> getPlatformSprites() {
-        return platformSprites;
-    }
+    private final Image cloudImage = new Image("view/dark.png");
 
     public void initGame(Stage stage){
         cloudXPos=-400;
@@ -41,6 +38,7 @@ public class Game {
         stage.setScene(scene);
         stage.show();
         platformSprites = level.createPlatformSprites();
+        enemySprites = level.getEnemySprites();
         AILogic=new AILogic();
         client = new Client();
         ai = new AI(3);
@@ -49,11 +47,12 @@ public class Game {
         checkForInput(scene);
         Image grass = new Image("view/Grass.png");
         Image clientImg = new Image("view/Body.png");
+        Image enemy = new Image("view/enemy.png");
 
         System.nanoTime();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                gameLoop(platformSprites,grass,clientImg);
+                gameLoop(platformSprites,grass,enemy,clientImg);
 
             }
         }.start();
@@ -109,12 +108,16 @@ public class Game {
         }
     }
 
-    private void gameLoop(ArrayList<Sprite> platformSprites, Image grass, Image clientImg){
+    private void gameLoop(ArrayList<Sprite> platformSprites, Image grass,Image enemy, Image clientImg){
         background.moveParallax();
         background.drawParallax(renderer);
         for (Sprite platformSprite : platformSprites) {
             renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
         }
+        for (Sprite enemySprite : enemySprites) {
+            renderer.drawImage(enemy,enemySprite.getPositionX(),enemySprite.getPositionY());
+        }
+
 
         cloudXPos=moveCloud(cloudXPos);
         renderer.drawImage(cloudImage,cloudXPos,0);
@@ -132,8 +135,6 @@ public class Game {
 
     private int moveCloud(int cloudXPos){
         int cloudXPosNew=cloudXPos+2;
-        System.out.println(cloudXPos);
-        System.out.println(client.getClientSprite().getPositionX());
 
         if (client.getClientSprite().getPositionX()-cloudXPos>1000){
             cloudXPosNew = client.getClientSprite().getPositionX()-1000;
