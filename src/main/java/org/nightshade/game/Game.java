@@ -131,8 +131,10 @@ public class Game {
         cloudXPos=moveCloud(cloudXPos);
         renderer.drawImage(cloudImage,cloudXPos,0);
 
-        moveClient(platformSprites);
-        client.displaySprite(renderer,clientImg,client.getClientSprite());
+        if(client.isLive()) {
+            moveClient(platformSprites);
+            client.displaySprite(renderer, clientImg, client.getClientSprite());
+        }
         ai.displaySprite(renderer,clientImg,ai.getAISprite());
         if ((-1*renderer.getTransLateX())+700<client.getClientSprite().getPositionX()){
             renderer.setTransLateX((int) (renderer.getTransLateX()+((-1*renderer.getTransLateX())+700-client.getClientSprite().getPositionX())));

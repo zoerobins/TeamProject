@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Client {
 
-    private final boolean isLive;
+    private boolean isLive;
     private boolean canJump;
     private Point2D velocity;
     private final Sprite clientSprite;
@@ -53,10 +53,9 @@ public class Client {
     }
 
 
-    /*TODO
-    public void kill(Group root, Node node) {
+    public void kill() {
         isLive=false;
-    }*/
+    }
 
     public Sprite createSprite() {
         return new Sprite(new Image("view/Body.png"),300,50);
@@ -80,11 +79,7 @@ public class Client {
             }
             for (Sprite enemy : enemySprites) {
                 if (enemy.intersects(clientSprite)){
-                    if(movingRight){
-                        getClientSprite().setPositionX(getClientSprite().getPositionX() - 1);
-                    } else {
-                        getClientSprite().setPositionX(getClientSprite().getPositionX() + 1);
-                    }
+                    kill();
                     return;
                 }
             }
@@ -105,8 +100,7 @@ public class Client {
             }
             for (Sprite enemy : enemySprites) {
                 if (enemy.intersects(clientSprite)) {
-                    getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
-                    setCanJump(true);
+                    kill();
                     return;
                 }
             }
