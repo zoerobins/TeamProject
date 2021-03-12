@@ -29,8 +29,8 @@ public class AI{
         this.velocity = new Point2D(0,0);
         this.speed = speed;
     }
-    public Sprite createSprite() {
-        return new Sprite(new Image("view/Body.png"),startX,startY);
+    public void createSprite() {
+        new Sprite(new Image("view/Body.png"), startX, startY);
     }
 
     public double getWidth(){

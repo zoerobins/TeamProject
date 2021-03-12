@@ -1,16 +1,9 @@
 package org.nightshade.game;
 
-import javafx.geometry.Rectangle2D;
-
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AILogic {
-    private final Game game;
-
-    public AILogic() {
-        game = new Game();
-    }
 
     public void moveChar(AI ai, ArrayList<Sprite> platformSprites){
 

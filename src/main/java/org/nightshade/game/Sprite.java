@@ -2,11 +2,9 @@ package org.nightshade.game;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
-import org.nightshade.renderer.Renderer;
 
 public class Sprite {
 
-    private final Image image;
     private double positionX;
     private double positionY;
     private final double width;
@@ -14,7 +12,6 @@ public class Sprite {
 
 
     public Sprite(Image image, int x, int y) {
-        this.image = image;
         width = image.getWidth();
         height = image.getHeight();
         positionX = x;
@@ -38,11 +35,6 @@ public class Sprite {
     }
     public void setPositionY(double y) {
         positionY = y;
-    }
-
-
-    public void render(Renderer renderer,int x, int y) {
-        renderer.drawImage(image, x, y);
     }
 
     public int getPositionY() {

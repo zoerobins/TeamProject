@@ -63,7 +63,7 @@ public class Client {
 
 
 
-    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> enemySprites){
+    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies){
         boolean movingRight = value > 0;
 
         for (int i = 0; i < Math.abs(value); i++) {
@@ -77,8 +77,8 @@ public class Client {
                     return;
                 }
             }
-            for (Sprite enemy : enemySprites) {
-                if (enemy.intersects(clientSprite)){
+            for (Enemy enemy : enemies) {
+                if (enemy.getEnemySprite().intersects(clientSprite)){
                     kill();
                     return;
                 }
@@ -86,7 +86,7 @@ public class Client {
             getClientSprite().setPositionX(getClientSprite().getPositionX() + (movingRight ? 1 : -1));
         }
     }
-    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> enemySprites){
+    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies){
 
         boolean movingDown = value > 0;
 
@@ -98,8 +98,8 @@ public class Client {
                     return;
                 }
             }
-            for (Sprite enemy : enemySprites) {
-                if (enemy.intersects(clientSprite)) {
+            for (Enemy enemy : enemies) {
+                if (enemy.getEnemySprite().intersects(clientSprite)) {
                     kill();
                     return;
                 }

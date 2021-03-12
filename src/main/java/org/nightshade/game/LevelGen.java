@@ -8,12 +8,8 @@ public class LevelGen {
     private final int width;
     ArrayList<ArrayList<NodeType>> level;
     ArrayList<Sprite> platformSprites = new ArrayList<>();
-    ArrayList<Sprite> enemySprites = new ArrayList<>();
-
-    Game game = new Game();
 
     Image grass = new Image("view/Grass.png");
-    Image enemy = new Image("view/enemy.png");
 
     public LevelGen(int width) {
         this.width = width;
@@ -40,20 +36,11 @@ public class LevelGen {
                 } else if(level.get(i).get(j)==NodeType.ENEMY) {
                     int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
                     int direction = ThreadLocalRandom.current().nextInt(0, (1) + 1);
-                    enemySprites.add(new Sprite(enemy, j * 60, i * 60));
-                    if (direction==1) {
-                        game.addEnemy(speed, true);
-                    } else{
-                        game.addEnemy(speed,false);
-                    }
+                    Game.enemies.add(new Enemy(speed,direction,j*60,i*60));
                 }
             }
         }
         return platformSprites;
-    }
-
-    public ArrayList<Sprite> getEnemySprites(){
-        return enemySprites;
     }
 
     private NodeType getRandomNode(int i,int j){

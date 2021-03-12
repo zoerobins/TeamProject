@@ -17,10 +17,7 @@ public class Game {
 
     private final ArrayList<String> input = new ArrayList<>();
     private ArrayList<Sprite> platformSprites;
-    private ArrayList<Sprite> enemySprites;
-    private static final ArrayList<Integer> enemySpeed = new ArrayList<>();
-    private static final ArrayList<Integer> enemyOffset= new ArrayList<>();
-    private static final ArrayList<Boolean> enemyDirection= new ArrayList<>();
+    public static ArrayList<Enemy> enemies = new ArrayList<>();
 
     private Renderer renderer;
     private Client client;
@@ -44,7 +41,6 @@ public class Game {
         stage.setScene(scene);
         stage.show();
         platformSprites = level.createPlatformSprites();
-        enemySprites = level.getEnemySprites();
         AILogic=new AILogic();
         client = new Client();
         ai = new AI(3);
@@ -91,26 +87,18 @@ public class Game {
             }
 
             if (input.contains("LEFT") && client.getClientSprite().getPositionX() >= 5) {
-                client.moveX(-5, platformSprites,enemySprites);
+                client.moveX(-5, platformSprites,enemies);
             }
 
             if (input.contains("RIGHT") && client.getClientSprite().getPositionX() <= (levelWidth*blockWidth) - 5) {
-                client.moveX(5,platformSprites,enemySprites);
+                client.moveX(5,platformSprites,enemies);
             }
 
             if (client.getVelocity().getY() < 10) {
                 client.setVelocity(client.getVelocity().add(0,1));
             }
 
-            /*
-            //LEAVE COMMENTED UNTIL ENEMIES ARE ADDED
-            for (Node enemy : enemies) {
-                if (player.getClientNode().getBoundsInParent().intersects(enemy.getBoundsInParent()) && player.isLive()) {
-                    player.kill(root,player.getClientNode());
-                }
-            }
-            */
-            client.moveY((int)client.getVelocity().getY(),platformSprites,enemySprites);
+            client.moveY((int)client.getVelocity().getY(),platformSprites,enemies);
 
         }
     }
@@ -120,10 +108,6 @@ public class Game {
         background.drawParallax(renderer);
         for (Sprite platformSprite : platformSprites) {
             renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
-        }
-        moveEnemies();
-        for (Sprite enemySprite : enemySprites) {
-            renderer.drawImage(enemy,enemySprite.getPositionX(),enemySprite.getPositionY());
         }
 
         moveCloud();
@@ -138,6 +122,10 @@ public class Game {
         }
 
         ai.displaySprite(renderer,clientImg,ai.getAISprite());
+        for (Enemy thisEnemy : enemies) {
+            thisEnemy.moveEnemy();
+            thisEnemy.displaySprite(renderer,enemy, thisEnemy.getEnemySprite());
+        }
         if ((-1*renderer.getTransLateX())+700<client.getClientSprite().getPositionX()){
             renderer.setTransLateX((int) (renderer.getTransLateX()+((-1*renderer.getTransLateX())+700-client.getClientSprite().getPositionX())));
         } else{
@@ -154,48 +142,6 @@ public class Game {
             cloudXPosNew = client.getClientSprite().getPositionX()-1000;
         }
         cloud.setPositionX(cloudXPosNew);
-    }
-
-
-    public void addEnemy(int speed, boolean direction){
-        enemySpeed.add(speed);
-        enemyDirection.add(direction);
-        enemyOffset.add(0);
-    }
-
-
-    private void moveEnemies() {
-
-        int index = 0;
-        for (Sprite enemy : enemySprites) {
-            int speed = enemySpeed.get(index);
-            int offset = enemyOffset.get(index);
-            Boolean direction = enemyDirection.get(index);
-
-            if (direction) {
-                if (offset > 180) {
-                    enemyDirection.set(index, false);
-                }
-                else {
-                    enemyOffset.set(index, enemyOffset.get(index)+speed);
-                    enemy.setPositionX(enemy.getPositionX()+speed);
-
-                }
-            }
-            else {
-                if (offset < -180) {
-                    enemyDirection.set(index, true);
-                }
-                else {
-                    enemyOffset.set(index, enemyOffset.get(index)-speed);
-                    enemy.setPositionX(enemy.getPositionX()-(speed));
-                }
-            }
-
-            index++;
-        }
-
-
     }
 
 
