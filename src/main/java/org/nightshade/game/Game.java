@@ -29,10 +29,10 @@ public class Game {
     private final Image cloudImage = new Image("view/dark.png");
 
     public void initGame(Stage stage){
-        cloud = new Sprite(new Image("view/dark.png"),-300,50);
+        cloud = new Sprite(cloudImage,-300,50);
         cloud.setPositionX(-400);
         background = new Parallax();
-        LevelGen level = new LevelGen(levelWidth);
+        LevelGen levelGen = new LevelGen(levelWidth);
         renderer = new Renderer();
         renderer.setHeight(720);
         renderer.setWidth(levelWidth*blockWidth);
@@ -40,7 +40,7 @@ public class Game {
         Scene scene = new Scene(pane,1280,720);
         stage.setScene(scene);
         stage.show();
-        platformSprites = level.createPlatformSprites();
+        platformSprites = levelGen.createPlatformSprites(renderer);
         AILogic=new AILogic();
         client = new Client();
         ai = new AI(3);
@@ -55,7 +55,6 @@ public class Game {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 gameLoop(platformSprites,grass,enemy,clientImg);
-
             }
         }.start();
 
@@ -67,8 +66,6 @@ public class Game {
         scene.setOnKeyPressed(
                 e -> {
                     String code = e.getCode().toString();
-
-                    // only add once... prevent duplicates
                     if ( !input.contains(code) )
                         input.add( code );
                 });

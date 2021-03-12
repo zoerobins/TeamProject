@@ -1,6 +1,9 @@
 package org.nightshade.game;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import org.nightshade.renderer.Renderer;
+
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -27,7 +30,7 @@ public class LevelGen {
         return level;
     }
 
-    public ArrayList<Sprite> createPlatformSprites(){
+    public ArrayList<Sprite> createPlatformSprites(Renderer renderer){
         //12 is the amount of blocks vertically (12*60=720, the canvas height) - using a variable gave an error for some reason?
         for (int i=0 ; i < 12 ; i++){
             for(int j=0 ; j < width ; j++){
@@ -37,6 +40,8 @@ public class LevelGen {
                     int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
                     int direction = ThreadLocalRandom.current().nextInt(0, (1) + 1);
                     Game.enemies.add(new Enemy(speed,direction,j*60,i*60));
+                } else if(level.get(i).get(j)==NodeType.END){
+                    renderer.drawRectangle(j*60,i*60,60,60, Color.GREEN);
                 }
             }
         }
