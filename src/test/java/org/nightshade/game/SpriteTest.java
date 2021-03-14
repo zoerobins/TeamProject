@@ -1,5 +1,6 @@
 package org.nightshade.game;
 
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
@@ -15,14 +16,15 @@ public class SpriteTest {
     Renderer renderer;
     LevelGen level;
     Game game;
-    Stage tempStage;
 
     @Start
     public void start(Stage stage) {
         game = new Game();
         renderer = new Renderer();
         level = new LevelGen(120);
-        tempStage = stage;
+        Scene scene = new Scene(renderer.getGroup());
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Test

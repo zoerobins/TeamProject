@@ -29,9 +29,6 @@ public class AI{
         this.velocity = new Point2D(0,0);
         this.speed = speed;
     }
-    public void createSprite() {
-        new Sprite(new Image("view/Body.png"), startX, startY);
-    }
 
     public double getWidth(){
         return AISprite.getWidth();
@@ -67,10 +64,10 @@ public class AI{
         }
     }
 
-    public void moveX(int value,ArrayList<Sprite> platformSprites){
-        boolean movingRight = value > 0;
+    public void moveX(int speed,ArrayList<Sprite> platformSprites){
+        boolean movingRight = speed > 0;
 
-        for (int i = 0; i < Math.abs(value); i++) {
+        for (int i = 0; i < Math.abs(speed); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(AISprite)){
                     if(movingRight){
@@ -84,11 +81,11 @@ public class AI{
             getAISprite().setPositionX(getAISprite().getPositionX() + (movingRight ? 1 : -1));
         }
     }
-    public void moveY(int value,ArrayList<Sprite> platformSprites){
+    public void moveY(int speed,ArrayList<Sprite> platformSprites){
 
-        boolean movingDown = value > 0;
+        boolean movingDown = speed > 0;
 
-        for (int i = 0; i < Math.abs(value); i++) {
+        for (int i = 0; i < Math.abs(speed); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(AISprite) && movingDown) {
                     getAISprite().setPositionY(getAISprite().getPositionY() - 1);

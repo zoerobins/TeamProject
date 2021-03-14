@@ -1,6 +1,7 @@
 package org.nightshade.game;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,14 +19,12 @@ public class ParallaxTest {
     @Start
     public void start(Stage stage) {
         tempStage = stage;
-        renderer = new Renderer();
+        renderer = new Renderer(1280,720);
         parallax = new Parallax();
         System.nanoTime();
-    }
-
-    @Test
-    public void test() {
-        System.out.println("Hello World");
+        Scene scene = new Scene(renderer.getGroup());
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Test

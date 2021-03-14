@@ -11,7 +11,7 @@ public class AILogic {
             ai.setVelocity(ai.getVelocity().add(0,1));
         }
 
-        ai.moveX(ai.getSpeed(),platformSprites);
+        ai.moveX(ai.getSpeed(), platformSprites);
 
         for (Sprite platform : platformSprites) {
 
@@ -24,7 +24,7 @@ public class AILogic {
             }
         }
 
-        ai.moveY((int)ai.getVelocity().getY(),platformSprites);
+        ai.moveY((int)ai.getVelocity().getY(), platformSprites);
 
     }
 

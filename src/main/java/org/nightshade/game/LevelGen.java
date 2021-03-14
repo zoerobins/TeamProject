@@ -48,7 +48,8 @@ public class LevelGen {
         return platformSprites;
     }
 
-    private NodeType getRandomNode(int i,int j){
+    //made public for test
+    public NodeType getRandomNode(int i,int j){
         int number = ThreadLocalRandom.current().nextInt(0, 100 + 1);
 
         if(i==6&&j==5||i==6&&j==6||i==6&&j==7){

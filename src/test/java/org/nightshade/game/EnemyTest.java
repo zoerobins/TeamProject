@@ -1,2 +1,4 @@
-package org.nightshade.game;public class EnemyTest {
+package org.nightshade.game;
+
+public class EnemyTest {
 }

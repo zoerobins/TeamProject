@@ -44,8 +44,6 @@ public class Game {
         AILogic=new AILogic();
         client = new Client();
         ai = new AI(3);
-        client.createSprite();
-        ai.createSprite();
         checkForInput(scene);
         Image grass = new Image("view/Grass.png");
         Image clientImg = new Image("view/Body.png");
