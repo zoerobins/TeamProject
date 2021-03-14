@@ -30,24 +30,28 @@ public class Game {
 
     public void initGame(Stage stage){
         cloud = new Sprite(cloudImage,-300,50);
-        cloud.setPositionX(-400);
         background = new Parallax();
-        LevelGen levelGen = new LevelGen(levelWidth);
         renderer = new Renderer();
-        renderer.setHeight(720);
-        renderer.setWidth(levelWidth*blockWidth);
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane,1280,720);
-        stage.setScene(scene);
-        stage.show();
-        platformSprites = levelGen.createPlatformSprites(renderer);
-        AILogic=new AILogic();
+        LevelGen levelGen = new LevelGen(levelWidth);
+        AILogic = new AILogic();
         client = new Client();
         ai = new AI(3);
-        checkForInput(scene);
+
+        cloud.setPositionX(-400);
+        renderer.setHeight(720);
+        renderer.setWidth(levelWidth*blockWidth);
+        platformSprites = levelGen.createPlatformSprites(renderer);
+
+        stage.setScene(scene);
+        stage.show();
+
         Image grass = new Image("view/Grass.png");
         Image clientImg = new Image("view/Body.png");
         Image enemy = new Image("view/enemy.png");
+
+        checkForInput(scene);
 
         System.nanoTime();
         new AnimationTimer() {
@@ -57,7 +61,6 @@ public class Game {
         }.start();
 
     }
-
 
     private void checkForInput(Scene scene){
 
@@ -98,9 +101,11 @@ public class Game {
         }
     }
 
-    private void gameLoop(ArrayList<Sprite> platformSprites, Image grass,Image enemy, Image clientImg){
+    public void gameLoop(ArrayList<Sprite> platformSprites, Image grass,Image enemy, Image clientImg){
+
         background.moveParallax();
         background.drawParallax(renderer);
+
         for (Sprite platformSprite : platformSprites) {
             renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
         }
@@ -116,25 +121,29 @@ public class Game {
             }
         }
 
+        AILogic.moveChar(ai, platformSprites);
         ai.displaySprite(renderer,clientImg,ai.getAISprite());
+
         for (Enemy thisEnemy : enemies) {
             thisEnemy.moveEnemy();
             thisEnemy.displaySprite(renderer,enemy, thisEnemy.getEnemySprite());
         }
-        if ((-1*renderer.getTransLateX())+700<client.getClientSprite().getPositionX()){
+
+        //Move camera
+        if ((-1*renderer.getTransLateX())+700 < client.getClientSprite().getPositionX()){
             renderer.setTransLateX((int) (renderer.getTransLateX()+((-1*renderer.getTransLateX())+700-client.getClientSprite().getPositionX())));
         } else{
             renderer.setTransLateX((int) (renderer.getTransLateX()));
         }
-        xViewCoordinate= (int) (-1*renderer.getTransLateX());
-        AILogic.moveChar(ai, platformSprites);
+
+        xViewCoordinate = (int) (-1*renderer.getTransLateX());
     }
 
     private void moveCloud(){
         int cloudXPosNew=cloud.getPositionX()+2;
 
-        if (client.getClientSprite().getPositionX()-cloud.getPositionX()>1000){
-            cloudXPosNew = client.getClientSprite().getPositionX()-1000;
+        if (client.getClientSprite().getPositionX()-cloud.getPositionX() > 1000){
+            cloudXPosNew = client.getClientSprite().getPositionX() - 1000;
         }
         cloud.setPositionX(cloudXPosNew);
     }
