@@ -20,7 +20,7 @@ public class SpriteTest {
     @Start
     public void start(Stage stage) {
         game = new Game();
-        renderer=new Renderer();
+        renderer = new Renderer();
         level = new LevelGen(120);
         tempStage = stage;
     }
