@@ -1,4 +1,4 @@
-package org.nightshade.game;
+package org.nightshade.ai;
 
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.nightshade.ai.AI;
+import org.nightshade.game.Game;
+import org.nightshade.game.LevelGen;
+import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;

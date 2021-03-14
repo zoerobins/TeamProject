@@ -1,4 +1,7 @@
-package org.nightshade.game;
+package org.nightshade.ai;
+
+import org.nightshade.ai.AI;
+import org.nightshade.game.Sprite;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;

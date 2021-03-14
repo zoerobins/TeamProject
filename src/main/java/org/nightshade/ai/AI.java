@@ -1,7 +1,8 @@
-package org.nightshade.game;
+package org.nightshade.ai;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 
 import java.util.ArrayList;

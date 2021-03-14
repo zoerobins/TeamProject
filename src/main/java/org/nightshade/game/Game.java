@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.nightshade.ai.AI;
+import org.nightshade.ai.AILogic;
 import org.nightshade.renderer.Renderer;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class Game {
     private Renderer renderer;
     private Client client;
     private AI ai;
-    private AILogic AILogic;
+    private org.nightshade.ai.AILogic AILogic;
     private Sprite cloud;
     private Parallax background;
 

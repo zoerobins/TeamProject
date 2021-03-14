@@ -1,10 +1,13 @@
-package org.nightshade.game;
+package org.nightshade.ai;
 
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.nightshade.ai.AI;
+import org.nightshade.ai.AILogic;
+import org.nightshade.game.LevelGen;
+import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
