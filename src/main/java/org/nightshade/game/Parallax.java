@@ -40,7 +40,6 @@ public class Parallax {
     public void drawParallax(Renderer renderer,int xViewCoordinate){
         renderer.drawImage(parallaxOne, xViewCoordinate ,0,1280,720);
         renderer.drawImage(parallaxTwo,parallax2X.get(0),0,7920,720);
-        System.out.println(parallaxSix.getWidth());
         renderer.drawImage(parallaxTwo,parallax2X.get(1),0,7920,720);
         renderer.drawImage(parallaxThree,parallax3X.get(0),0,7920,720);
         renderer.drawImage(parallaxThree,parallax3X.get(1),0,7920,720);
