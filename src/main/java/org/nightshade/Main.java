@@ -2,7 +2,7 @@ package org.nightshade;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.nightshade.gamelogic.Game;
+import org.nightshade.game.Game;
 
 public class Main extends Application {
 
@@ -12,7 +12,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         Game game = new Game();
         game.initGame(stage);
 

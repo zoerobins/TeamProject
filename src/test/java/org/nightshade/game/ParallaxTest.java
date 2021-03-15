@@ -1,5 +1,6 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
@@ -9,30 +10,31 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 @ExtendWith(ApplicationExtension.class)
-public class CloudTest {
+public class ParallaxTest {
 
     Renderer renderer;
-    Cloud cloud;
-    Game game;
+    Stage tempStage;
+    Parallax parallax;
 
     @Start
     public void start(Stage stage) {
-        renderer = new Renderer();
-        game = new Game();
-        cloud = new Cloud();
+        tempStage = stage;
+        renderer = new Renderer(1280,720);
+        parallax = new Parallax();
+        System.nanoTime();
         Scene scene = new Scene(renderer.getGroup());
         stage.setScene(scene);
         stage.show();
     }
 
     @Test
-    public void test() {
-        System.out.println("Hello World");
-    }
-
-    @Test
-    public void testShowCloud() {
-        cloud.showCloud(renderer,0,0,80,300);
+    public void showParallaxScroll(){
+        new AnimationTimer() {
+            public void handle(long currentNanoTime) {
+                parallax.moveParallax();
+                parallax.drawParallax(renderer);
+            }
+        }.start();
     }
 
 }

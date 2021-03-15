@@ -1,4 +1,4 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Client {
 
-    private final boolean isLive;
+    private boolean isLive;
     private boolean canJump;
     private Point2D velocity;
     private final Sprite clientSprite;
@@ -53,10 +53,9 @@ public class Client {
     }
 
 
-    /*TODO
-    public void kill(Group root, Node node) {
+    public void kill() {
         isLive=false;
-    }*/
+    }
 
     public Sprite createSprite() {
         return new Sprite(new Image("view/Body.png"),300,50);
@@ -64,27 +63,30 @@ public class Client {
 
 
 
-    public void moveX(int value,ArrayList<Sprite> platformSprites){
+    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies){
         boolean movingRight = value > 0;
 
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(clientSprite)){
-                    if (movingRight) {
-                        if (getClientSprite().getPositionX() + 40 == platform.getPositionX()) {
-                            return;
-                        }
+                    if(movingRight){
+                        getClientSprite().setPositionX(getClientSprite().getPositionX() - 1);
                     } else {
-                        if (getClientSprite().getPositionX() == platform.getPositionX() + 60) {
-                            return;
-                        }
+                        getClientSprite().setPositionX(getClientSprite().getPositionX() + 1);
                     }
+                    return;
+                }
+            }
+            for (Enemy enemy : enemies) {
+                if (enemy.getEnemySprite().intersects(clientSprite)){
+                    kill();
+                    return;
                 }
             }
             getClientSprite().setPositionX(getClientSprite().getPositionX() + (movingRight ? 1 : -1));
         }
     }
-    public void moveY(int value,ArrayList<Sprite> platformSprites){
+    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies){
 
         boolean movingDown = value > 0;
 
@@ -93,6 +95,12 @@ public class Client {
                 if (platform.intersects(clientSprite) && movingDown) {
                     getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
                     setCanJump(true);
+                    return;
+                }
+            }
+            for (Enemy enemy : enemies) {
+                if (enemy.getEnemySprite().intersects(clientSprite)) {
+                    kill();
                     return;
                 }
             }

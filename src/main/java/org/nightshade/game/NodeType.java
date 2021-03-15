@@ -1,4 +1,4 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
 public enum NodeType {
     AIR,

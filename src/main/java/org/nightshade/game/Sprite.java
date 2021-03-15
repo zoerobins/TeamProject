@@ -1,23 +1,29 @@
-package org.nightshade.gamelogic;
+package org.nightshade.game;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
-import org.nightshade.renderer.Renderer;
 
 public class Sprite {
 
-    private final Image image;
     private double positionX;
     private double positionY;
     private final double width;
     private final double height;
 
+
     public Sprite(Image image, int x, int y) {
-        this.image = image;
         width = image.getWidth();
         height = image.getHeight();
         positionX = x;
         positionY = y;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
     }
 
     public void setPosition(double x, double y) {
@@ -29,11 +35,6 @@ public class Sprite {
     }
     public void setPositionY(double y) {
         positionY = y;
-    }
-
-
-    public void render(Renderer renderer,int x, int y) {
-        renderer.drawImage(image, x, y);
     }
 
     public int getPositionY() {
@@ -51,4 +52,17 @@ public class Sprite {
     public boolean intersects(Sprite spr) {
         return spr.getBoundary().intersects(this.getBoundary());
     }
+
+    public boolean intersects(int x, int y, int w, int h) {
+        return this.getBoundary().intersects(x,y,w,h);
+    }
+
+    public void moveLeft() {
+        this.positionX += 1;
+    }
+
+    public void moveRight() {
+        this.positionX -= 1;
+    }
+
 }
