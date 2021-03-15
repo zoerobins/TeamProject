@@ -21,7 +21,8 @@ public class Game {
 
     private final ArrayList<String> input = new ArrayList<>();
     private ArrayList<Sprite> platformSprites;
-    public static ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Sprite> waterSprites;
+    private ArrayList<Enemy> enemies = new ArrayList<>();
 
     private Renderer renderer;
     private Client client;
@@ -46,14 +47,19 @@ public class Game {
         cloud.setPositionX(-400);
         renderer.setHeight(720);
         renderer.setWidth(levelWidth*blockWidth);
-        platformSprites = levelGen.createPlatformSprites(renderer);
+        platformSprites = levelGen.createPlatformSprites();
+        waterSprites = levelGen.createWaterSprites();
+        enemies = levelGen.createEnemies();
 
         stage.setScene(scene);
         stage.show();
 
         Image grass = new Image("view/Grass.png");
+        Image grassLeft = new Image("view/GrassRight.png");
+        Image grassRight = new Image("view/GrassLeft.png");
         Image clientImg = new Image("view/Body.png");
         Image enemy = new Image("view/enemy.png");
+        Image water = new Image("view/Water/image 1.png");
 
         checkForInput(scene);
 
@@ -62,7 +68,7 @@ public class Game {
 
         KeyFrame keyFrame = new KeyFrame(
                 Duration.seconds(0.017), // 60FPS
-                actionEvent -> gameLoop(platformSprites, grass, enemy, clientImg)
+                actionEvent -> gameLoop(platformSprites, grass, grassLeft, grassRight, water, enemy, clientImg)
         );
 
         timeline.getKeyFrames().add(keyFrame);
@@ -103,19 +109,17 @@ public class Game {
                 client.setVelocity(client.getVelocity().add(0,1));
             }
 
-            client.moveY((int)client.getVelocity().getY(),platformSprites,enemies);
+            client.moveY((int)client.getVelocity().getY(),platformSprites,waterSprites,enemies);
 
         }
     }
 
-    public void gameLoop(ArrayList<Sprite> platformSprites, Image grass,Image enemy, Image clientImg){
+    public void gameLoop(ArrayList<Sprite> platformSprites, Image grass, Image grassLeft, Image grassRight, Image water, Image enemy, Image clientImg){
 
         background.moveParallax();
         background.drawParallax(renderer);
 
-        for (Sprite platformSprite : platformSprites) {
-            renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
-        }
+        drawPlatformsAndWater(grass, water);
 
         moveCloud();
         renderer.drawImage(cloudImage,cloud.getPositionX(),0);
@@ -128,7 +132,7 @@ public class Game {
             }
         }
 
-        aiLogic.moveChar(ai, platformSprites);
+        aiLogic.moveChar(ai, platformSprites,waterSprites);
         ai.displaySprite(renderer,clientImg,ai.getSprite());
 
         for (Enemy thisEnemy : enemies) {
@@ -155,7 +159,14 @@ public class Game {
         cloud.setPositionX(cloudXPosNew);
     }
 
-
+    private void drawPlatformsAndWater(Image grass, Image water){
+        for (Sprite platformSprite : platformSprites){
+            renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
+        }
+        for (Sprite waterSprite : waterSprites) {
+            renderer.drawImage(water, waterSprite.getPositionX(), waterSprite.getPositionY());
+        }
+    }
 
 
 

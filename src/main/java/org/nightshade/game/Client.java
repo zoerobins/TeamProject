@@ -86,7 +86,7 @@ public class Client {
             getClientSprite().setPositionX(getClientSprite().getPositionX() + (movingRight ? 1 : -1));
         }
     }
-    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies){
+    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies){
 
         boolean movingDown = value > 0;
 
@@ -95,6 +95,12 @@ public class Client {
                 if (platform.intersects(clientSprite) && movingDown) {
                     getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
                     setCanJump(true);
+                    return;
+                }
+            }
+            for (Sprite water : waterSprites) {
+                if (water.intersects(clientSprite)){
+                    getClientSprite().setPositionY(getClientSprite().getPositionY() + 1);
                     return;
                 }
             }

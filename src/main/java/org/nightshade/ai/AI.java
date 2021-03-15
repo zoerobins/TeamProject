@@ -6,7 +6,6 @@ import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class AI {
 
@@ -82,7 +81,7 @@ public class AI {
 
         }
     }
-    public void moveY(int speed,ArrayList<Sprite> platformSprites){
+    public void moveY(int speed,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites){
 
         boolean movingDown = speed > 0;
 

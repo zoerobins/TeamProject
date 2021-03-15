@@ -34,12 +34,15 @@ public class GameTest {
         Image enemy = new Image("view/enemy.png");
         Image clientImg = new Image("view/Body.png");
         Image grass = new Image("Grass.png");
-        platformSprites = levelGen.createPlatformSprites(renderer);
+        Image grassLeft = new Image("GrassLeft.png");
+        Image grassRight = new Image("GrassRight.png");
+        Image water = new Image("Water.png");
+        platformSprites = levelGen.createPlatformSprites();
 
         System.nanoTime();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                game.gameLoop(platformSprites,grass,enemy,clientImg);
+                game.gameLoop(platformSprites,grass,grassLeft,grassRight,water,enemy,clientImg);
             }
         }.start();
     }
