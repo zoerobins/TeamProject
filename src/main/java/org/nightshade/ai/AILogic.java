@@ -1,6 +1,5 @@
 package org.nightshade.ai;
 
-import org.nightshade.ai.AI;
 import org.nightshade.game.Sprite;
 
 import java.util.ArrayList;
@@ -20,9 +19,9 @@ public class AILogic {
 
             int closeness = ThreadLocalRandom.current().nextInt(2, (30) + 1);
 
-            if(ai.getAISprite().getPositionX()+ai.getWidth()+closeness > platform.getPositionX()&&
-                    ai.getAISprite().getPositionX() + 10 < platform.getPositionX() &&
-                    ai.getAISprite().getPositionY() > platform.getPositionY()){
+            if(ai.getSprite().getPositionX()+ai.getSprite().getWidth()+closeness > platform.getPositionX()&&
+                    ai.getSprite().getPositionX() + 10 < platform.getPositionX() &&
+                    ai.getSprite().getPositionY() > platform.getPositionY()){
                 ai.jump();
             }
         }

@@ -57,4 +57,12 @@ public class Sprite {
         return this.getBoundary().intersects(x,y,w,h);
     }
 
+    public void moveLeft() {
+        this.positionX += 1;
+    }
+
+    public void moveRight() {
+        this.positionX -= 1;
+    }
+
 }

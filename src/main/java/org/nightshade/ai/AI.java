@@ -8,31 +8,24 @@ import org.nightshade.renderer.Renderer;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class AI{
+public class AI {
 
-    private final boolean isLive;
+    private boolean isAlive;
     private boolean canJump;
     private Point2D velocity;
-    private final Sprite AISprite = new Sprite(new Image("view/Body.png"),300,50);
-    private final int speed;
-
-    int startX = ThreadLocalRandom.current().nextInt(250, (350) + 1);
-    int startY = ThreadLocalRandom.current().nextInt(30, (80) + 1);
-
-
-    public int getSpeed() {
-        return speed;
-    }
+    private Sprite sprite;
+    private int speed;
 
     public AI(int speed) {
-        this.isLive = true;
+        this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
+        this.sprite = new Sprite(new Image("view/Body.png"),300,50);
         this.speed = speed;
     }
 
-    public double getWidth(){
-        return AISprite.getWidth();
+    public int getSpeed() {
+        return speed;
     }
 
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
@@ -42,8 +35,8 @@ public class AI{
         this.velocity = velocity;
     }
 
-    public boolean isLive() {
-        return isLive;
+    public boolean isAlive() {
+        return isAlive;
     }
 
     public void setCanJump(boolean canJump) {
@@ -54,8 +47,8 @@ public class AI{
         return velocity;
     }
 
-    public Sprite getAISprite() {
-        return AISprite;
+    public Sprite getSprite() {
+        return this.sprite;
     }
 
     public void jump() {
@@ -65,21 +58,28 @@ public class AI{
         }
     }
 
-    public void moveX(int speed,ArrayList<Sprite> platformSprites){
-        boolean movingRight = speed > 0;
+    public void moveX(int speed, ArrayList<Sprite> platformSprites) {
+        int absoluteSpeed = Math.abs(speed);
 
-        for (int i = 0; i < Math.abs(speed); i++) {
+        for (int i = 0; i < absoluteSpeed; i ++) {
             for (Sprite platform : platformSprites) {
-                if (platform.intersects(AISprite)){
-                    if(movingRight){
-                        getAISprite().setPositionX(getAISprite().getPositionX() - 1);
+                if (platform.intersects(sprite)) {
+                    if (speed > 0) {
+                        // moving right
+                        sprite.moveRight();
                     } else {
-                        getAISprite().setPositionX(getAISprite().getPositionX() + 1);
+                        sprite.moveLeft();
                     }
-                    return;
                 }
             }
-            getAISprite().setPositionX(getAISprite().getPositionX() + (movingRight ? 1 : -1));
+
+            if (speed > 0) {
+                // moving right
+                sprite.moveLeft();
+            } else {
+                sprite.moveRight();
+            }
+
         }
     }
     public void moveY(int speed,ArrayList<Sprite> platformSprites){
@@ -88,13 +88,13 @@ public class AI{
 
         for (int i = 0; i < Math.abs(speed); i++) {
             for (Sprite platform : platformSprites) {
-                if (platform.intersects(AISprite) && movingDown) {
-                    getAISprite().setPositionY(getAISprite().getPositionY() - 1);
+                if (platform.intersects(sprite) && movingDown) {
+                    sprite.setPositionY(sprite.getPositionY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
-            getAISprite().setPositionY(getAISprite().getPositionY() + (movingDown ? 1 : -1));
+            sprite.setPositionY(sprite.getPositionY() + (movingDown ? 1 : -1));
         }
 
     }

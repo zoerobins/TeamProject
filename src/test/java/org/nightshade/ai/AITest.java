@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.nightshade.ai.AI;
 import org.nightshade.game.Game;
 import org.nightshade.game.LevelGen;
 import org.nightshade.game.Sprite;
@@ -48,7 +47,7 @@ public class AITest {
 
     @Test
     public void testGetWidth(){
-        Assertions.assertEquals(40,ai.getWidth());
+        Assertions.assertEquals(40,ai.getSprite().getWidth());
     }
 
     @Test
@@ -64,7 +63,7 @@ public class AITest {
 
     @Test
     public void testGetAISprite(){
-        Assertions.assertNotNull(ai.getAISprite());
+        Assertions.assertNotNull(ai.getSprite());
     }
     @Test
     public void testJump(){
@@ -76,7 +75,7 @@ public class AITest {
 
     @Test
     public void testIsLive(){
-        Assertions.assertTrue(ai.isLive());
+        Assertions.assertTrue(ai.isAlive());
     }
 
     @Test
@@ -90,7 +89,7 @@ public class AITest {
         Image image = new Image("Grass.png");
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                ai.displaySprite(renderer,image,ai.getAISprite());
+                ai.displaySprite(renderer,image,ai.getSprite());
                 ai.moveX(10,platformSprites);
             }
         }.start();
@@ -101,7 +100,7 @@ public class AITest {
         Image image = new Image("Grass.png");
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                ai.displaySprite(renderer,image,ai.getAISprite());
+                ai.displaySprite(renderer,image,ai.getSprite());
                 ai.moveY(10,platformSprites);
             }
         }.start();

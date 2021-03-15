@@ -1,10 +1,7 @@
 package org.nightshade.game;
 
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -14,7 +11,6 @@ import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
 import org.nightshade.renderer.Renderer;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class Game {
@@ -30,7 +26,7 @@ public class Game {
     private Renderer renderer;
     private Client client;
     private AI ai;
-    private org.nightshade.ai.AILogic AILogic;
+    private AILogic aiLogic;
     private Sprite cloud;
     private Parallax background;
 
@@ -43,7 +39,7 @@ public class Game {
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane,1280,720);
         LevelGen levelGen = new LevelGen(levelWidth);
-        AILogic = new AILogic();
+        aiLogic = new AILogic();
         client = new Client();
         ai = new AI(3);
 
@@ -132,8 +128,8 @@ public class Game {
             }
         }
 
-        AILogic.moveChar(ai, platformSprites);
-        ai.displaySprite(renderer,clientImg,ai.getAISprite());
+        aiLogic.moveChar(ai, platformSprites);
+        ai.displaySprite(renderer,clientImg,ai.getSprite());
 
         for (Enemy thisEnemy : enemies) {
             thisEnemy.moveEnemy();
