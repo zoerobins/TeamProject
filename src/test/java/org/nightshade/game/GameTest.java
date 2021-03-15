@@ -38,12 +38,13 @@ public class GameTest {
         Image grassRight = new Image("GrassRight.png");
         Image water = new Image("Water.png");
         Image ground = new Image("Dirt.png");
+        Image end = new Image("EndNode.png");
         platformSprites = levelGen.createPlatformSprites();
 
         System.nanoTime();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                game.gameLoop(platformSprites,grass,ground,water,enemy,clientImg);
+                game.gameLoop(platformSprites,grass,ground,water,enemy,end,clientImg);
             }
         }.start();
     }

@@ -17,7 +17,7 @@ public class Game {
 
     private final int levelWidth = 120;
     private final int blockWidth = 60;
-    public static int xViewCoordinate = 0;
+    private int xViewCoordinate = 0;
 
     private final ArrayList<String> input = new ArrayList<>();
     private ArrayList<Sprite> platformSprites;
@@ -31,7 +31,6 @@ public class Game {
     private AILogic aiLogic;
     private Sprite cloud;
     private Parallax background;
-
     private final Image cloudImage = new Image("view/dark.png");
 
     public void initGame(Stage stage){
@@ -120,7 +119,7 @@ public class Game {
     public void gameLoop(ArrayList<Sprite> platformSprites, Image grass, Image ground, Image water, Image enemy, Image end, Image clientImg){
 
         background.moveParallax();
-        background.drawParallax(renderer);
+        background.drawParallax(renderer,xViewCoordinate);
 
         drawPlatformsAndWaterAndGroundAndEnd(grass, water, ground, end);
 
