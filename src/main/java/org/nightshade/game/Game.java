@@ -1,14 +1,20 @@
 package org.nightshade.game;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
 import org.nightshade.renderer.Renderer;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class Game {
@@ -55,13 +61,16 @@ public class Game {
 
         checkForInput(scene);
 
-        System.nanoTime();
-        new AnimationTimer() {
-            public void handle(long currentNanoTime) {
-                gameLoop(platformSprites,grass,enemy,clientImg);
-            }
-        }.start();
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
 
+        KeyFrame keyFrame = new KeyFrame(
+                Duration.seconds(0.017), // 60FPS
+                actionEvent -> gameLoop(platformSprites, grass, enemy, clientImg)
+        );
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
     }
 
     private void checkForInput(Scene scene){
