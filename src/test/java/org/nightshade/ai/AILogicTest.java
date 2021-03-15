@@ -23,6 +23,7 @@ public class AILogicTest {
     int speed = 5;
     ArrayList<Sprite> platformSprites;
     ArrayList<Sprite> waterSprites;
+    ArrayList<Sprite> groundSprites;
 
 
     @Start
@@ -40,6 +41,7 @@ public class AILogicTest {
     public void testMoveChar(){
        platformSprites = levelGen.createPlatformSprites();
        waterSprites = levelGen.createWaterSprites();
-       aiLogic.moveChar(ai,platformSprites,waterSprites);
+       groundSprites = levelGen.createGroundSprites();
+       aiLogic.moveChar(ai,platformSprites,waterSprites, groundSprites);
     }
 }

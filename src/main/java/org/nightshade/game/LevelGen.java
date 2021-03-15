@@ -10,11 +10,12 @@ public class LevelGen {
     ArrayList<ArrayList<NodeType>> level;
     ArrayList<Sprite> platformSprites = new ArrayList<>();
     ArrayList<Sprite> waterSprites = new ArrayList<>();
+    ArrayList<Sprite> groundSprites = new ArrayList<>();
     ArrayList<Enemy> enemies = new ArrayList<>();
 
     Image grass = new Image("view/Grass.png");
     Image water = new Image("view/Water/image 1.png");
-    Image enemy = new Image("view/enemy.png");
+    Image ground = new Image("view/Dirt.png");
 
 
     public LevelGen(int width) {
@@ -84,7 +85,16 @@ public class LevelGen {
         return waterSprites;
     }
 
-
+    public ArrayList<Sprite> createGroundSprites(){
+        for (int i = 0 ; i < 12 ; i++){
+            for(int j = 0 ; j < width ; j++){
+                if(level.get(i).get(j) == NodeType.GROUND){
+                    groundSprites.add(new Sprite(ground, j * 60, i * 60));
+                }
+            }
+        }
+        return groundSprites;
+    }
 
     //made public for test
     public NodeType getRandomNode(int i,int j){
@@ -104,9 +114,9 @@ public class LevelGen {
             return NodeType.AIR;
         }
         if(i == 11){
-            //will spawn a platform 90% of the time, and water the other 10%
+            //will spawn ground 90% of the time, and water the other 10%
             if(randomNumber<90) {
-                return NodeType.PLATFORM;
+                return NodeType.GROUND;
             } else{
                 return NodeType.WATER;
             }
@@ -123,13 +133,13 @@ public class LevelGen {
         if(i>7){
             if(randomNumber<15) {
                 return NodeType.PLATFORM;
-            } else if(randomNumber<16){
+            } else if(randomNumber<16 && j>20){
                 return NodeType.ENEMY;
             } else{
                 return NodeType.AIR;
             }
         } else{
-            if(randomNumber==1){
+            if(randomNumber==1 && j>20){
                 return NodeType.ENEMY;
             } else{
                 return NodeType.AIR;
