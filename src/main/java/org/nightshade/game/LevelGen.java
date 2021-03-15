@@ -6,29 +6,31 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LevelGen {
-    private final int width;
+    private final int levelWidth;
     ArrayList<ArrayList<NodeType>> level;
     ArrayList<Sprite> platformSprites = new ArrayList<>();
     ArrayList<Sprite> waterSprites = new ArrayList<>();
     ArrayList<Sprite> groundSprites = new ArrayList<>();
+    ArrayList<Sprite> endSprites = new ArrayList<>();
     ArrayList<Enemy> enemies = new ArrayList<>();
 
     Image grass = new Image("view/Grass.png");
     Image water = new Image("view/Water/image 1.png");
     Image ground = new Image("view/Dirt.png");
+    Image end = new Image("view/EndNode.png");
 
 
     public LevelGen(int width) {
-        this.width = width;
+        this.levelWidth = width;
         this.level = createLevel(width);
     }
 
-    private ArrayList<ArrayList<NodeType>> createLevel(int width) {
+    private ArrayList<ArrayList<NodeType>> createLevel(int levelWidth) {
         level=new ArrayList<>();
         for (int i=0;i<12;i++){
             level.add(new ArrayList<>());
             int j = 0;
-            while(j < width){
+            while(j < levelWidth){
                 NodeType newNode = getRandomNode(i,j);
                 level.get(i).add(newNode);
                 if (newNode == NodeType.PLATFORM){
@@ -52,7 +54,7 @@ public class LevelGen {
     public ArrayList<Sprite> createPlatformSprites(){
         //12 is the amount of blocks vertically (12*60=720, the canvas height) - using a variable gave an error for some reason?
         for (int i = 0 ; i < 12 ; i++){
-            for(int j = 0 ; j < width ; j++){
+            for(int j = 0; j < levelWidth; j++){
                 if(level.get(i).get(j) == NodeType.PLATFORM) {
                     platformSprites.add(new Sprite(grass, j * 60, i * 60));
                 }
@@ -63,7 +65,7 @@ public class LevelGen {
 
     public ArrayList<Enemy> createEnemies(){
         for (int i = 0 ; i < 12 ; i++){
-            for(int j = 0 ; j < width ; j++){
+            for(int j = 0; j < levelWidth; j++){
                 if(level.get(i).get(j) == NodeType.ENEMY) {
                     int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
                     int direction = ThreadLocalRandom.current().nextInt(0, (1) + 1);
@@ -76,7 +78,7 @@ public class LevelGen {
 
     public ArrayList<Sprite> createWaterSprites(){
         for (int i = 0 ; i < 12 ; i++){
-            for(int j = 0 ; j < width ; j++){
+            for(int j = 0; j < levelWidth; j++){
                 if(level.get(i).get(j) == NodeType.WATER){
                     waterSprites.add(new Sprite(water, j * 60, i * 60));
                 }
@@ -86,14 +88,19 @@ public class LevelGen {
     }
 
     public ArrayList<Sprite> createGroundSprites(){
-        for (int i = 0 ; i < 12 ; i++){
-            for(int j = 0 ; j < width ; j++){
-                if(level.get(i).get(j) == NodeType.GROUND){
-                    groundSprites.add(new Sprite(ground, j * 60, i * 60));
+            for(int j = 0; j < levelWidth; j++){
+                if(level.get(11).get(j) == NodeType.GROUND){
+                    groundSprites.add(new Sprite(ground, j * 60, 11 * 60));
                 }
             }
-        }
         return groundSprites;
+    }
+
+    public ArrayList<Sprite> createEndSprites(){
+        for (int i = 0 ; i < 12 ; i++){
+            endSprites.add(new Sprite(end, (levelWidth -1) * 60, i * 60));
+        }
+        return endSprites;
     }
 
     //made public for test
@@ -106,7 +113,7 @@ public class LevelGen {
             return NodeType.PLATFORM;
         }
         //Last column of blocks should be end nodes (the end of the level)
-        if(j==width-1) {
+        if(j== levelWidth -1) {
             return NodeType.END;
         }
         //this condition keeps the start of the level clear of enemies where the players will spawn

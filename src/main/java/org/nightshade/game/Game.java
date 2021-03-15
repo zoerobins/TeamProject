@@ -22,9 +22,9 @@ public class Game {
     private final ArrayList<String> input = new ArrayList<>();
     private ArrayList<Sprite> platformSprites;
     private ArrayList<Sprite> waterSprites;
-    private ArrayList<Sprite> getGroundSprites;
-    private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Sprite> groundSprites;
+    private ArrayList<Sprite> endSprites;
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private Renderer renderer;
     private Client client;
     private AI ai;
@@ -52,6 +52,7 @@ public class Game {
         waterSprites = levelGen.createWaterSprites();
         groundSprites = levelGen.createGroundSprites();
         enemies = levelGen.createEnemies();
+        endSprites = levelGen.createEndSprites();
 
         stage.setScene(scene);
         stage.show();
@@ -61,6 +62,7 @@ public class Game {
         Image clientImg = new Image("view/Body.png");
         Image enemy = new Image("view/enemy.png");
         Image water = new Image("view/Water/image 1.png");
+        Image end = new Image("view/EndNode.png");
 
         checkForInput(scene);
 
@@ -69,7 +71,7 @@ public class Game {
 
         KeyFrame keyFrame = new KeyFrame(
                 Duration.seconds(0.017), // 60FPS
-                actionEvent -> gameLoop(platformSprites, grass, ground, water, enemy, clientImg)
+                actionEvent -> gameLoop(platformSprites, grass, ground, water, enemy, end, clientImg)
         );
 
         timeline.getKeyFrames().add(keyFrame);
@@ -115,12 +117,12 @@ public class Game {
         }
     }
 
-    public void gameLoop(ArrayList<Sprite> platformSprites, Image grass, Image ground, Image water, Image enemy, Image clientImg){
+    public void gameLoop(ArrayList<Sprite> platformSprites, Image grass, Image ground, Image water, Image enemy, Image end, Image clientImg){
 
         background.moveParallax();
         background.drawParallax(renderer);
 
-        drawPlatformsAndWaterAndGround(grass, water, ground);
+        drawPlatformsAndWaterAndGroundAndEnd(grass, water, ground, end);
 
         moveCloud();
         renderer.drawImage(cloudImage,cloud.getPositionX(),0);
@@ -142,7 +144,7 @@ public class Game {
         }
 
         //Move camera
-        if ((-1*renderer.getTransLateX())+700 < client.getClientSprite().getPositionX()){
+        if ((-1*renderer.getTransLateX())+700 < client.getClientSprite().getPositionX() && (-1*renderer.getTransLateX()) < (levelWidth * 60 - 1280)){
             renderer.setTransLateX((int) (renderer.getTransLateX()+((-1*renderer.getTransLateX())+700-client.getClientSprite().getPositionX())));
         } else{
             renderer.setTransLateX((int) (renderer.getTransLateX()));
@@ -160,7 +162,7 @@ public class Game {
         cloud.setPositionX(cloudXPosNew);
     }
 
-    private void drawPlatformsAndWaterAndGround(Image grass, Image water, Image ground){
+    private void drawPlatformsAndWaterAndGroundAndEnd(Image grass, Image water, Image ground, Image end){
         for (Sprite platformSprite : platformSprites){
             renderer.drawImage(grass, platformSprite.getPositionX(), platformSprite.getPositionY());
         }
@@ -169,6 +171,9 @@ public class Game {
         }
         for (Sprite groundSprite : groundSprites) {
             renderer.drawImage(ground, groundSprite.getPositionX(), groundSprite.getPositionY());
+        }
+        for (Sprite endSprite : endSprites) {
+            renderer.drawImage(end, endSprite.getPositionX(), endSprite.getPositionY());
         }
     }
 
