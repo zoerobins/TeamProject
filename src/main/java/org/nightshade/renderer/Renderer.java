@@ -4,6 +4,8 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Renderer {
 
@@ -29,14 +31,6 @@ public class Renderer {
         return group;
     }
 
-    public void renderImage(Image image, int x, int y) {
-        graphicsContext.drawImage(image, x, y);
-    }
-
-    public void renderImage(Image image, int x, int y, int w, int h) {
-        graphicsContext.drawImage(image, x, y, w, h);
-    }
-
     public void setWidth(int x) {
         canvas.setWidth(x);
     }
@@ -44,4 +38,28 @@ public class Renderer {
     public void setHeight(int x) {
         canvas.setHeight(x);
     }
+
+    public void drawImage(Image image, int x, int y) {
+        graphicsContext.drawImage(image, x, y);
+    }
+
+    public void drawImage(Image image, int x, int y, int w, int h) {
+        graphicsContext.drawImage(image, x, y, w, h);
+    }
+
+    public void drawRectangle(int x, int y, int w, int h, Color color) {
+        graphicsContext.setFill(color);
+        graphicsContext.fillRect(x, y, w, h);
+    }
+
+    public void drawCircle(int x, int y, int c, Color color) {
+        graphicsContext.setFill(color);
+        graphicsContext.fillOval(x, y, c, c);
+    }
+
+    public void drawTriangle(double[] xs, double[] ys, Color color) {
+        graphicsContext.setFill(color);
+        graphicsContext.fillPolygon(xs, ys, 3);
+    }
+
 }
