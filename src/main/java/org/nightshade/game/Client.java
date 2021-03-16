@@ -58,7 +58,7 @@ public class Client {
     }
 
     public Sprite createSprite() {
-        return new Sprite(new Image("view/Body.png"),300,50);
+        return new Sprite(new Image("view/GameComponents/Body.png"),300,50);
     }
 
 

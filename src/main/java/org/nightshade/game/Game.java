@@ -34,7 +34,7 @@ public class Game {
     private AILogic aiLogic;
     private Sprite cloud;
     private Parallax background;
-    private final Image cloudImage = new Image("view/dark.png");
+    private final Image cloudImage = new Image("view/GameComponents/dark.png");
 
     public void initGame(Stage stage){
         cloud = new Sprite(cloudImage,-300,50);
@@ -49,8 +49,8 @@ public class Game {
         int tempAICount = 3;
         aiList = new ArrayList<>();
         for (int i = 0; i < tempAICount; i++){
-            int randomNumber = ThreadLocalRandom.current().nextInt(3, 5 + 1);
-            aiList.add(new AI (randomNumber));
+            int randomSpeed = ThreadLocalRandom.current().nextInt(2, 4 + 1);
+            aiList.add(new AI (randomSpeed));
         }
 
         cloud.setPositionX(-400);
@@ -65,12 +65,13 @@ public class Game {
         stage.setScene(scene);
         stage.show();
 
-        Image grass = new Image("view/Grass.png");
-        Image ground = new Image("view/Dirt.png");
-        Image clientImg = new Image("view/Body.png");
-        Image enemy = new Image("view/enemy.png");
-        Image water = new Image("view/Water/image 1.png");
-        Image end = new Image("view/EndNode.png");
+        Image grass = new Image("view/GameComponents/Grass.png");
+        Image ground = new Image("view/GameComponents/Dirt.png");
+        Image clientImg = new Image("view/GameComponents/Body.png");
+        Image aiImg = new Image("view/GameComponents/AIBody.png");
+        Image enemy = new Image("view/GameComponents/enemy.png");
+        Image water = new Image("view/GameComponents/Water/image 1.png");
+        Image end = new Image("view/GameComponents/EndNode.png");
 
         checkForInput(scene);
 
@@ -79,7 +80,7 @@ public class Game {
 
         KeyFrame keyFrame = new KeyFrame(
                 Duration.seconds(0.017), // 60FPS
-                actionEvent -> gameLoop(platformSprites, grass, ground, water, enemy, end, clientImg)
+                actionEvent -> gameLoop(platformSprites, grass, ground, water, enemy, end, clientImg, aiImg)
         );
 
         timeline.getKeyFrames().add(keyFrame);
@@ -125,7 +126,7 @@ public class Game {
         }
     }
 
-    public void gameLoop(ArrayList<Sprite> platformSprites, Image grass, Image ground, Image water, Image enemy, Image end, Image clientImg){
+    public void gameLoop(ArrayList<Sprite> platformSprites, Image grass, Image ground, Image water, Image enemy, Image end, Image clientImg, Image aiImg){
 
         background.moveParallax();
         background.drawParallax(renderer,xViewCoordinate);
@@ -145,7 +146,7 @@ public class Game {
 
         for (AI ai : aiList) {
             aiLogic.moveChar(ai, platformSprites, waterSprites, groundSprites);
-            ai.displaySprite(renderer, clientImg, ai.getSprite());
+            ai.displaySprite(renderer, aiImg, ai.getSprite());
         }
 
         for (Enemy thisEnemy : enemies) {

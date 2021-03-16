@@ -6,6 +6,7 @@ import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AI {
 
@@ -19,7 +20,10 @@ public class AI {
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
-        this.sprite = new Sprite(new Image("view/Body.png"),300,50);
+        int randomXStart = ThreadLocalRandom.current().nextInt(270, 330 + 1);
+        int randomYStart = ThreadLocalRandom.current().nextInt(20, 60 + 1);
+
+        this.sprite = new Sprite(new Image("view/GameComponents/AIBody.png"),randomXStart,randomYStart);
         this.speed = speed;
     }
 
