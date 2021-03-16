@@ -37,7 +37,7 @@ public class Game {
     private final Image cloudImage = new Image("view/GameComponents/dark.png");
 
     public void initGame(Stage stage){
-        cloud = new Sprite(cloudImage,-300,50);
+        cloud = new Sprite(cloudImage,-2300,50);
         background = new Parallax();
         renderer = new Renderer();
         Pane pane = new Pane(renderer.getGroup());
@@ -53,7 +53,7 @@ public class Game {
             aiList.add(new AI (randomSpeed));
         }
 
-        cloud.setPositionX(-400);
+        cloud.setPositionX(-1300);
         renderer.setHeight(720);
         renderer.setWidth(levelWidth*blockWidth);
         platformSprites = levelGen.createPlatformSprites();
@@ -65,7 +65,7 @@ public class Game {
         stage.setScene(scene);
         stage.show();
 
-        Image grass = new Image("view/GameComponents/Grass.png");
+        Image grass = new Image("view/GameComponents/DarkGrass.png");
         Image ground = new Image("view/GameComponents/Dirt.png");
         Image clientImg = new Image("view/GameComponents/Body.png");
         Image aiImg = new Image("view/GameComponents/AIBody.png");
@@ -134,12 +134,12 @@ public class Game {
         drawPlatformsAndWaterAndGroundAndEnd(grass, water, ground, end);
 
         moveCloud();
-        renderer.drawImage(cloudImage,cloud.getPositionX(),0);
+        renderer.drawImage(cloudImage,cloud.getPositionX(),50);
 
         if(client.isLive()) {
             moveClient(platformSprites);
             client.displaySprite(renderer, clientImg, client.getClientSprite());
-            if (client.getClientSprite().intersects(cloud.getPositionX()-200,cloud.getPositionY(),(int)cloud.getWidth(),(int)cloud.getHeight())){
+            if (client.getClientSprite().intersects(cloud.getPositionX()-90,cloud.getPositionY(),(int)cloud.getWidth(),(int)cloud.getHeight())){
                 client.kill();
             }
         }
@@ -167,8 +167,8 @@ public class Game {
     private void moveCloud(){
         int cloudXPosNew=cloud.getPositionX()+2;
 
-        if (client.getClientSprite().getPositionX()-cloud.getPositionX() > 1000){
-            cloudXPosNew = client.getClientSprite().getPositionX() - 1000;
+        if (client.getClientSprite().getPositionX()-cloud.getPositionX() > 2000){
+            cloudXPosNew = client.getClientSprite().getPositionX() - 2000;
         }
         cloud.setPositionX(cloudXPosNew);
     }
