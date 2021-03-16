@@ -32,7 +32,7 @@ public class ParallaxTest {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 parallax.moveParallax();
-                parallax.drawParallax(renderer);
+                parallax.drawParallax(renderer,0);
             }
         }.start();
     }

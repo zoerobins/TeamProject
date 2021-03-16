@@ -6,7 +6,6 @@ import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class AI {
 
@@ -58,12 +57,22 @@ public class AI {
         }
     }
 
-    public void moveX(int speed, ArrayList<Sprite> platformSprites) {
+    public void moveX(int speed, ArrayList<Sprite> platformSprites, ArrayList<Sprite> groundSprites ) {
         int absoluteSpeed = Math.abs(speed);
 
         for (int i = 0; i < absoluteSpeed; i ++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(sprite)) {
+                    if (speed > 0) {
+                        // moving right
+                        sprite.moveRight();
+                    } else {
+                        sprite.moveLeft();
+                    }
+                }
+            }
+            for (Sprite ground : groundSprites) {
+                if (ground.intersects(sprite)) {
                     if (speed > 0) {
                         // moving right
                         sprite.moveRight();
@@ -82,13 +91,20 @@ public class AI {
 
         }
     }
-    public void moveY(int speed,ArrayList<Sprite> platformSprites){
+    public void moveY(int speed,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Sprite> groundSprites){
 
         boolean movingDown = speed > 0;
 
         for (int i = 0; i < Math.abs(speed); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(sprite) && movingDown) {
+                    sprite.setPositionY(sprite.getPositionY() - 1);
+                    setCanJump(true);
+                    return;
+                }
+            }
+            for (Sprite ground : groundSprites) {
+                if (ground.intersects(sprite) && movingDown) {
                     sprite.setPositionY(sprite.getPositionY() - 1);
                     setCanJump(true);
                     return;

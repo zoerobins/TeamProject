@@ -7,13 +7,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AILogic {
 
-    public void moveChar(AI ai, ArrayList<Sprite> platformSprites){
+    public void moveChar(AI ai, ArrayList<Sprite> platformSprites, ArrayList<Sprite> waterSprites,ArrayList<Sprite> groundSprites){
 
         if (ai.getVelocity().getY() < 10) {
             ai.setVelocity(ai.getVelocity().add(0,1));
         }
 
-        ai.moveX(ai.getSpeed(), platformSprites);
+        ai.moveX(ai.getSpeed(), platformSprites,groundSprites);
 
         for (Sprite platform : platformSprites) {
 
@@ -25,8 +25,18 @@ public class AILogic {
                 ai.jump();
             }
         }
+        for (Sprite ground : groundSprites) {
 
-        ai.moveY((int)ai.getVelocity().getY(), platformSprites);
+            int closeness = ThreadLocalRandom.current().nextInt(2, (30) + 1);
+
+            if(ai.getSprite().getPositionX()+ai.getSprite().getWidth()+closeness > ground.getPositionX()&&
+                    ai.getSprite().getPositionX() + 10 < ground.getPositionX() &&
+                    ai.getSprite().getPositionY() > ground.getPositionY()){
+                ai.jump();
+            }
+        }
+
+        ai.moveY((int)ai.getVelocity().getY(), platformSprites,waterSprites,groundSprites);
 
     }
 

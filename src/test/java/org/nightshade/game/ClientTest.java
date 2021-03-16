@@ -32,7 +32,7 @@ public class ClientTest {
         stage.setScene(scene);
         stage.show();
         levelGen = new LevelGen(120);
-        platformSprites = levelGen.createPlatformSprites(renderer);
+        platformSprites = levelGen.createPlatformSprites();
     }
 
     @Test

@@ -40,7 +40,7 @@ public class LevelGenTest {
 
     @Test
     public void createPlatformSprites(){
-        platformSprites = levelGen.createPlatformSprites(renderer);
+        platformSprites = levelGen.createPlatformSprites();
         Assertions.assertNotNull(platformSprites);  //length is random so cannot use assertEquals
     }
 
@@ -53,7 +53,7 @@ public class LevelGenTest {
 
     @Test
     public void testDrawPlatforms(){
-        platformSprites = levelGen.createPlatformSprites(renderer);
+        platformSprites = levelGen.createPlatformSprites();
         for (Sprite platformSprite : platformSprites) {
             renderer.drawImage(new Image("Grass.png"), platformSprite.getPositionX(), platformSprite.getPositionY());
         }

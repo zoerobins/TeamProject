@@ -22,6 +22,9 @@ public class AILogicTest {
     AILogic aiLogic;
     int speed = 5;
     ArrayList<Sprite> platformSprites;
+    ArrayList<Sprite> waterSprites;
+    ArrayList<Sprite> groundSprites;
+
 
     @Start
     public void start(Stage stage) {
@@ -36,7 +39,9 @@ public class AILogicTest {
 
     @Test
     public void testMoveChar(){
-       platformSprites = levelGen.createPlatformSprites(renderer);
-       aiLogic.moveChar(ai,platformSprites);
+       platformSprites = levelGen.createPlatformSprites();
+       waterSprites = levelGen.createWaterSprites();
+       groundSprites = levelGen.createGroundSprites();
+       aiLogic.moveChar(ai,platformSprites,waterSprites, groundSprites);
     }
 }

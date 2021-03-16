@@ -63,12 +63,22 @@ public class Client {
 
 
 
-    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies){
+    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites){
         boolean movingRight = value > 0;
 
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(clientSprite)){
+                    if(movingRight){
+                        getClientSprite().setPositionX(getClientSprite().getPositionX() - 1);
+                    } else {
+                        getClientSprite().setPositionX(getClientSprite().getPositionX() + 1);
+                    }
+                    return;
+                }
+            }
+            for (Sprite ground : groundSprites) {
+                if (ground.intersects(clientSprite)){
                     if(movingRight){
                         getClientSprite().setPositionX(getClientSprite().getPositionX() - 1);
                     } else {
@@ -86,7 +96,7 @@ public class Client {
             getClientSprite().setPositionX(getClientSprite().getPositionX() + (movingRight ? 1 : -1));
         }
     }
-    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies){
+    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites){
 
         boolean movingDown = value > 0;
 
@@ -95,6 +105,19 @@ public class Client {
                 if (platform.intersects(clientSprite) && movingDown) {
                     getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
                     setCanJump(true);
+                    return;
+                }
+            }
+            for (Sprite ground : groundSprites) {
+                if (ground.intersects(clientSprite) && movingDown) {
+                    getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
+                    setCanJump(true);
+                    return;
+                }
+            }
+            for (Sprite water : waterSprites) {
+                if (water.intersects(clientSprite)){
+                    getClientSprite().setPositionY(getClientSprite().getPositionY() + 1);
                     return;
                 }
             }

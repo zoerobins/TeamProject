@@ -25,6 +25,7 @@ public class AITest {
     AI ai;
     int speed;
     ArrayList<Sprite> platformSprites;
+    ArrayList<Sprite> waterSprites;
 
     @Start
     public void start(Stage stage) {
@@ -36,7 +37,8 @@ public class AITest {
         stage.setScene(scene);
         stage.show();
         levelGen = new LevelGen(120);
-        platformSprites = levelGen.createPlatformSprites(renderer);
+        platformSprites = levelGen.createPlatformSprites();
+        waterSprites = levelGen.createWaterSprites();
     }
 
     @Test
@@ -90,7 +92,7 @@ public class AITest {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 ai.displaySprite(renderer,image,ai.getSprite());
-                ai.moveX(10,platformSprites);
+                ai.moveX(10,platformSprites, levelGen.createGroundSprites());
             }
         }.start();
     }
@@ -101,7 +103,7 @@ public class AITest {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 ai.displaySprite(renderer,image,ai.getSprite());
-                ai.moveY(10,platformSprites);
+                ai.moveY(10,platformSprites,waterSprites, levelGen.createGroundSprites());
             }
         }.start();
     }
