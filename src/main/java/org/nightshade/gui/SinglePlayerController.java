@@ -42,9 +42,8 @@ public class SinglePlayerController {
 
     @FXML
     void startGame(ActionEvent event) {
-        System.out.println(count);
         Game game = new Game();
-        game.initGame(Main.stage);
+        game.initGame(Main.stage, count);
     }
 
     @FXML

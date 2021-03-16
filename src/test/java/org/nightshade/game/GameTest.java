@@ -23,7 +23,7 @@ public class GameTest {
     @Start
     public void start(Stage stage) {
         game = new Game();
-        game.initGame(stage);
+        game.initGame(stage,1);
         levelGen = new LevelGen(120);
         renderer = new Renderer(1280,720);
     }

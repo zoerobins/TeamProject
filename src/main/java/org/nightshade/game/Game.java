@@ -36,7 +36,7 @@ public class Game {
     private Parallax background;
     private final Image cloudImage = new Image("view/GameComponents/dark.png");
 
-    public void initGame(Stage stage){
+    public void initGame(Stage stage, int aiCount){
         cloud = new Sprite(cloudImage,-2300,50);
         background = new Parallax();
         renderer = new Renderer();
@@ -46,9 +46,8 @@ public class Game {
         aiLogic = new AILogic();
         client = new Client();
 
-        int tempAICount = 3;
         aiList = new ArrayList<>();
-        for (int i = 0; i < tempAICount; i++){
+        for (int i = 0; i < aiCount; i++){
             int randomSpeed = ThreadLocalRandom.current().nextInt(2, 4 + 1);
             aiList.add(new AI (randomSpeed));
         }
