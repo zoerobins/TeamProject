@@ -12,12 +12,16 @@ import org.nightshade.ai.AILogic;
 import org.nightshade.renderer.Renderer;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
     private final int levelWidth = 120;
     private final int blockWidth = 60;
     private int xViewCoordinate = 0;
+
+    private ArrayList<AI> aiList;
+
 
     private final ArrayList<String> input = new ArrayList<>();
     private ArrayList<Sprite> platformSprites;
@@ -27,7 +31,6 @@ public class Game {
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private Renderer renderer;
     private Client client;
-    private AI ai;
     private AILogic aiLogic;
     private Sprite cloud;
     private Parallax background;
@@ -42,7 +45,13 @@ public class Game {
         LevelGen levelGen = new LevelGen(levelWidth);
         aiLogic = new AILogic();
         client = new Client();
-        ai = new AI(3);
+
+        int tempAICount = 3;
+        aiList = new ArrayList<>();
+        for (int i = 0; i < tempAICount; i++){
+            int randomNumber = ThreadLocalRandom.current().nextInt(3, 5 + 1);
+            aiList.add(new AI (randomNumber));
+        }
 
         cloud.setPositionX(-400);
         renderer.setHeight(720);
@@ -134,8 +143,10 @@ public class Game {
             }
         }
 
-        aiLogic.moveChar(ai, platformSprites,waterSprites,groundSprites);
-        ai.displaySprite(renderer,clientImg,ai.getSprite());
+        for (AI ai : aiList) {
+            aiLogic.moveChar(ai, platformSprites, waterSprites, groundSprites);
+            ai.displaySprite(renderer, clientImg, ai.getSprite());
+        }
 
         for (Enemy thisEnemy : enemies) {
             thisEnemy.moveEnemy();
