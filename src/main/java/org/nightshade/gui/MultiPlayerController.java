@@ -1,4 +1,4 @@
-package sample;
+package org.nightshade.gui;
 
 public class MultiPlayerController {
     public void playButton(){

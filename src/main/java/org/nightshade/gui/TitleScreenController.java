@@ -1,4 +1,4 @@
-package sample;
+package org.nightshade.gui;
 
 import javafx.fxml.FXML;
 
