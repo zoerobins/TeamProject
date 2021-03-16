@@ -1,4 +1,5 @@
-package org.nightshade.gui;
+package sample;
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,7 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 
-public class SinglePlayerMenuController {
+
+public class SinglePlayerController {
 
     @FXML
     private CheckBox ai1Check;
@@ -34,7 +36,7 @@ public class SinglePlayerMenuController {
 
     @FXML
     void backToMain(ActionEvent event) {
-
+        Main.stage.setScene(Main.menu);
     }
 
     @FXML
