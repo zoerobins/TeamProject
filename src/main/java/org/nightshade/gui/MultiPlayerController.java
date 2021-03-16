@@ -5,6 +5,6 @@ public class MultiPlayerController {
 
     }
     public void backButton(){
-        Main.stage.setScene(Main.menu);
+        GuiHandler.stage.setScene(GuiHandler.menu);
     }
 }

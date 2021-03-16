@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import org.nightshade.Main;
 
 
 public class SinglePlayerController {
@@ -37,7 +36,7 @@ public class SinglePlayerController {
 
     @FXML
     void backToMain(ActionEvent event) {
-        Main.stage.setScene(Main.menu);
+        GuiHandler.stage.setScene(GuiHandler.menu);
     }
 
     @FXML

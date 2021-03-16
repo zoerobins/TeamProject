@@ -4,16 +4,16 @@ package org.nightshade.gui;
 public class MenuController {
 
     public void singlePLayerButton (){
-        Main.stage.setScene(Main.singlePlayer);
+        GuiHandler.stage.setScene(GuiHandler.singlePlayer);
     }
 
     public void settingsButton (){
-        Main.stage.setScene(Main.settings);
+        GuiHandler.stage.setScene(GuiHandler.settings);
     }
 
     public void exitButton (){
-        Main.stage.setScene(Main.titleScreen);
+        GuiHandler.stage.setScene(GuiHandler.titleScreen);
     }
 
-    public void multiPlayerButton (){Main.stage.setScene(Main.multiPlayer);}
+    public void multiPlayerButton (){GuiHandler.stage.setScene(GuiHandler.multiPlayer);}
 }
