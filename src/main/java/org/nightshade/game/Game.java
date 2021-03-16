@@ -127,10 +127,10 @@ public class Game {
     }
 
     public void gameLoop(ArrayList<Sprite> platformSprites, Image grass, Image ground, Image water, Image enemy, Image end, Image clientImg, Image aiImg){
-
+/*
         background.moveParallax();
         background.drawParallax(renderer,xViewCoordinate);
-
+*/
         drawPlatformsAndWaterAndGroundAndEnd(grass, water, ground, end);
 
         moveCloud();
