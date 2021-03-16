@@ -45,6 +45,7 @@ public class Client {
         renderer.drawImage(image, sprite.getPositionX(), sprite.getPositionY());
     }
 
+
     public void jump() {
         if (canJump) {
             velocity = velocity.add(0, -30);

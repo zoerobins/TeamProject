@@ -38,7 +38,7 @@ public class AITest {
         stage.show();
         levelGen = new LevelGen(120);
         platformSprites = levelGen.createPlatformSprites();
-        waterSprites = levelGen.createWaterSprites();
+        waterSprites = levelGen.createLavaSprites();
     }
 
     @Test

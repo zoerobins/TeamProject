@@ -4,8 +4,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.nightshade.ai.AI;
-import org.nightshade.ai.AILogic;
 import org.nightshade.game.LevelGen;
 import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
@@ -40,7 +38,7 @@ public class AILogicTest {
     @Test
     public void testMoveChar(){
        platformSprites = levelGen.createPlatformSprites();
-       waterSprites = levelGen.createWaterSprites();
+       waterSprites = levelGen.createLavaSprites();
        groundSprites = levelGen.createGroundSprites();
        aiLogic.moveChar(ai,platformSprites,waterSprites, groundSprites);
     }

@@ -34,7 +34,6 @@ public class GameTest {
         Image enemy = new Image("view/GameComponents/enemy.png");
         Image clientImg = new Image("view/GameComponents/Body.png");
         Image grass = new Image("Grass.png");
-        Image water = new Image("Water.png");
         Image ground = new Image("Dirt.png");
         Image end = new Image("EndNode.png");
         Image aiImg = new Image("AIBody.png");
@@ -43,7 +42,7 @@ public class GameTest {
         System.nanoTime();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                game.gameLoop(platformSprites,grass,ground,water,enemy,end,clientImg,aiImg);
+                game.gameLoop(platformSprites,1,grass,ground,enemy,end,clientImg,aiImg);
             }
         }.start();
     }
