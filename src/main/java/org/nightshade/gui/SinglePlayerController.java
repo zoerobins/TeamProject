@@ -56,7 +56,6 @@ public class SinglePlayerController {
 
     @FXML
     void startGame(ActionEvent event) {
-        System.out.println(aiList);
         Game game = new Game();
         game.initGame(Main.stage, count, aiList);
     }
