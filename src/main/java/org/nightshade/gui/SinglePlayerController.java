@@ -23,12 +23,6 @@ public class SinglePlayerController {
 
     @FXML private CheckBox ai3Check;
 
-    @FXML private Label ai1OnOff;
-
-    @FXML private Label ai2OnOff;
-
-    @FXML private Label ai3OnOff;
-
     @FXML private ChoiceBox<String> ai1Drop;
 
     @FXML private ChoiceBox<String> ai2Drop;
@@ -63,21 +57,22 @@ public class SinglePlayerController {
         count = 0;
         if (ai1Check.isSelected()){
             count ++;
-            ai1OnOff.setText("ON");
+            ai1Check.setText("ON");
+            ai1Check.setText("ON");
         }else{
-            ai1OnOff.setText("OFF");
+            ai1Check.setText("OFF");
         }
         if (ai2Check.isSelected()){
             count ++;
-            ai2OnOff.setText("ON");
+            ai2Check.setText("ON");
         }else{
-            ai2OnOff.setText("OFF");
+            ai2Check.setText("OFF");
         }
         if (ai3Check.isSelected()){
             count ++;
-            ai3OnOff.setText("ON");
+            ai3Check.setText("ON");
         }else{
-            ai3OnOff.setText("OFF");
+            ai3Check.setText("OFF");
         }
     }
 
