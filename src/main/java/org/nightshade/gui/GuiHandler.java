@@ -27,11 +27,11 @@ public class GuiHandler {
 
         stage = window;
 
-        Parent settingsRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/Settings.fxml")));
-        Parent singlePlayerRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/SinglePlayer.fxml")));
-        Parent titleScreenRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/TitleScreen.fxml")));
-        Parent menuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/Menu.fxml")));
-        Parent multiPlayerRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/MultiPlayer.fxml")));
+        Parent settingsRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/guiComponents/Settings.fxml")));
+        Parent singlePlayerRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/guiComponents/SinglePlayer.fxml")));
+        Parent titleScreenRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/guiComponents/TitleScreen.fxml")));
+        Parent menuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/guiComponents/Menu.fxml")));
+        Parent multiPlayerRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/guiComponents/MultiPlayer.fxml")));
 
         menu = new Scene(menuRoot, 1280, 720);
         singlePlayer = new Scene(singlePlayerRoot, 1280, 720);
@@ -39,13 +39,13 @@ public class GuiHandler {
         settings = new Scene(settingsRoot, 1280, 720);
         multiPlayer = new Scene(multiPlayerRoot, 1280, 720);
 
-        menu.getStylesheets().add("view/Buttons.css");
-        singlePlayer.getStylesheets().add("view/Buttons.css");
-        titleScreen.getStylesheets().add("view/Buttons.css");
-        settings.getStylesheets().add("view/Buttons.css");
-        multiPlayer.getStylesheets().add("view/Buttons.css");
+        menu.getStylesheets().add("view/guiComponents/Buttons.css");
+        singlePlayer.getStylesheets().add("view/guiComponents/Buttons.css");
+        titleScreen.getStylesheets().add("view/guiComponents/Buttons.css");
+        settings.getStylesheets().add("view/guiComponents/Buttons.css");
+        multiPlayer.getStylesheets().add("view/guiComponents/Buttons.css");
 
-        Image img = new Image("view/backbutton.png");
+        Image img = new Image("view/guiComponents/backbutton.png");
         ImageView view = new ImageView(img);
         view.setFitHeight(80);
         view.setPreserveRatio(true);
