@@ -116,7 +116,12 @@ public class AI {
                     return;
                 }
             }
-            sprite.setPositionY(sprite.getPositionY() + (movingDown ? 1 : -1));
+
+            if (movingDown) {
+                sprite.setPositionY(sprite.getPositionY() + 1);
+            } else {
+                sprite.setPositionY(sprite.getPositionY() - 1);
+            }
         }
 
     }
