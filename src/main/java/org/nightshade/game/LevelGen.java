@@ -14,7 +14,7 @@ public class LevelGen {
     ArrayList<Sprite> endSprites = new ArrayList<>();
     ArrayList<Enemy> enemies = new ArrayList<>();
 
-    Image grass = new Image("view/GameComponents/Grass.png");
+    Image grass = new Image("view/GameComponents/darkGrass.png");
     Image water = new Image("view/GameComponents/Water/image 1.png");
     Image ground = new Image("view/GameComponents/Dirt.png");
     Image end = new Image("view/GameComponents/EndNode.png");
