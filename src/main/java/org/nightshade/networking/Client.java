@@ -25,12 +25,8 @@ public class Client {
         }
     }
 
-    public Client(String serverIp, int portValue) {
-        try {
-            clientLogic = new ClientLogic(serverIp, portValue, this);
-        } catch (IOException e) {
-            System.out.println("IOException occurred");
-        }
+    public Client(String serverIp, int portValue) throws IOException {
+        clientLogic = new ClientLogic(serverIp, portValue, this);
     }
 
     public void actOnInput() throws IOException {
