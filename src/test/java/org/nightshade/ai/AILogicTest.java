@@ -20,8 +20,8 @@ public class AILogicTest {
     AILogic aiLogic;
     int speed = 5;
     ArrayList<Sprite> platformSprites;
-    ArrayList<Sprite> waterSprites;
     ArrayList<Sprite> groundSprites;
+    ArrayList<Sprite> sprites;
 
 
     @Start
@@ -33,13 +33,15 @@ public class AILogicTest {
         aiLogic = new AILogic();
         ai = new AI(speed);
         levelGen = new LevelGen(120);
+        platformSprites = levelGen.createPlatformSprites();
+        groundSprites = levelGen.createGroundSprites();
+        sprites = new ArrayList<>();
+        sprites.addAll(platformSprites);
+        sprites.addAll(groundSprites);
     }
 
     @Test
     public void testMoveChar(){
-       platformSprites = levelGen.createPlatformSprites();
-       waterSprites = levelGen.createLavaSprites();
-       groundSprites = levelGen.createGroundSprites();
-       aiLogic.moveChar(ai, platformSprites, groundSprites);
+       aiLogic.moveSprite(ai, sprites);
     }
 }

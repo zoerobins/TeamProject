@@ -7,15 +7,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AILogic {
 
-    public void moveChar(AI ai, ArrayList<Sprite> platformSprites, ArrayList<Sprite> groundSprites) {
+    public void moveSprite(AI ai, ArrayList<Sprite> sprites) {
 
         if (ai.getVelocity().getY() < 10) {
             ai.setVelocity(ai.getVelocity().add(0, 1));
         }
-
-        ArrayList<Sprite> sprites = new ArrayList<>();
-        sprites.addAll(platformSprites);
-        sprites.addAll(groundSprites);
 
         ai.moveX(sprites);
 

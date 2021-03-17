@@ -83,7 +83,6 @@ public class AI {
             } else {
                 sprite.moveRight();
             }
-
         }
     }
 

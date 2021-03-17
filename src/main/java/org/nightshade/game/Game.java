@@ -1,13 +1,11 @@
 package org.nightshade.game;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
 import org.nightshade.renderer.Renderer;
@@ -160,7 +158,10 @@ public class Game {
         }
 
         for (AI ai : aiList) {
-            aiLogic.moveChar(ai, platformSprites, groundSprites);
+            ArrayList<Sprite> sprites = new ArrayList<>();
+            sprites.addAll(platformSprites);
+            sprites.addAll(groundSprites);
+            aiLogic.moveSprite(ai, sprites);
             ai.displaySprite(renderer, aiImg, ai.getSprite());
         }
 
