@@ -97,31 +97,25 @@ public class AI {
         }
     }
 
-    public void moveY(int speed, ArrayList<Sprite> platformSprites, ArrayList<Sprite> waterSprites, ArrayList<Sprite> groundSprites) {
+    public void moveY(ArrayList<Sprite> sprites) {
 
-        for (int i = 0; i < Math.abs(speed); i++) {
-            for (Sprite platform : platformSprites) {
-                if (platform.intersects(sprite) && speed > 0) {
-                    sprite.setPositionY(sprite.getPositionY() - 1);
-                    setCanJump(true);
-                    return;
-                }
-            }
-            for (Sprite ground : groundSprites) {
-                if (ground.intersects(sprite) && speed > 0) {
+        int speedY = (int) velocity.getY();
+        int absoluteSpeed = Math.abs(speedY);
+
+        for (int i = 0; i < absoluteSpeed; i++) {
+            for (Sprite platform : sprites) {
+                if (platform.intersects(sprite) && speedY > 0) {
                     sprite.setPositionY(sprite.getPositionY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
 
-            if (speed > 0) {
+            if (speedY > 0) {
                 sprite.setPositionY(sprite.getPositionY() + 1);
             } else {
                 sprite.setPositionY(sprite.getPositionY() - 1);
             }
         }
-
     }
-
 }

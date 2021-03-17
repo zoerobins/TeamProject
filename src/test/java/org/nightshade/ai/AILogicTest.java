@@ -40,6 +40,6 @@ public class AILogicTest {
        platformSprites = levelGen.createPlatformSprites();
        waterSprites = levelGen.createLavaSprites();
        groundSprites = levelGen.createGroundSprites();
-       aiLogic.moveChar(ai,platformSprites,waterSprites, groundSprites);
+       aiLogic.moveChar(ai, platformSprites, groundSprites);
     }
 }

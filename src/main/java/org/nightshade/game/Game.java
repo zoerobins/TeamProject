@@ -160,7 +160,7 @@ public class Game {
         }
 
         for (AI ai : aiList) {
-            aiLogic.moveChar(ai, platformSprites, lavaSprites, groundSprites);
+            aiLogic.moveChar(ai, platformSprites, groundSprites);
             ai.displaySprite(renderer, aiImg, ai.getSprite());
         }
 
