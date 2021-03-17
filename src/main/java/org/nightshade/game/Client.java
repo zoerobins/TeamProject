@@ -55,6 +55,7 @@ public class Client {
         renderer.drawImage(image, sprite.getPositionX(), sprite.getPositionY());
     }
 
+
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
@@ -73,7 +74,7 @@ public class Client {
     }
 
     public Sprite createSprite() {
-        return new Sprite(new Image("view/Body.png"),300,50);
+        return new Sprite(new Image("view/GameComponents/Body.png"),300,50);
     }
 
 
