@@ -1,5 +1,6 @@
 package org.nightshade.game;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -85,13 +86,20 @@ public class Game {
         Timeline timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
 
-        KeyFrame keyFrame = new KeyFrame(
+      /*  KeyFrame keyFrame = new KeyFrame(
                 Duration.seconds(0.017), // 60FPS
                 actionEvent -> gameLoop(platformSprites, gameTickCounter++, grass, ground, enemy, end, clientImg, aiImg)
         );
 
         timeline.getKeyFrames().add(keyFrame);
-        timeline.play();
+        timeline.play();*/
+        new AnimationTimer()
+        {
+            public void handle(long currentNanoTime)
+            {
+                gameLoop(platformSprites, gameTickCounter++, grass, ground, enemy, end, clientImg, aiImg);
+            }
+        }.start();
     }
 
     private void checkForInput(Scene scene){
