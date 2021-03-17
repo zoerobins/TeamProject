@@ -28,8 +28,8 @@ public class MultiPlayerController {
         System.out.println(serverIp);
         System.out.println(portValue);
 
-        Client client = new Client();
-        clientLogic = new ClientLogic(serverIp, portValue, client);
+        Client client = new Client(serverIp, portValue);
+        //clientLogic = new ClientLogic(serverIp, portValue, client);
 
 
         Game game = new Game();
