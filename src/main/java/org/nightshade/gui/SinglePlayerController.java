@@ -43,7 +43,7 @@ public class SinglePlayerController {
     @FXML
     void startGame(ActionEvent event) {
         Game game = new Game();
-        game.initGame(Main.stage, 2);
+        game.initGame(Main.stage, count);
     }
 
     @FXML
