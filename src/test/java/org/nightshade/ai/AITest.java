@@ -92,7 +92,11 @@ public class AITest {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 ai.displaySprite(renderer,image,ai.getSprite());
-                ai.moveX(10,platformSprites, levelGen.createGroundSprites());
+                ArrayList<Sprite> levelSprites = levelGen.createGroundSprites();
+                ArrayList<Sprite> sprites = new ArrayList<>();
+                sprites.addAll(platformSprites);
+                sprites.addAll(levelSprites);
+                ai.moveX(sprites);
             }
         }.start();
     }

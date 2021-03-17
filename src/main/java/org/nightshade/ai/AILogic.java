@@ -13,11 +13,11 @@ public class AILogic {
             ai.setVelocity(ai.getVelocity().add(0, 1));
         }
 
-        ai.moveX(ai.getSpeed(), platformSprites, groundSprites);
-
         ArrayList<Sprite> sprites = new ArrayList<>();
         sprites.addAll(platformSprites);
         sprites.addAll(groundSprites);
+
+        ai.moveX(sprites);
 
         for (Sprite sprite : sprites) {
             int closeness = ThreadLocalRandom.current().nextInt(2, (30) + 1);

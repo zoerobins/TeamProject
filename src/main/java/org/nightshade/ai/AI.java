@@ -62,27 +62,17 @@ public class AI {
         }
     }
 
-    public void moveX(int speed, ArrayList<Sprite> platformSprites, ArrayList<Sprite> groundSprites) {
+    public void moveX(ArrayList<Sprite> sprites) {
         int absoluteSpeed = Math.abs(speed);
 
         for (int i = 0; i < absoluteSpeed; i++) {
-            for (Sprite platform : platformSprites) {
-                if (platform.intersects(sprite)) {
+            for (Sprite sprite : sprites) {
+                if (sprite.intersects(this.sprite)) {
                     if (speed > 0) {
                         // moving right
-                        sprite.moveRight();
+                        this.sprite.moveRight();
                     } else {
-                        sprite.moveLeft();
-                    }
-                }
-            }
-            for (Sprite ground : groundSprites) {
-                if (ground.intersects(sprite)) {
-                    if (speed > 0) {
-                        // moving right
-                        sprite.moveRight();
-                    } else {
-                        sprite.moveLeft();
+                        this.sprite.moveLeft();
                     }
                 }
             }
