@@ -3,6 +3,9 @@ package org.nightshade;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.nightshade.game.Game;
+import org.nightshade.gui.GuiHandler;
+
+import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -15,8 +18,11 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
 
-        Game game = new Game();
-        game.initGame(window,3);
+        stage = window;
+        GuiHandler gh = new GuiHandler();
+
+        stage.setScene(gh.loadGui(stage));
+        stage.show();
 
     }
 }
