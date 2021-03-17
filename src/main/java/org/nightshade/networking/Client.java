@@ -11,7 +11,7 @@ public class Client {
     private int portValue;
     private ClientLogic clientLogic;
 
-    Client() {
+    public Client() {
         try {
             System.out.println("Please enter the server name or IP address: ");
             serverIp = br.readLine();
