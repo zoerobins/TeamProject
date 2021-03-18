@@ -173,13 +173,14 @@ public class Game {
         }
 
         //Move camera
-        if ((-1 * renderer.getTransLateX()) + 700 < client.getClientSprite().getX() && (-1 * renderer.getTransLateX()) < (levelWidth * 60 - 1280)) {
-            renderer.setTransLateX((int) (renderer.getTransLateX() + ((-1 * renderer.getTransLateX()) + 700 - client.getClientSprite().getX())));
+        double translateX = renderer.getCanvas().getTranslateX();
+        if ((-1 *translateX) + 700 < client.getClientSprite().getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
+            renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - client.getClientSprite().getX())));
         } else {
-            renderer.setTransLateX((int) (renderer.getTransLateX()));
+            renderer.getCanvas().setTranslateX((int) (translateX));
         }
 
-        xViewCoordinate = (int) (-1 * renderer.getTransLateX());
+        xViewCoordinate = (int) (-1 * translateX);
     }
 
     private void moveCloud() {

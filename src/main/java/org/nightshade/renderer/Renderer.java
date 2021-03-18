@@ -30,8 +30,8 @@ public class Renderer {
         return group;
     }
 
-    public double getTransLateX(){
-        return canvas.getTranslateX();
+    public Canvas getCanvas() {
+        return canvas;
     }
 
     public void setTransLateX(int x){
