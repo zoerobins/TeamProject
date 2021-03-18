@@ -26,6 +26,7 @@ public class Game {
 
     private final ArrayList<String> input = new ArrayList<>();
     private ArrayList<Sprite> platformSprites;
+    private ArrayList<MovingPlatform> movingPlatforms;
     private ArrayList<Sprite> lavaSprites;
     private ArrayList<Sprite> groundSprites;
     private ArrayList<Sprite> endSprites;
@@ -63,6 +64,7 @@ public class Game {
         renderer.setHeight(720);
         renderer.setWidth(levelWidth*blockWidth);
         platformSprites = levelGen.createPlatformSprites();
+        movingPlatforms = levelGen.createMovingPlatforms();
         lavaSprites = levelGen.createLavaSprites();
         groundSprites = levelGen.createGroundSprites();
         enemies = levelGen.createEnemies();
@@ -128,18 +130,18 @@ public class Game {
             }
 
             if (input.contains("LEFT") && client.getClientSprite().getPositionX() >= 5) {
-                client.moveX(-5, platformSprites,enemies,groundSprites);
+                client.moveX(-5, platformSprites,enemies,groundSprites, movingPlatforms);
             }
 
             if (input.contains("RIGHT") && client.getClientSprite().getPositionX() <= (levelWidth*blockWidth) - 5) {
-                client.moveX(5,platformSprites,enemies,groundSprites);
+                client.moveX(5,platformSprites,enemies,groundSprites, movingPlatforms);
             }
 
             if (client.getVelocity().getY() < 10) {
                 client.setVelocity(client.getVelocity().add(0,1));
             }
 
-            client.moveY((int)client.getVelocity().getY(),platformSprites, lavaSprites,enemies,groundSprites);
+            client.moveY((int)client.getVelocity().getY(),platformSprites, lavaSprites,enemies,groundSprites, movingPlatforms);
 
         }
     }
@@ -174,6 +176,11 @@ public class Game {
         for (Enemy thisEnemy : enemies) {
             thisEnemy.moveEnemy();
             thisEnemy.displaySprite(renderer,enemy, thisEnemy.getEnemySprite());
+        }
+
+        for (MovingPlatform thisMV : movingPlatforms) {
+            thisMV.movePlatform();
+            thisMV.displaySprite(renderer, grass, thisMV.getmvSprite());
         }
 
         //Move camera
@@ -219,6 +226,7 @@ public class Game {
         for (Sprite endSprite : endSprites) {
             renderer.drawImage(end, endSprite.getPositionX(), endSprite.getPositionY());
         }
+
     }
 
 }

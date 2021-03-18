@@ -13,6 +13,7 @@ public class LevelGen {
     ArrayList<Sprite> groundSprites = new ArrayList<>();
     ArrayList<Sprite> endSprites = new ArrayList<>();
     ArrayList<Enemy> enemies = new ArrayList<>();
+    ArrayList<MovingPlatform> movingPlatforms = new ArrayList<>();
 
     Image grass = new Image("view/GameComponents/darkGrass.png");
     Image water = new Image("view/GameComponents/Water/image 1.png");
@@ -61,6 +62,22 @@ public class LevelGen {
             }
         }
         return platformSprites;
+    }
+
+    public ArrayList<MovingPlatform> createMovingPlatforms(){
+
+        for (int i = 0 ; i < 12 ; i++){
+            for(int j = 0; j < levelWidth; j++){
+                if(level.get(i).get(j) == NodeType.MOVINGPLATFORM) {
+                    int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
+                    int direction = ThreadLocalRandom.current().nextInt(0, (1) + 1);
+                    movingPlatforms.add(new MovingPlatform(j*60,i*60,speed,direction));
+                }
+            }
+        }
+
+        return movingPlatforms;
+
     }
 
     public ArrayList<Enemy> createEnemies(){
@@ -138,10 +155,14 @@ public class LevelGen {
             }
         }
         if(i>7){
-            if(randomNumber<15) {
+            if(randomNumber<10) {
                 return NodeType.PLATFORM;
-            } else if(randomNumber<16 && j>20){
+            }else if (randomNumber<15) {
+                return NodeType.MOVINGPLATFORM;
+            } else if(randomNumber<16 && j>20) {
                 return NodeType.ENEMY;
+            } else if (randomNumber<17 && j>20){
+                return NodeType.MOVINGPLATFORM;
             } else{
                 return NodeType.AIR;
             }

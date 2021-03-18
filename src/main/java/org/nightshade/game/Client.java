@@ -76,7 +76,7 @@ public class Client {
 
 
 
-    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites){
+    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
         boolean movingRight = value > 0;
 
         for (int i = 0; i < Math.abs(value); i++) {
@@ -86,6 +86,16 @@ public class Client {
                         getClientSprite().setPositionX(getClientSprite().getPositionX() - 1);
                     } else {
                         getClientSprite().setPositionX(getClientSprite().getPositionX() + 1);
+                    }
+                    return;
+                }
+            }
+            for (MovingPlatform mPlatform : movingPlatforms){
+                if (mPlatform.getmvSprite().intersects(clientSprite)){
+                    if(movingRight){
+                        getClientSprite().setPositionX(getClientSprite().getPositionX() -1);
+                    } else {
+                        getClientSprite().setPositionX(getClientSprite().getPositionX() +1);
                     }
                     return;
                 }
@@ -109,7 +119,7 @@ public class Client {
             getClientSprite().setPositionX(getClientSprite().getPositionX() + (movingRight ? 1 : -1));
         }
     }
-    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites){
+    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
         boolean movingDown = value > 0;
 
         for (int i = 0; i < Math.abs(value); i++) {
@@ -120,6 +130,14 @@ public class Client {
                     return;
                 }
             }
+            for (MovingPlatform mPlatform : movingPlatforms) {
+                if (mPlatform.getmvSprite().intersects(clientSprite) && movingDown){
+                    getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
+                    setCanJump(true);
+                    return;
+                }
+            }
+
             for (Sprite ground : groundSprites) {
                 if (ground.intersects(clientSprite) && movingDown) {
                     getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
