@@ -55,7 +55,7 @@ public class LevelGenTest {
     public void testDrawPlatforms(){
         platformSprites = levelGen.createPlatformSprites();
         for (Sprite platformSprite : platformSprites) {
-            renderer.drawImage(new Image("Grass.png"), platformSprite.getPositionX(), platformSprite.getPositionY());
+            renderer.drawImage(new Image("Grass.png"), platformSprite.getX(), platformSprite.getY());
         }
     }
 

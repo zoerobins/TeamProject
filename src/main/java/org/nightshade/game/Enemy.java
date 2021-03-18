@@ -21,7 +21,7 @@ public class Enemy {
     }
 
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
-        renderer.drawImage(image, sprite.getPositionX(), sprite.getPositionY());
+        renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
 
     public void moveEnemy(){
@@ -31,7 +31,7 @@ public class Enemy {
             }
             else {
                 offset = offset+speed;
-                enemySprite.setPositionX(enemySprite.getPositionX()+speed);
+                enemySprite.setX(enemySprite.getX()+speed);
             }
         } else{
             if (offset < -180) {
@@ -39,7 +39,7 @@ public class Enemy {
             }
             else {
                 offset = offset-speed;
-                enemySprite.setPositionX(enemySprite.getPositionX()-speed);
+                enemySprite.setX(enemySprite.getX()-speed);
             }
         }
     }

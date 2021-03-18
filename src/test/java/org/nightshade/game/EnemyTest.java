@@ -38,9 +38,9 @@ public class EnemyTest {
 
     @Test
     public void testMoveEnemy(){
-        int oldPosition = enemy.getEnemySprite().getPositionX();
+        int oldPosition = enemy.getEnemySprite().getX();
         enemy.moveEnemy();
-        int newPosition = enemy.getEnemySprite().getPositionX();
+        int newPosition = enemy.getEnemySprite().getX();
         Assertions.assertEquals(speed,newPosition-oldPosition);
     }
 }

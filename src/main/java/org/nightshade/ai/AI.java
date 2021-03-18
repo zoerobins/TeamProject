@@ -32,7 +32,7 @@ public class AI {
     }
 
     public void displaySprite(Renderer renderer, Image image, Sprite sprite) {
-        renderer.drawImage(image, sprite.getPositionX(), sprite.getPositionY());
+        renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
 
     public void setVelocity(Point2D velocity) {
@@ -94,16 +94,16 @@ public class AI {
         for (int i = 0; i < absoluteSpeed; i++) {
             for (Sprite platform : sprites) {
                 if (platform.intersects(sprite) && speedY > 0) {
-                    sprite.setPositionY(sprite.getPositionY() - 1);
+                    sprite.setY(sprite.getY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
 
             if (speedY > 0) {
-                sprite.setPositionY(sprite.getPositionY() + 1);
+                sprite.setY(sprite.getY() + 1);
             } else {
-                sprite.setPositionY(sprite.getPositionY() - 1);
+                sprite.setY(sprite.getY() - 1);
             }
         }
     }

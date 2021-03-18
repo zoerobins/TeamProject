@@ -2,7 +2,6 @@ package org.nightshade.game;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import org.nightshade.audio.BackgroundMusic;
 import org.nightshade.audio.SpotEffects;
 import org.nightshade.renderer.Renderer;
 
@@ -50,7 +49,7 @@ public class Client {
     }
 
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
-        renderer.drawImage(image, sprite.getPositionX(), sprite.getPositionY());
+        renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
 
 
@@ -83,9 +82,9 @@ public class Client {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(clientSprite)){
                     if(movingRight){
-                        getClientSprite().setPositionX(getClientSprite().getPositionX() - 1);
+                        getClientSprite().setX(getClientSprite().getX() - 1);
                     } else {
-                        getClientSprite().setPositionX(getClientSprite().getPositionX() + 1);
+                        getClientSprite().setX(getClientSprite().getX() + 1);
                     }
                     return;
                 }
@@ -93,9 +92,9 @@ public class Client {
             for (Sprite ground : groundSprites) {
                 if (ground.intersects(clientSprite)){
                     if(movingRight){
-                        getClientSprite().setPositionX(getClientSprite().getPositionX() - 1);
+                        getClientSprite().setX(getClientSprite().getX() - 1);
                     } else {
-                        getClientSprite().setPositionX(getClientSprite().getPositionX() + 1);
+                        getClientSprite().setX(getClientSprite().getX() + 1);
                     }
                     return;
                 }
@@ -106,7 +105,7 @@ public class Client {
                     return;
                 }
             }
-            getClientSprite().setPositionX(getClientSprite().getPositionX() + (movingRight ? 1 : -1));
+            getClientSprite().setX(getClientSprite().getX() + (movingRight ? 1 : -1));
         }
     }
     public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites){
@@ -115,21 +114,21 @@ public class Client {
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(clientSprite) && movingDown) {
-                    getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
+                    getClientSprite().setY(getClientSprite().getY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
             for (Sprite ground : groundSprites) {
                 if (ground.intersects(clientSprite) && movingDown) {
-                    getClientSprite().setPositionY(getClientSprite().getPositionY() - 1);
+                    getClientSprite().setY(getClientSprite().getY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
             for (Sprite water : waterSprites) {
                 if (water.intersects(clientSprite)){
-                    getClientSprite().setPositionY(getClientSprite().getPositionY() + 1);
+                    getClientSprite().setY(getClientSprite().getY() + 1);
                     return;
                 }
             }
@@ -139,7 +138,7 @@ public class Client {
                     return;
                 }
             }
-            getClientSprite().setPositionY(getClientSprite().getPositionY() + (movingDown ? 1 : -1));
+            getClientSprite().setY(getClientSprite().getY() + (movingDown ? 1 : -1));
         }
 
     }
