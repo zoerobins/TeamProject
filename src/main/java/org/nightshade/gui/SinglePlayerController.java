@@ -82,6 +82,11 @@ public class SinglePlayerController implements Initializable {
     }
 
     @FXML
+    public void startGame(ActionEvent event) {
+        Game game = new Game(Main.stage);
+    }
+
+    @FXML
     public void startButtonHandler(ActionEvent event) {
         Game game = new Game(Main.stage);
 
