@@ -54,7 +54,7 @@ public class ClientTest {
 
     @Test
     public void testGetClientSprite(){
-        Assertions.assertNotNull(client.getClientSprite());
+        Assertions.assertNotNull(client.getSprite());
     }
 
     @Test
@@ -67,14 +67,14 @@ public class ClientTest {
 
     @Test
     public void testIsLive(){
-        Assertions.assertTrue(client.isLive());
+        Assertions.assertTrue(client.isAlive());
     }
 
     @Test
     public void testKill(){
-        Assertions.assertTrue(client.isLive());
+        Assertions.assertTrue(client.isAlive());
         client.kill();
-        Assertions.assertFalse(client.isLive());
+        Assertions.assertFalse(client.isAlive());
     }
 
     @Test

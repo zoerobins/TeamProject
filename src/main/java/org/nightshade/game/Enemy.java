@@ -4,20 +4,20 @@ import org.nightshade.renderer.Renderer;
 
 public class Enemy {
 
-    private final Sprite enemySprite;
+    private final Sprite sprite;
     private final int speed;
     private boolean direction;
     private int offset;
 
     public Enemy(int speed, int direction, int x, int y) {
-        this.enemySprite = new Sprite(new Image("view/GameComponents/enemy.png"),x,y);
+        this.sprite = new Sprite(new Image("view/GameComponents/enemy.png"),x,y);
         this.speed = speed;
         this.offset = 0;
         this.direction = direction == 1;
     }
 
-    public Sprite getEnemySprite() {
-        return enemySprite;
+    public Sprite getSprite() {
+        return sprite;
     }
 
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
@@ -31,7 +31,7 @@ public class Enemy {
             }
             else {
                 offset = offset+speed;
-                enemySprite.setX(enemySprite.getX()+speed);
+                sprite.setX(sprite.getX()+speed);
             }
         } else{
             if (offset < -180) {
@@ -39,7 +39,7 @@ public class Enemy {
             }
             else {
                 offset = offset-speed;
-                enemySprite.setX(enemySprite.getX()-speed);
+                sprite.setX(sprite.getX()-speed);
             }
         }
     }

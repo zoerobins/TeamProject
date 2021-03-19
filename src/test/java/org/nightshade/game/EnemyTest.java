@@ -28,19 +28,19 @@ public class EnemyTest {
 
     @Test
     public void testGetEnemySprite(){
-        Assertions.assertNotNull(enemy.getEnemySprite());
+        Assertions.assertNotNull(enemy.getSprite());
     }
 
     @Test
     public void testDisplaySprite(){
-        enemy.displaySprite(renderer,new Image("cat.png"),enemy.getEnemySprite());
+        enemy.displaySprite(renderer,new Image("cat.png"),enemy.getSprite());
     }
 
     @Test
     public void testMoveEnemy(){
-        int oldPosition = enemy.getEnemySprite().getX();
+        int oldPosition = enemy.getSprite().getX();
         enemy.moveEnemy();
-        int newPosition = enemy.getEnemySprite().getX();
+        int newPosition = enemy.getSprite().getX();
         Assertions.assertEquals(speed,newPosition-oldPosition);
     }
 }

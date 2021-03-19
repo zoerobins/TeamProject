@@ -11,28 +11,28 @@ import java.util.Random;
 
 public class Client {
 
-    private boolean isLive;
+    private boolean isAlive;
     private boolean canJump;
     private Point2D velocity;
-    private final Sprite clientSprite;
+    private final Sprite sprite;
     private SpotEffects spotEffects;
     private Random random;
 
     public Client() {
-        this.isLive = true;
+        this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
+        this.sprite = new Sprite(new Image("view/GameComponents/Body.png"),300,50);
         this.spotEffects = new SpotEffects();
         this.random = new Random();
-        clientSprite = createSprite();
     }
 
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
 
-    public boolean isLive() {
-        return isLive;
+    public boolean isAlive() {
+        return isAlive;
     }
 
     public void setCanJump(boolean canJump) {
@@ -44,8 +44,8 @@ public class Client {
     }
 
 
-    public Sprite getClientSprite() {
-        return clientSprite;
+    public Sprite getSprite() {
+        return sprite;
     }
 
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
@@ -66,46 +66,40 @@ public class Client {
     public void kill() {
         File soundFile = new File("src/main/resources/audio/die.mp3");
         spotEffects.playSoundUntilEnd(soundFile, true);
-        isLive=false;
+        isAlive =false;
     }
-
-    public Sprite createSprite() {
-        return new Sprite(new Image("view/GameComponents/Body.png"),300,50);
-    }
-
-
 
     public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites){
         boolean movingRight = value > 0;
 
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
-                if (platform.intersects(clientSprite)){
+                if (platform.intersects(sprite)){
                     if(movingRight){
-                        getClientSprite().setX(getClientSprite().getX() - 1);
+                        getSprite().setX(getSprite().getX() - 1);
                     } else {
-                        getClientSprite().setX(getClientSprite().getX() + 1);
+                        getSprite().setX(getSprite().getX() + 1);
                     }
                     return;
                 }
             }
             for (Sprite ground : groundSprites) {
-                if (ground.intersects(clientSprite)){
+                if (ground.intersects(sprite)){
                     if(movingRight){
-                        getClientSprite().setX(getClientSprite().getX() - 1);
+                        getSprite().setX(getSprite().getX() - 1);
                     } else {
-                        getClientSprite().setX(getClientSprite().getX() + 1);
+                        getSprite().setX(getSprite().getX() + 1);
                     }
                     return;
                 }
             }
             for (Enemy enemy : enemies) {
-                if (enemy.getEnemySprite().intersects(clientSprite)){
+                if (enemy.getSprite().intersects(sprite)){
                     kill();
                     return;
                 }
             }
-            getClientSprite().setX(getClientSprite().getX() + (movingRight ? 1 : -1));
+            getSprite().setX(getSprite().getX() + (movingRight ? 1 : -1));
         }
     }
     public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites){
@@ -113,32 +107,32 @@ public class Client {
 
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
-                if (platform.intersects(clientSprite) && movingDown) {
-                    getClientSprite().setY(getClientSprite().getY() - 1);
+                if (platform.intersects(sprite) && movingDown) {
+                    getSprite().setY(getSprite().getY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
             for (Sprite ground : groundSprites) {
-                if (ground.intersects(clientSprite) && movingDown) {
-                    getClientSprite().setY(getClientSprite().getY() - 1);
+                if (ground.intersects(sprite) && movingDown) {
+                    getSprite().setY(getSprite().getY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
             for (Sprite water : waterSprites) {
-                if (water.intersects(clientSprite)){
-                    getClientSprite().setY(getClientSprite().getY() + 1);
+                if (water.intersects(sprite)){
+                    getSprite().setY(getSprite().getY() + 1);
                     return;
                 }
             }
             for (Enemy enemy : enemies) {
-                if (enemy.getEnemySprite().intersects(clientSprite)) {
+                if (enemy.getSprite().intersects(sprite)) {
                     kill();
                     return;
                 }
             }
-            getClientSprite().setY(getClientSprite().getY() + (movingDown ? 1 : -1));
+            getSprite().setY(getSprite().getY() + (movingDown ? 1 : -1));
         }
 
     }

@@ -26,7 +26,7 @@ public class LevelGenTest {
 
     @Start
     public void start(Stage stage) {
-        game = new Game();
+        game = new Game(stage, 1, );
         sprite = new Sprite(new Image("Grass.png"),20,20);
         level = new LevelGen(120);
         tempStage = stage;

@@ -1,7 +1,6 @@
 package org.nightshade.game;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -36,7 +35,7 @@ public class Game {
     private Parallax parallax;
     private final Image cloudImage = new Image("view/GameComponents/dark.png");
 
-    public void initGame(Stage stage, int aiCount, ArrayList<String> aiDifficulty) {
+    public Game(Stage stage) {
         cloud = new Sprite(cloudImage, -2300, 50);
         parallax = new Parallax();
         renderer = new Renderer();
@@ -47,16 +46,6 @@ public class Game {
         client = new Client();
 
         aiPlayers = new ArrayList<>();
-        for (int i = 0; i < aiCount; i++) {
-            String difficulty = aiDifficulty.get(i);
-            if (difficulty.equals("EASY")) {
-                aiPlayers.add(new AI(3));
-            } else if (difficulty.equals("MEDIUM")) {
-                aiPlayers.add(new AI(4));
-            } else {
-                aiPlayers.add(new AI(5));
-            }
-        }
 
         cloud.setX(-1300);
         renderer.setHeight(720);
@@ -85,19 +74,9 @@ public class Game {
 
         checkForInput(scene);
 
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-
-      /*  KeyFrame keyFrame = new KeyFrame(
-                Duration.seconds(0.017), // 60FPS
-                actionEvent -> gameLoop(platformSprites, gameTickCounter++, grass, ground, enemy, end, clientImg, aiImg)
-        );
-
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.play();*/
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                gameLoop(platformSprites, gameTickCounter++, grass, ground, enemy, end, clientImg, aiImg);
+                loop(gameTickCounter);
             }
         }.start();
     }
@@ -106,8 +85,9 @@ public class Game {
         scene.setOnKeyPressed(
                 keyEvent -> {
                     String code = keyEvent.getCode().toString();
-                    if (!input.contains(code))
+                    if (!input.contains(code)) {
                         input.add(code);
+                    }
                 });
 
         scene.setOnKeyReleased(
@@ -118,16 +98,16 @@ public class Game {
     }
 
     private void moveClient(ArrayList<Sprite> platformSprites) {
-        if (client.isLive()) {
-            if (input.contains("UP") && client.getClientSprite().getY() >= 5) {
+        if (client.isAlive()) {
+            if (input.contains("UP") && client.getSprite().getY() >= 5) {
                 client.jump();
             }
 
-            if (input.contains("LEFT") && client.getClientSprite().getX() >= 5) {
+            if (input.contains("LEFT") && client.getSprite().getX() >= 5) {
                 client.moveX(-5, platformSprites, enemies, groundSprites);
             }
 
-            if (input.contains("RIGHT") && client.getClientSprite().getX() <= (levelWidth * blockWidth) - 5) {
+            if (input.contains("RIGHT") && client.getSprite().getX() <= (levelWidth * blockWidth) - 5) {
                 client.moveX(5, platformSprites, enemies, groundSprites);
             }
 
@@ -140,20 +120,38 @@ public class Game {
         }
     }
 
-    public void gameLoop(ArrayList<Sprite> platformSprites, int gameTickCounter, Image grass, Image ground, Image enemy, Image end, Image clientImg, Image aiImg) {
+    public void addAiPlayer(AI ai) {
+        aiPlayers.add(ai);
+    }
+
+    public void loop(int gameTickCounter) {
 
         parallax.moveParallax();
         parallax.drawParallax(renderer, xViewCoordinate);
 
-        drawPlatformsAndLavaAndGroundAndEnd(grass, ground, end, setAnimationIndex(gameTickCounter));
+        renderSprites(platformSprites);
+        renderSprites(groundSprites);
+        renderSprites(endSprites);
+        for (Sprite lavaSprite : lavaSprites) {
+            renderer.drawImage(lavaImages.get(animationIndex), lavaSprite.getX(), lavaSprite.getY());
+        }
 
-        moveCloud();
-        renderer.drawImage(cloudImage, cloud.getX(), 50);
+        // move cloud
+        if (client.getSprite().getX() - cloud.getX() > 2000) {
+            cloud.setX(client.getSprite().getX() - 2000);
+        } else {
+            cloud.setX(cloud.getX() + 2);
+        }
+        renderer.drawImage(cloud.getImage(), cloud.getX(), 50);
 
-        if (client.isLive()) {
+        if (client.isAlive()) {
             moveClient(platformSprites);
-            client.displaySprite(renderer, clientImg, client.getClientSprite());
-            if (client.getClientSprite().intersects(cloud.getX() - 90, cloud.getY(), (int) cloud.getWidth(), (int) cloud.getHeight())) {
+            Sprite clientSprite = client.getSprite();
+            renderer.drawImage(clientSprite.getImage(), clientSprite.getX(), clientSprite.getY());
+
+            boolean intersectsCloud = clientSprite.intersects(cloud.getX() - 90, cloud.getY(), (int) cloud.getWidth(), (int) cloud.getHeight());
+
+            if (intersectsCloud) {
                 client.kill();
             }
         }
@@ -164,18 +162,20 @@ public class Game {
             sprites.addAll(groundSprites);
             sprites.addAll(lavaSprites);
             aiLogic.moveSprite(ai, sprites);
-            ai.displaySprite(renderer, aiImg, ai.getSprite());
+            Sprite aiSprite = ai.getSprite();
+            renderer.drawImage(aiSprite.getImage(), aiSprite.getX(), aiSprite.getY());
         }
 
-        for (Enemy thisEnemy : enemies) {
-            thisEnemy.moveEnemy();
-            thisEnemy.displaySprite(renderer, enemy, thisEnemy.getEnemySprite());
+        for (Enemy enemy : enemies) {
+            enemy.moveEnemy();
+            Sprite enemySprite = enemy.getSprite();
+            renderer.drawImage(enemySprite.getImage(), enemySprite.getX(), enemySprite.getY());
         }
 
         //Move camera
         double translateX = renderer.getCanvas().getTranslateX();
-        if ((-1 *translateX) + 700 < client.getClientSprite().getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
-            renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - client.getClientSprite().getX())));
+        if ((-1 *translateX) + 700 < client.getSprite().getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
+            renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - client.getSprite().getX())));
         } else {
             renderer.getCanvas().setTranslateX((int) (translateX));
         }
@@ -183,14 +183,12 @@ public class Game {
         xViewCoordinate = (int) (-1 * translateX);
     }
 
-    private void moveCloud() {
-        int cloudXPosNew = cloud.getX() + 2;
-
-        if (client.getClientSprite().getX() - cloud.getX() > 2000) {
-            cloudXPosNew = client.getClientSprite().getX() - 2000;
+    private void renderSprites(ArrayList<Sprite> sprites) {
+        for (Sprite sprite : sprites) {
+            renderer.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
         }
-        cloud.setX(cloudXPosNew);
     }
+
 
     private int setAnimationIndex(int counter) {
         if (counter % 3 == 0) {
@@ -202,18 +200,7 @@ public class Game {
         return animationIndex;
     }
 
-    private void drawPlatformsAndLavaAndGroundAndEnd(Image grass, Image ground, Image end, int animationIndex) {
-        for (Sprite platformSprite : platformSprites) {
-            renderer.drawImage(platformSprite.getImage(), platformSprite.getX(), platformSprite.getY());
-        }
-        for (Sprite lavaSprite : lavaSprites) {
-            renderer.drawImage(lavaImages.get(animationIndex), lavaSprite.getX(), lavaSprite.getY());
-        }
-        for (Sprite groundSprite : groundSprites) {
-            renderer.drawImage(groundSprite.getImage(), groundSprite.getX(), groundSprite.getY());
-        }
-        for (Sprite endSprite : endSprites) {
-            renderer.drawImage(endSprite.getImage(), endSprite.getX(), endSprite.getY());
-        }
+    private void drawPlatformsAndLavaAndGroundAndEnd(int animationIndex) {
+
     }
 }

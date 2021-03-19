@@ -10,21 +10,33 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AI {
 
+    private Difficulty difficulty;
     private boolean isAlive;
     private boolean canJump;
     private Point2D velocity;
     private Sprite sprite;
     private int speed;
 
-    public AI(int speed) {
+    public AI(Difficulty difficulty) {
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0, 0);
         int randomXStart = ThreadLocalRandom.current().nextInt(270, 330 + 1);
         int randomYStart = ThreadLocalRandom.current().nextInt(20, 60 + 1);
-
         this.sprite = new Sprite(new Image("view/GameComponents/AIBody.png"), randomXStart, randomYStart);
-        this.speed = speed;
+        this.difficulty = difficulty;
+
+        switch (difficulty) {
+            case EASY:
+                this.speed = 3;
+                break;
+            case MEDIUM:
+                this.speed = 4;
+                break;
+            case HARD:
+                this.speed = 5;
+                break;
+        }
     }
 
     public int getSpeed() {

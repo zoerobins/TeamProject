@@ -22,8 +22,7 @@ public class GameTest {
 
     @Start
     public void start(Stage stage) {
-        game = new Game();
-        game.initGame(stage,1, new ArrayList<>());
+        game = new Game(stage);
         levelGen = new LevelGen(120);
         renderer = new Renderer(1280,720);
     }
@@ -42,7 +41,7 @@ public class GameTest {
         System.nanoTime();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                game.gameLoop(platformSprites,1,grass,ground,enemy,end,clientImg,aiImg);
+                game.loop(1);
             }
         }.start();
     }
