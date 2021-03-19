@@ -2,15 +2,20 @@ package org.nightshade.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import org.nightshade.Main;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.Difficulty;
 import org.nightshade.game.Game;
 
-public class SinglePlayerController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SinglePlayerController implements Initializable {
 
     @FXML private CheckBox ai1Check;
     @FXML private CheckBox ai2Check;
@@ -31,6 +36,37 @@ public class SinglePlayerController {
     @FXML private Button start;
     @FXML private Button back;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ToggleGroup ai1ToggleGroup = new ToggleGroup();
+        ToggleGroup ai2ToggleGroup = new ToggleGroup();
+        ToggleGroup ai3ToggleGroup = new ToggleGroup();
+
+        ai1EasyRadio = new RadioButton();
+        ai1MediumRadio = new RadioButton();
+        ai1HardRadio = new RadioButton();
+
+        ai1EasyRadio.setToggleGroup(ai1ToggleGroup);
+        ai1MediumRadio.setToggleGroup(ai1ToggleGroup);
+        ai1HardRadio.setToggleGroup(ai1ToggleGroup);
+
+        ai2EasyRadio = new RadioButton();
+        ai2MediumRadio = new RadioButton();
+        ai2HardRadio = new RadioButton();
+
+        ai2EasyRadio.setToggleGroup(ai2ToggleGroup);
+        ai2MediumRadio.setToggleGroup(ai2ToggleGroup);
+        ai2HardRadio.setToggleGroup(ai2ToggleGroup);
+
+        ai3EasyRadio = new RadioButton();
+        ai3MediumRadio = new RadioButton();
+        ai3HardRadio = new RadioButton();
+
+        ai3EasyRadio.setToggleGroup(ai3ToggleGroup);
+        ai3MediumRadio.setToggleGroup(ai3ToggleGroup);
+        ai3HardRadio.setToggleGroup(ai3ToggleGroup);
+    }
+
     @FXML
     public void backToMain(ActionEvent event) {
         GuiHandler.stage.setScene(GuiHandler.menu);
@@ -45,8 +81,11 @@ public class SinglePlayerController {
         addAiPlayers(game, ai2Check, ai2EasyRadio, ai2MediumRadio, ai2HardRadio);
 
         addAiPlayers(game, ai3Check, ai3EasyRadio, ai3MediumRadio, ai3HardRadio);
-    }
 
+        for (AI ai : game.getAiPlayers()) {
+            System.out.println(ai.getSpeed());
+        }
+    }
 
     // adds AI players to the game based on radio buttons selected when start button is pressed
     private void addAiPlayers(Game game, CheckBox checkBox, RadioButton easyRadioButton, RadioButton mediumRadioButton, RadioButton hardRadioButton) {

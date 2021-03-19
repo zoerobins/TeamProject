@@ -27,7 +27,7 @@ public class Game {
     private ArrayList<Sprite> lavaSprites;
     private ArrayList<Sprite> groundSprites;
     private ArrayList<Sprite> endSprites;
-    private ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Enemy> enemies;
     private Renderer renderer;
     private Client client;
     private AILogic aiLogic;
@@ -58,13 +58,6 @@ public class Game {
 
         stage.setScene(scene);
         stage.show();
-
-        Image grass = new Image("view/GameComponents/DarkGrass.png");
-        Image ground = new Image("view/GameComponents/Dirt.png");
-        Image clientImg = new Image("view/GameComponents/Body.png");
-        Image aiImg = new Image("view/GameComponents/AIBody.png");
-        Image enemy = new Image("view/GameComponents/enemy.png");
-        Image end = new Image("view/GameComponents/EndNode.png");
 
         lavaImages = new ArrayList<>();
 
@@ -122,6 +115,10 @@ public class Game {
 
     public void addAiPlayer(AI ai) {
         aiPlayers.add(ai);
+    }
+
+    public ArrayList<AI> getAiPlayers() {
+        return this.aiPlayers;
     }
 
     public void loop(int gameTickCounter) {

@@ -60,14 +60,23 @@
             </font>
         </Button>
         <Button id="back-button" layoutY="14.0" mnemonicParsing="false" onAction="#backToMain" prefHeight="38.0" prefWidth="82.0" text="" />
-      <RadioButton fx:id="ai1EasyRadio" layoutX="132.0" layoutY="324.0" mnemonicParsing="false" text="EASY" />
-      <RadioButton fx:id="ai1MediumRadio" layoutX="132.0" layoutY="399.0" mnemonicParsing="false" text="MEDIUM" />
-      <RadioButton fx:id="ai1HardRadio" layoutX="131.0" layoutY="474.0" mnemonicParsing="false" text="HARD" />
-      <RadioButton fx:id="ai2HardRadio1" layoutX="529.0" layoutY="466.0" mnemonicParsing="false" text="HARD" />
-      <RadioButton fx:id="ai2MediumRadio1" layoutX="530.0" layoutY="391.0" mnemonicParsing="false" text="MEDIUM" />
-      <RadioButton fx:id="ai2EasyRadio1" layoutX="530.0" layoutY="316.0" mnemonicParsing="false" text="EASY" />
-      <RadioButton fx:id="ai3EasyRadio11" layoutX="898.0" layoutY="315.0" mnemonicParsing="false" text="EASY" />
-      <RadioButton fx:id="ai3MediumRadio11" layoutX="898.0" layoutY="390.0" mnemonicParsing="false" text="MEDIUM" />
-      <RadioButton fx:id="ai3HardRadio11" layoutX="897.0" layoutY="465.0" mnemonicParsing="false" text="HARD" />
+      <RadioButton fx:id="ai1EasyRadio" layoutX="132.0" layoutY="324.0" mnemonicParsing="false" text="EASY">
+         <toggleGroup>
+            <ToggleGroup fx:id="ai1ToggleGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="ai1MediumRadio" layoutX="132.0" layoutY="399.0" mnemonicParsing="false" text="MEDIUM" toggleGroup="$ai1ToggleGroup" />
+      <RadioButton fx:id="ai1HardRadio" layoutX="131.0" layoutY="474.0" mnemonicParsing="false" text="HARD" toggleGroup="$ai1ToggleGroup" />
+      <RadioButton fx:id="ai2HardRadio1" layoutX="529.0" layoutY="466.0" mnemonicParsing="false" text="HARD">
+         <toggleGroup>
+            <ToggleGroup fx:id="ai2ToggleGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="ai2MediumRadio1" layoutX="530.0" layoutY="391.0" mnemonicParsing="false" text="MEDIUM" toggleGroup="$ai2ToggleGroup" />
+      <RadioButton fx:id="ai2EasyRadio1" layoutX="530.0" layoutY="316.0" mnemonicParsing="false" text="EASY" toggleGroup="$ai2ToggleGroup" />
+      <RadioButton fx:id="ai3EasyRadio11" layoutX="898.0" layoutY="315.0" mnemonicParsing="false" text="EASY">
+         <toggleGroup>
+            <ToggleGroup fx:id="ai3ToggleGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="ai3MediumRadio11" layoutX="898.0" layoutY="390.0" mnemonicParsing="false" text="MEDIUM" toggleGroup="$ai3ToggleGroup" />
+      <RadioButton fx:id="ai3HardRadio11" layoutX="897.0" layoutY="465.0" mnemonicParsing="false" text="HARD" toggleGroup="$ai3ToggleGroup" />
     </children>
 </AnchorPane>
