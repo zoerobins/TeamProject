@@ -3,16 +3,14 @@ package org.nightshade.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import org.nightshade.Main;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.Difficulty;
 import org.nightshade.game.Game;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SinglePlayerController implements Initializable {
@@ -36,35 +34,46 @@ public class SinglePlayerController implements Initializable {
     @FXML private Button start;
     @FXML private Button back;
 
+    private ToggleGroup ai1ToggleGroup;
+    private ToggleGroup ai2ToggleGroup;
+    private ToggleGroup ai3ToggleGroup;
+
+    private ArrayList<RadioButton> easyRadioButtons;
+    private ArrayList<RadioButton> mediumRadioButtons;
+    private ArrayList<RadioButton> hardRadioButtons;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ToggleGroup ai1ToggleGroup = new ToggleGroup();
-        ToggleGroup ai2ToggleGroup = new ToggleGroup();
-        ToggleGroup ai3ToggleGroup = new ToggleGroup();
-
-        ai1EasyRadio = new RadioButton();
-        ai1MediumRadio = new RadioButton();
-        ai1HardRadio = new RadioButton();
+        ai1ToggleGroup = new ToggleGroup();
+        ai2ToggleGroup = new ToggleGroup();
+        ai3ToggleGroup = new ToggleGroup();
 
         ai1EasyRadio.setToggleGroup(ai1ToggleGroup);
         ai1MediumRadio.setToggleGroup(ai1ToggleGroup);
         ai1HardRadio.setToggleGroup(ai1ToggleGroup);
 
-        ai2EasyRadio = new RadioButton();
-        ai2MediumRadio = new RadioButton();
-        ai2HardRadio = new RadioButton();
-
         ai2EasyRadio.setToggleGroup(ai2ToggleGroup);
         ai2MediumRadio.setToggleGroup(ai2ToggleGroup);
         ai2HardRadio.setToggleGroup(ai2ToggleGroup);
 
-        ai3EasyRadio = new RadioButton();
-        ai3MediumRadio = new RadioButton();
-        ai3HardRadio = new RadioButton();
-
         ai3EasyRadio.setToggleGroup(ai3ToggleGroup);
         ai3MediumRadio.setToggleGroup(ai3ToggleGroup);
         ai3HardRadio.setToggleGroup(ai3ToggleGroup);
+
+        easyRadioButtons = new ArrayList<>();
+        easyRadioButtons.add(ai1EasyRadio);
+        easyRadioButtons.add(ai2EasyRadio);
+        easyRadioButtons.add(ai3EasyRadio);
+
+        mediumRadioButtons = new ArrayList<>();
+        mediumRadioButtons.add(ai1MediumRadio);
+        mediumRadioButtons.add(ai2MediumRadio);
+        mediumRadioButtons.add(ai3MediumRadio);
+
+        hardRadioButtons = new ArrayList<>();
+        hardRadioButtons.add(ai1HardRadio);
+        hardRadioButtons.add(ai2HardRadio);
+        hardRadioButtons.add(ai3HardRadio);
     }
 
     @FXML
@@ -76,25 +85,22 @@ public class SinglePlayerController implements Initializable {
     public void startButtonHandler(ActionEvent event) {
         Game game = new Game(Main.stage);
 
-        addAiPlayers(game, ai1Check, ai1EasyRadio, ai1MediumRadio, ai1HardRadio);
+        addAiPlayers(game, ai1Check, ai1ToggleGroup);
 
-        addAiPlayers(game, ai2Check, ai2EasyRadio, ai2MediumRadio, ai2HardRadio);
+        addAiPlayers(game, ai2Check, ai2ToggleGroup);
 
-        addAiPlayers(game, ai3Check, ai3EasyRadio, ai3MediumRadio, ai3HardRadio);
-
-        for (AI ai : game.getAiPlayers()) {
-            System.out.println(ai.getSpeed());
-        }
+        addAiPlayers(game, ai3Check, ai3ToggleGroup);
     }
 
     // adds AI players to the game based on radio buttons selected when start button is pressed
-    private void addAiPlayers(Game game, CheckBox checkBox, RadioButton easyRadioButton, RadioButton mediumRadioButton, RadioButton hardRadioButton) {
+    private void addAiPlayers(Game game, CheckBox checkBox, ToggleGroup toggleGroup) {
         if (checkBox.isSelected()) {
-            if (easyRadioButton.isSelected()) {
+            if (easyRadioButtons.contains(toggleGroup.getSelectedToggle())) {
+                System.out.println(toggleGroup.getSelectedToggle().toString());
                 game.addAiPlayer(new AI(Difficulty.EASY));
-            } else if (mediumRadioButton.isSelected()) {
+            } else if (mediumRadioButtons.contains(toggleGroup.getSelectedToggle())) {
                 game.addAiPlayer(new AI(Difficulty.MEDIUM));
-            } else if (hardRadioButton.isSelected()) {
+            } else if (hardRadioButtons.contains(toggleGroup.getSelectedToggle())) {
                 game.addAiPlayer(new AI(Difficulty.HARD));
             }
         }
