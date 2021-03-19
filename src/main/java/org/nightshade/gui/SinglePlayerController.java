@@ -116,25 +116,24 @@ public class SinglePlayerController implements Initializable {
         String onText = "ON";
         String offText = "OFF";
 
-        if (ai1Check.isSelected()) {
-            ai1Check.setText(onText);
-            ai1EasyRadio.setSelected(true);
-        } else {
-            ai1Check.setText(offText);
-        }
+        checkBoxHandlerHelper(ai1Check, ai1EasyRadio, ai1ToggleGroup);
 
-        if (ai2Check.isSelected()) {
-            ai2Check.setText(onText);
-            ai2EasyRadio.setSelected(true);
-        } else {
-            ai2Check.setText(offText);
-        }
+        checkBoxHandlerHelper(ai2Check, ai2EasyRadio, ai2ToggleGroup);
 
-        if (ai3Check.isSelected()) {
-            ai3Check.setText(onText);
-            ai3EasyRadio.setSelected(true);
+        checkBoxHandlerHelper(ai3Check, ai3EasyRadio, ai3ToggleGroup);
+    }
+
+    private void checkBoxHandlerHelper(CheckBox checkBox, RadioButton radioButton, ToggleGroup toggleGroup) {
+        String onText = "ON";
+        String offText = "OFF";
+
+        if (checkBox.isSelected()) {
+            checkBox.setText(onText);
+            if (toggleGroup.getSelectedToggle() == null) {
+                radioButton.setSelected(true);
+            }
         } else {
-            ai3Check.setText(offText);
+            checkBox.setText(offText);
         }
     }
 }
