@@ -3,7 +3,9 @@ package org.nightshade.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import org.nightshade.Main;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.Difficulty;
@@ -31,9 +33,6 @@ public class SinglePlayerController implements Initializable {
     @FXML private RadioButton ai3MediumRadio;
     @FXML private RadioButton ai3HardRadio;
 
-    @FXML private Button start;
-    @FXML private Button back;
-
     private ToggleGroup ai1ToggleGroup;
     private ToggleGroup ai2ToggleGroup;
     private ToggleGroup ai3ToggleGroup;
@@ -41,6 +40,10 @@ public class SinglePlayerController implements Initializable {
     private ArrayList<RadioButton> easyRadioButtons;
     private ArrayList<RadioButton> mediumRadioButtons;
     private ArrayList<RadioButton> hardRadioButtons;
+
+    private ArrayList<RadioButton> ai1RadioButtons;
+    private ArrayList<RadioButton> ai2RadioButtons;
+    private ArrayList<RadioButton> ai3RadioButtons;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -74,6 +77,30 @@ public class SinglePlayerController implements Initializable {
         hardRadioButtons.add(ai1HardRadio);
         hardRadioButtons.add(ai2HardRadio);
         hardRadioButtons.add(ai3HardRadio);
+
+        ai1RadioButtons = new ArrayList<>();
+        ai1RadioButtons.add(ai1EasyRadio);
+        ai1RadioButtons.add(ai1MediumRadio);
+        ai1RadioButtons.add(ai1HardRadio);
+
+        ai2RadioButtons = new ArrayList<>();
+        ai2RadioButtons.add(ai2EasyRadio);
+        ai2RadioButtons.add(ai2MediumRadio);
+        ai2RadioButtons.add(ai2HardRadio);
+
+        ai3RadioButtons = new ArrayList<>();
+        ai3RadioButtons.add(ai3EasyRadio);
+        ai3RadioButtons.add(ai3MediumRadio);
+        ai3RadioButtons.add(ai3HardRadio);
+
+        ArrayList<RadioButton> radioButtons = new ArrayList<>();
+        radioButtons.addAll(ai1RadioButtons);
+        radioButtons.addAll(ai2RadioButtons);
+        radioButtons.addAll(ai3RadioButtons);
+
+        for (RadioButton radioButton : radioButtons) {
+            radioButton.setDisable(true);
+        }
     }
 
     @FXML
@@ -97,11 +124,9 @@ public class SinglePlayerController implements Initializable {
         addAiPlayers(game, ai3Check, ai3ToggleGroup);
     }
 
-    // adds AI players to the game based on radio buttons selected when start button is pressed
     private void addAiPlayers(Game game, CheckBox checkBox, ToggleGroup toggleGroup) {
         if (checkBox.isSelected()) {
             if (easyRadioButtons.contains(toggleGroup.getSelectedToggle())) {
-                System.out.println(toggleGroup.getSelectedToggle().toString());
                 game.addAiPlayer(new AI(Difficulty.EASY));
             } else if (mediumRadioButtons.contains(toggleGroup.getSelectedToggle())) {
                 game.addAiPlayer(new AI(Difficulty.MEDIUM));
@@ -113,27 +138,30 @@ public class SinglePlayerController implements Initializable {
 
     @FXML
     public void checkBoxHandler(ActionEvent event) {
-        String onText = "ON";
-        String offText = "OFF";
+        checkBoxHandlerHelper(ai1Check, ai1EasyRadio, ai1ToggleGroup, ai1RadioButtons);
 
-        checkBoxHandlerHelper(ai1Check, ai1EasyRadio, ai1ToggleGroup);
+        checkBoxHandlerHelper(ai2Check, ai2EasyRadio, ai2ToggleGroup, ai2RadioButtons);
 
-        checkBoxHandlerHelper(ai2Check, ai2EasyRadio, ai2ToggleGroup);
-
-        checkBoxHandlerHelper(ai3Check, ai3EasyRadio, ai3ToggleGroup);
+        checkBoxHandlerHelper(ai3Check, ai3EasyRadio, ai3ToggleGroup, ai3RadioButtons);
     }
 
-    private void checkBoxHandlerHelper(CheckBox checkBox, RadioButton radioButton, ToggleGroup toggleGroup) {
+    private void checkBoxHandlerHelper(CheckBox checkBox, RadioButton easyRadioButton, ToggleGroup toggleGroup, ArrayList<RadioButton> radioButtons) {
         String onText = "ON";
         String offText = "OFF";
 
         if (checkBox.isSelected()) {
             checkBox.setText(onText);
             if (toggleGroup.getSelectedToggle() == null) {
-                radioButton.setSelected(true);
+                easyRadioButton.setSelected(true);
+                for (RadioButton radioButton : radioButtons) {
+                    radioButton.setDisable(false);
+                }
             }
         } else {
             checkBox.setText(offText);
+            for (RadioButton radioButton : radioButtons) {
+                radioButton.setDisable(true);
+            }
         }
     }
 }
