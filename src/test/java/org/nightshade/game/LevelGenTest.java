@@ -21,6 +21,7 @@ public class LevelGenTest {
     Stage tempStage;
     Sprite sprite;
     ArrayList<Sprite> platformSprites;
+    ArrayList<MovingPlatform> movingPlatforms;
     LevelGen levelGen;
 
 
@@ -42,6 +43,12 @@ public class LevelGenTest {
     public void createPlatformSprites(){
         platformSprites = levelGen.createPlatformSprites();
         Assertions.assertNotNull(platformSprites);  //length is random so cannot use assertEquals
+    }
+
+    @Test
+    public void testCreateMovingPlatforms(){
+        movingPlatforms = levelGen.createMovingPlatforms();
+        Assertions.assertNotNull(movingPlatforms);
     }
 
 

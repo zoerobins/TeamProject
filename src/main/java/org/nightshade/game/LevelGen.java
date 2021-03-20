@@ -47,6 +47,7 @@ public class LevelGen {
                     }
                     j+=randomWaterLength;
                 }
+
             }
         }
         return level;
@@ -157,12 +158,10 @@ public class LevelGen {
         if(i>7){
             if(randomNumber<10) {
                 return NodeType.PLATFORM;
-            }else if (randomNumber<15) {
+            }else if (randomNumber<13) {
                 return NodeType.MOVINGPLATFORM;
             } else if(randomNumber<16 && j>20) {
                 return NodeType.ENEMY;
-            } else if (randomNumber<17 && j>20){
-                return NodeType.MOVINGPLATFORM;
             } else{
                 return NodeType.AIR;
             }
