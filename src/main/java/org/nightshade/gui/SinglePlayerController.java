@@ -153,9 +153,9 @@ public class SinglePlayerController implements Initializable {
             checkBox.setText(onText);
             if (toggleGroup.getSelectedToggle() == null) {
                 easyRadioButton.setSelected(true);
-                for (RadioButton radioButton : radioButtons) {
-                    radioButton.setDisable(false);
-                }
+            }
+            for (RadioButton radioButton : radioButtons) {
+                radioButton.setDisable(false);
             }
         } else {
             checkBox.setText(offText);
