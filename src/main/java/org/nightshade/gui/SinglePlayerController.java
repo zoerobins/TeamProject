@@ -33,9 +33,9 @@ public class SinglePlayerController implements Initializable {
     @FXML private RadioButton ai3MediumRadio;
     @FXML private RadioButton ai3HardRadio;
 
-    private ToggleGroup ai1ToggleGroup;
-    private ToggleGroup ai2ToggleGroup;
-    private ToggleGroup ai3ToggleGroup;
+    @FXML private ToggleGroup ai1ToggleGroup;
+    @FXML private ToggleGroup ai2ToggleGroup;
+    @FXML private ToggleGroup ai3ToggleGroup;
 
     private ArrayList<RadioButton> easyRadioButtons;
     private ArrayList<RadioButton> mediumRadioButtons;
