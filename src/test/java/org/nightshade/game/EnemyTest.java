@@ -32,11 +32,6 @@ public class EnemyTest {
     }
 
     @Test
-    public void testDisplaySprite(){
-        enemy.displaySprite(renderer,new Image("cat.png"),enemy.getSprite());
-    }
-
-    @Test
     public void testMoveEnemy(){
         int oldPosition = enemy.getSprite().getX();
         enemy.moveEnemy();

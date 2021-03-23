@@ -10,7 +10,8 @@ public class Enemy {
     private int offset;
 
     public Enemy(int speed, int x, int y) {
-        this.sprite = new Sprite(new Image("img/game/enemy.png"),x,y);
+        Image spriteImage = new Image("img/game/enemy.png");
+        this.sprite = new Sprite(spriteImage, x, y);
         this.speed = speed;
         this.offset = 0;
         this.direction = Direction.getRandomDirection();
@@ -20,11 +21,7 @@ public class Enemy {
         return sprite;
     }
 
-    public void displaySprite(Renderer renderer, Image image, Sprite sprite){
-        renderer.drawImage(image, sprite.getX(), sprite.getY());
-    }
-
-    public void moveEnemy(){
+    public void moveEnemy() {
         if (this.direction.equals(Direction.FORWARD)) {
             if (offset > 180) {
                 direction = Direction.BACKWARD;
