@@ -41,7 +41,7 @@ public class GameTest {
         System.nanoTime();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                game.loop(1);
+                game.loop();
             }
         }.start();
     }

@@ -31,8 +31,8 @@ public class ParallaxTest {
     public void showParallaxScroll(){
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                parallax.moveParallax();
-                parallax.drawParallax(renderer,0);
+                parallax.move();
+                parallax.render(renderer,0);
             }
         }.start();
     }

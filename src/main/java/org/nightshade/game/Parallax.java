@@ -6,80 +6,80 @@ import org.nightshade.renderer.Renderer;
 import java.util.ArrayList;
 
 public class Parallax {
+
+    private final Image image1;
+    private final Image image2;
+    private final Image image3;
+    private final Image image4;
+    private final Image image5;
+    private final Image image6;
+    private final Image image7;
+
+    private final int scaledWidth;
+
+    private final ArrayList<Integer> image2XPositions;
+    private final ArrayList<Integer> image3XPositions;
+    private final ArrayList<Integer> image4XPositions;
+    private final ArrayList<Integer> image5XPositions;
+    private final ArrayList<Integer> image6XPositions;
+    private final ArrayList<Integer> image7XPositions;
+
     public Parallax() {
-        initArrays();
+        image1 = new Image("img/game/parallax/parallax-1.png");
+        image2 = new Image("img/game/parallax/parallax-2.png");
+        image3 = new Image("img/game/parallax/parallax-3.png");
+        image4 = new Image("img/game/parallax/parallax-4.png");
+        image5 = new Image("img/game/parallax/parallax-5.png");
+        image6 = new Image("img/game/parallax/parallax-6.png");
+        image7 = new Image("img/game/parallax/parallax-7.png");
+
+        int imageWidth = 3960;
+        scaledWidth = imageWidth * 2;
+        ArrayList<Integer> initialXPositions = new ArrayList<>();
+        initialXPositions.add(0);
+        initialXPositions.add(scaledWidth);
+
+        image2XPositions = initialXPositions;
+        image3XPositions = initialXPositions;
+        image4XPositions = initialXPositions;
+        image5XPositions = initialXPositions;
+        image6XPositions = initialXPositions;
+        image7XPositions = initialXPositions;
     }
 
-    private final Image parallaxOne = new Image ("img/game/parallax/parallax-1.png");
-    private final Image parallaxTwo = new Image ("img/game/parallax/parallax-2.png");
-    private final Image parallaxThree = new Image ("img/game/parallax/parallax-3.png");
-    private final Image parallaxFour = new Image ("img/game/parallax/parallax-4.png");
-    private final Image parallaxFive = new Image ("img/game/parallax/parallax-5.png");
-    private final Image parallaxSix = new Image ("img/game/parallax/parallax-6.png");
-    private final Image parallaxSeven = new Image ("img/game/parallax/parallax-7.png");
-
-    private final ArrayList<Integer> parallax2X = new ArrayList<>();
-    private final ArrayList<Integer> parallax3X = new ArrayList<>();
-    private final ArrayList<Integer> parallax4X = new ArrayList<>();
-    private final ArrayList<Integer> parallax5X = new ArrayList<>();
-    private final ArrayList<Integer> parallax6X = new ArrayList<>();
-    private final ArrayList<Integer> parallax7X = new ArrayList<>();
-
-    public void initArrays(){
-        for(int i = 0 ; i < 2 ; i++){
-            parallax2X.add((int) (i*parallaxTwo.getWidth()*2));
-            parallax3X.add((int) (i*parallaxTwo.getWidth()*2));
-            parallax4X.add((int) (i*parallaxTwo.getWidth()*2));
-            parallax5X.add((int) (i*parallaxTwo.getWidth()*2));
-            parallax6X.add((int) (i*parallaxTwo.getWidth()*2));
-            parallax7X.add((int) (i*parallaxTwo.getWidth()*2));
+    public void move() {
+        for (int i = 0; i < 2; i++) {
+            moveHelper(image2XPositions, i);
+            moveHelper(image3XPositions, i);
+            moveHelper(image4XPositions, i);
+            moveHelper(image5XPositions, i);
+            moveHelper(image6XPositions, i);
+            moveHelper(image7XPositions, i);
         }
     }
 
-
-    public void drawParallax(Renderer renderer,int xViewCoordinate){
-        renderer.drawImage(parallaxOne, xViewCoordinate ,0,1280,720);
-        renderer.drawImage(parallaxTwo,parallax2X.get(0),0,7920,720);
-        renderer.drawImage(parallaxTwo,parallax2X.get(1),0,7920,720);
-        renderer.drawImage(parallaxThree,parallax3X.get(0),0,7920,720);
-        renderer.drawImage(parallaxThree,parallax3X.get(1),0,7920,720);
-        renderer.drawImage(parallaxFour,parallax4X.get(0),0,7920,720);
-        renderer.drawImage(parallaxFour,parallax4X.get(1),0,7920,720);
-        renderer.drawImage(parallaxFive,parallax5X.get(0),0,7920,720);
-        renderer.drawImage(parallaxFive,parallax5X.get(1),0,7920,720);
-        renderer.drawImage(parallaxSix,parallax6X.get(0),0,7920,720);
-        renderer.drawImage(parallaxSix,parallax6X.get(1),0,7920,720);
-        renderer.drawImage(parallaxSeven,parallax7X.get(0),0,7920,720);
-        renderer.drawImage(parallaxSeven,parallax7X.get(1),0,7920,720);
+    private void moveHelper(ArrayList<Integer> imageXPositions, int index) {
+        int imageXPosition = imageXPositions.get(index);
+        if (imageXPosition > -scaledWidth) {
+            imageXPositions.set(index, imageXPosition - 1);
+        } else {
+            imageXPositions.set(index, scaledWidth - 5);
+        }
     }
 
-    public void moveParallax() {
-        for (int i = 0 ; i < parallax2X.size() ; i++){
-            if (parallax2X.get(i)>-7920){
-                parallax2X.set(i,parallax2X.get(i)-1);
-            } else{
-                parallax2X.set(i, (int) (parallaxTwo.getWidth()*2)-5);
-            } if (parallax3X.get(i)>-7920){
-                parallax3X.set(i,parallax3X.get(i)-2);
-            } else{
-                parallax3X.set(i, (int) (parallaxThree.getWidth()*2)-5);
-            } if (parallax4X.get(i)>-7920){
-                parallax4X.set(i,parallax4X.get(i)-3);
-            } else{
-                parallax4X.set(i, (int) (parallaxFour.getWidth()*2)-5);
-            } if (parallax5X.get(i)>-7920){
-                parallax5X.set(i,parallax5X.get(i)-4);
-            } else{
-                parallax5X.set(i, (int) (parallaxFive.getWidth()*2)-5);
-            } if (parallax6X.get(i)>-7920){
-                parallax6X.set(i,parallax6X.get(i)-5);
-            } else{
-                parallax6X.set(i, (int) (parallaxTwo.getWidth()*2)-5);
-            } if (parallax7X.get(i)>-7920){
-                parallax7X.set(i,parallax7X.get(i)-5);
-            } else{
-                parallax7X.set(i, (int) (parallaxSeven.getWidth()*2)-5);
-            }
+    public void render(Renderer renderer, int xViewCoordinate) {
+        int y = 0;
+        int scaledHeight = 720;
+
+        renderer.drawImage(image1, xViewCoordinate, 0, 1280, 720);
+
+        for (int index = 0; index < 2; index ++) {
+            renderer.drawImage(image2, image2XPositions.get(index), y, scaledWidth, scaledHeight);
+            renderer.drawImage(image3, image3XPositions.get(index), y, scaledWidth, scaledHeight);
+            renderer.drawImage(image4, image4XPositions.get(index), y, scaledWidth, scaledHeight);
+            renderer.drawImage(image5, image5XPositions.get(index), y, scaledWidth, scaledHeight);
+            renderer.drawImage(image6, image6XPositions.get(index), y, scaledWidth, scaledHeight);
+            renderer.drawImage(image7, image7XPositions.get(index), y, scaledWidth, scaledHeight);
         }
     }
 }

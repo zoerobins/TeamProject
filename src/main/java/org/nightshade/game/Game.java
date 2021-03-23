@@ -17,26 +17,24 @@ public class Game {
     private final int blockWidth = 60;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;
-    private int gameTickCounter = 0;
 
-    private ArrayList<AI> aiPlayers;
-    private ArrayList<Image> lavaImages;
+    private final ArrayList<AI> aiPlayers;
+    private final ArrayList<Image> lavaImages;
 
     private final ArrayList<String> input = new ArrayList<>();
-    private ArrayList<Sprite> platformSprites;
-    private ArrayList<Sprite> lavaSprites;
-    private ArrayList<Sprite> groundSprites;
-    private ArrayList<Sprite> endSprites;
-    private ArrayList<Enemy> enemies;
-    private Renderer renderer;
-    private Client client;
-    private AILogic aiLogic;
-    private Sprite cloud;
-    private Parallax parallax;
-    private final Image cloudImage = new Image("img/game/cloud.png");
+    private final ArrayList<Sprite> platformSprites;
+    private final ArrayList<Sprite> lavaSprites;
+    private final ArrayList<Sprite> groundSprites;
+    private final ArrayList<Sprite> endSprites;
+    private final ArrayList<Enemy> enemies;
+    private final Renderer renderer;
+    private final Client client;
+    private final AILogic aiLogic;
+    private final Sprite cloud;
+    private final Parallax parallax;
 
     public Game(Stage stage) {
-        cloud = new Sprite(cloudImage, -2300, 50);
+        cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
         parallax = new Parallax();
         renderer = new Renderer();
         Pane pane = new Pane(renderer.getGroup());
@@ -69,7 +67,7 @@ public class Game {
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                loop(gameTickCounter);
+                loop();
             }
         }.start();
     }
@@ -121,10 +119,10 @@ public class Game {
         return this.aiPlayers;
     }
 
-    public void loop(int gameTickCounter) {
+    public void loop() {
 
-        parallax.moveParallax();
-        parallax.drawParallax(renderer, xViewCoordinate);
+        parallax.move();
+        parallax.render(renderer, xViewCoordinate);
 
         renderSprites(platformSprites);
         renderSprites(groundSprites);
@@ -184,20 +182,5 @@ public class Game {
         for (Sprite sprite : sprites) {
             renderer.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
         }
-    }
-
-
-    private int setAnimationIndex(int counter) {
-        if (counter % 3 == 0) {
-            animationIndex ++;
-            if (animationIndex == 17) {
-                animationIndex = 0;
-            }
-        }
-        return animationIndex;
-    }
-
-    private void drawPlatformsAndLavaAndGroundAndEnd(int animationIndex) {
-
     }
 }
