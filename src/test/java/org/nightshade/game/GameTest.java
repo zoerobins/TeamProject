@@ -30,8 +30,8 @@ public class GameTest {
     @Test
     public void testFullGame() {
 
-        Image enemy = new Image("view/GameComponents/enemy.png");
-        Image clientImg = new Image("view/GameComponents/Body.png");
+        Image enemy = new Image("img/game/enemy.png");
+        Image clientImg = new Image("img/game/player.png");
         Image grass = new Image("Grass.png");
         Image ground = new Image("Dirt.png");
         Image end = new Image("EndNode.png");

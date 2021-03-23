@@ -33,7 +33,7 @@ public class Game {
     private AILogic aiLogic;
     private Sprite cloud;
     private Parallax parallax;
-    private final Image cloudImage = new Image("view/GameComponents/dark.png");
+    private final Image cloudImage = new Image("img/game/cloud.png");
 
     public Game(Stage stage) {
         cloud = new Sprite(cloudImage, -2300, 50);
@@ -62,7 +62,7 @@ public class Game {
         lavaImages = new ArrayList<>();
 
         for (int i = 0; i < 17; i++) {
-            lavaImages.add(new Image("view/GameComponents/Water/image " + (i + 1) + ".png"));
+            lavaImages.add(new Image("img/game/lava/image " + (i + 1) + ".png"));
         }
 
         checkForInput(scene);

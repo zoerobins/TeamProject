@@ -23,7 +23,7 @@ public class AI {
         this.velocity = new Point2D(0, 0);
         int randomXStart = ThreadLocalRandom.current().nextInt(270, 330 + 1);
         int randomYStart = ThreadLocalRandom.current().nextInt(20, 60 + 1);
-        this.sprite = new Sprite(new Image("view/GameComponents/AIBody.png"), randomXStart, randomYStart);
+        this.sprite = new Sprite(new Image("img/game/ai.png"), randomXStart, randomYStart);
         this.difficulty = difficulty;
 
         switch (difficulty) {

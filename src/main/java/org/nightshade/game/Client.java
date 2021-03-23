@@ -22,7 +22,7 @@ public class Client {
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
-        this.sprite = new Sprite(new Image("view/GameComponents/Body.png"),300,50);
+        this.sprite = new Sprite(new Image("img/game/player.png"),300,50);
         this.spotEffects = new SpotEffects();
         this.random = new Random();
     }
