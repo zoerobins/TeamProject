@@ -68,8 +68,7 @@ public class LevelGen {
             for (int j = 0; j < levelWidth; j++) {
                 if (level.get(i).get(j) == NodeType.ENEMY) {
                     int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
-                    Direction direction = Direction.getRandomDirection();
-                    enemies.add(new Enemy(speed, direction, j*60, i*60));
+                    enemies.add(new Enemy(speed, j*60, i*60));
                 }
             }
         }

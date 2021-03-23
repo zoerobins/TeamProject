@@ -9,7 +9,7 @@ public class Enemy {
     private Direction direction;
     private int offset;
 
-    public Enemy(int speed, Direction direction, int x, int y) {
+    public Enemy(int speed, int x, int y) {
         this.sprite = new Sprite(new Image("img/game/enemy.png"),x,y);
         this.speed = speed;
         this.offset = 0;
