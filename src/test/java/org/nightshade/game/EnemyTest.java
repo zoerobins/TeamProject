@@ -19,7 +19,7 @@ public class EnemyTest {
     @Start
     public void start(Stage stage) {
         speed=5;
-        enemy = new Enemy(speed,1,50,50);
+        enemy = new Enemy(speed,Direction.FORWARD,50,50);
         renderer = new Renderer();
         Scene scene = new Scene(renderer.getGroup());
         stage.setScene(scene);
