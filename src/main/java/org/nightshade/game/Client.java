@@ -148,6 +148,7 @@ public class Client {
             for (Sprite water : waterSprites) {
                 if (water.intersects(clientSprite)){
                     getClientSprite().setPositionY(getClientSprite().getPositionY() + 1);
+                    kill();
                     return;
                 }
             }

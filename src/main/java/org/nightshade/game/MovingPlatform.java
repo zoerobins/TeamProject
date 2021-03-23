@@ -10,13 +10,21 @@ public class MovingPlatform {
     private boolean direction;
     private int offset;
 
-    public MovingPlatform(int x, int y, int speed, int direction){
+    public MovingPlatform(int x, int y, int speed, boolean direction){
 
         this.mvSprite = new Sprite(new Image("view/GameComponents/DarkGrass.png"),x,y);
         this.speed = speed;
-        this.direction = direction == 1;
+        this.direction = direction;
         this.offset = 0;
 
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public boolean getDirection() {
+        return direction;
     }
 
     public Sprite getmvSprite(){
