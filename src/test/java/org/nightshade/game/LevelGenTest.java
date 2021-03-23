@@ -27,7 +27,7 @@ public class LevelGenTest {
 
     @Start
     public void start(Stage stage) {
-        game = new Game();
+        game = new Game(stage);
         sprite = new Sprite(new Image("Grass.png"),20,20);
         level = new LevelGen(120);
         tempStage = stage;
@@ -62,7 +62,7 @@ public class LevelGenTest {
     public void testDrawPlatforms(){
         platformSprites = levelGen.createPlatformSprites();
         for (Sprite platformSprite : platformSprites) {
-            renderer.drawImage(new Image("Grass.png"), platformSprite.getPositionX(), platformSprite.getPositionY());
+            renderer.drawImage(new Image("Grass.png"), platformSprite.getX(), platformSprite.getY());
         }
     }
 

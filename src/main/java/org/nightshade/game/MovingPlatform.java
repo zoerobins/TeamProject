@@ -32,7 +32,7 @@ public class MovingPlatform {
     }
 
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
-        renderer.drawImage(image, sprite.getPositionX(), sprite.getPositionY());
+        renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
 
     public void movePlatform(){
@@ -43,14 +43,14 @@ public class MovingPlatform {
             }
             else{
                 offset = offset + speed;
-                mvSprite.setPositionX(mvSprite.getPositionX() + speed);
+                mvSprite.setX(mvSprite.getX() + speed);
             }
         } else {
             if (offset < -180) {
                 direction = true;
             } else {
                 offset = offset - speed;
-                mvSprite.setPositionX(mvSprite.getPositionX() - speed);
+                mvSprite.setX(mvSprite.getX() - speed);
             }
         }
     }
