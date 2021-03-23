@@ -19,7 +19,7 @@ public class SpriteTest {
 
     @Start
     public void start(Stage stage) {
-        game = new Game();
+        game = new Game(stage);
         renderer = new Renderer();
         level = new LevelGen(120);
         Scene scene = new Scene(renderer.getGroup());

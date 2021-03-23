@@ -6,14 +6,14 @@ public class Enemy {
 
     private final Sprite sprite;
     private final int speed;
-    private boolean direction;
+    private Direction direction;
     private int offset;
 
-    public Enemy(int speed, int direction, int x, int y) {
+    public Enemy(int speed, Direction direction, int x, int y) {
         this.sprite = new Sprite(new Image("img/game/enemy.png"),x,y);
         this.speed = speed;
         this.offset = 0;
-        this.direction = direction == 1;
+        this.direction = Direction.getRandomDirection();
     }
 
     public Sprite getSprite() {
@@ -25,25 +25,20 @@ public class Enemy {
     }
 
     public void moveEnemy(){
-        if (this.direction){
+        if (this.direction.equals(Direction.FORWARD)) {
             if (offset > 180) {
-                direction = false;
+                direction = Direction.BACKWARD;
+            } else {
+                offset += speed;
+                sprite.setX(sprite.getX() + speed);
             }
-            else {
-                offset = offset+speed;
-                sprite.setX(sprite.getX()+speed);
-            }
-        } else{
+        } else {
             if (offset < -180) {
-                direction = true;
-            }
-            else {
-                offset = offset-speed;
-                sprite.setX(sprite.getX()-speed);
+                direction = Direction.FORWARD;
+            } else {
+                offset -= speed;
+                sprite.setX(sprite.getX() - speed);
             }
         }
     }
-
-
-
 }

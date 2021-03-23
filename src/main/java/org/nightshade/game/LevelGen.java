@@ -64,12 +64,12 @@ public class LevelGen {
     }
 
     public ArrayList<Enemy> createEnemies(){
-        for (int i = 0 ; i < 12 ; i++){
-            for(int j = 0; j < levelWidth; j++){
-                if(level.get(i).get(j) == NodeType.ENEMY) {
+        for (int i = 0 ; i < 12 ; i++) {
+            for (int j = 0; j < levelWidth; j++) {
+                if (level.get(i).get(j) == NodeType.ENEMY) {
                     int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
-                    int direction = ThreadLocalRandom.current().nextInt(0, (1) + 1);
-                    enemies.add(new Enemy(speed,direction,j*60,i*60));
+                    Direction direction = Direction.getRandomDirection();
+                    enemies.add(new Enemy(speed, direction, j*60, i*60));
                 }
             }
         }

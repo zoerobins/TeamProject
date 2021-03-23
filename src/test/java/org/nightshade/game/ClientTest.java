@@ -26,7 +26,7 @@ public class ClientTest {
     public void start(Stage stage) {
         speed=5;
         client = new Client();
-        game = new Game();
+        game = new Game(stage);
         renderer = new Renderer();
         Scene scene = new Scene(renderer.getGroup());
         stage.setScene(scene);
