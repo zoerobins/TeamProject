@@ -13,6 +13,7 @@ public class LevelGen {
     ArrayList<Sprite> groundSprites = new ArrayList<>();
     ArrayList<Sprite> endSprites = new ArrayList<>();
     ArrayList<Enemy> enemies = new ArrayList<>();
+    ArrayList<MovingPlatform> movingPlatforms = new ArrayList<>();
 
     Image grass = new Image("img/game/dark-grass.png");
     Image water = new Image("img/game/lava/lava-1.png");
@@ -36,6 +37,9 @@ public class LevelGen {
                 if (newNode == NodeType.PLATFORM){
                     level.get(i).add(level.get(i).get(j));
                     j += 2;
+                } else if (newNode == NodeType.MOVINGPLATFORM){
+                    level.get(i).add(level.get(i).get(j));
+                    j += 2;
                 } else{
                     j++;
                 }
@@ -46,6 +50,7 @@ public class LevelGen {
                     }
                     j+=randomWaterLength;
                 }
+
             }
         }
         return level;
@@ -61,6 +66,27 @@ public class LevelGen {
             }
         }
         return platformSprites;
+    }
+
+    public ArrayList<MovingPlatform> createMovingPlatforms(){
+
+        for (int i = 0 ; i < 12 ; i++){
+            for(int j = 0; j < levelWidth; j++){
+                if(level.get(i).get(j) == NodeType.MOVINGPLATFORM) {
+                    int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
+                    int randomDirectionInt = ThreadLocalRandom.current().nextInt(0, (1) + 1);
+                    boolean direction = randomDirectionInt == 1;
+                    if (level.get(i).get(j-1) == NodeType.MOVINGPLATFORM){
+                        speed = movingPlatforms.get(movingPlatforms.size()-1).getSpeed();
+                        direction = movingPlatforms.get(movingPlatforms.size()-1).getDirection();
+                    }
+                    movingPlatforms.add(new MovingPlatform(j*60,i*60,speed,direction));
+                }
+            }
+        }
+
+        return movingPlatforms;
+
     }
 
     public ArrayList<Enemy> createEnemies(){
@@ -137,9 +163,11 @@ public class LevelGen {
             }
         }
         if(i>7){
-            if(randomNumber<15) {
+            if(randomNumber<10) {
                 return NodeType.PLATFORM;
-            } else if(randomNumber<16 && j>20){
+            }else if (randomNumber<13) {
+                return NodeType.MOVINGPLATFORM;
+            } else if(randomNumber<14 && j>20) {
                 return NodeType.ENEMY;
             } else{
                 return NodeType.AIR;

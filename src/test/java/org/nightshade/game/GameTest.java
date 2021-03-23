@@ -17,6 +17,7 @@ public class GameTest {
     Renderer renderer;
     Game game;
     ArrayList<Sprite> platformSprites;
+    ArrayList<Sprite> movingPlatformSprites;
     LevelGen levelGen;
 
 
@@ -37,6 +38,7 @@ public class GameTest {
         Image end = new Image("EndNode.png");
         Image aiImg = new Image("AIBody.png");
         platformSprites = levelGen.createPlatformSprites();
+
 
         System.nanoTime();
         new AnimationTimer() {
