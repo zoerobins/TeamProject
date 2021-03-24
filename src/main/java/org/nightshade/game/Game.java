@@ -11,41 +11,42 @@ import java.util.ArrayList;
 public class Game {
     private final int levelWidth = 120;
     private final int blockWidth = 60;
+    private int verticalBlocksCount;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;
     private final ArrayList<AI> aiPlayers;
     private final ArrayList<Image> lavaImages;
     private final ArrayList<String> input = new ArrayList<>();
-    private final ArrayList<Sprite> platformSprites;
     private final ArrayList<Sprite> lavaSprites;
     private final ArrayList<Sprite> groundSprites;
     private final ArrayList<Sprite> endSprites;
-    private final ArrayList<Enemy> enemies;
     private ArrayList<MovingPlatform> movingPlatforms;
     private final Renderer renderer;
     private final Client client;
     private final AILogic aiLogic;
     private final Sprite cloud;
     private final Parallax parallax;
+    private Level level;
+
     public Game(Stage stage) {
+        this.level = new Level(levelWidth);
         cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
         parallax = new Parallax();
         renderer = new Renderer();
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane, 1280, 720);
-        LevelGen levelGen = new LevelGen(levelWidth);
+
         aiLogic = new AILogic();
         client = new Client();
         aiPlayers = new ArrayList<>();
         cloud.setX(-1300);
         renderer.setHeight(720);
         renderer.setWidth(levelWidth * blockWidth);
-        platformSprites = levelGen.createPlatformSprites();
-        lavaSprites = levelGen.createLavaSprites();
-        groundSprites = levelGen.createGroundSprites();
-        enemies = levelGen.createEnemies();
-        movingPlatforms = levelGen.createMovingPlatforms();
-        endSprites = levelGen.createEndSprites();
+        lavaSprites = level.createLavaSprites();
+        groundSprites = level.createGroundSprites();
+
+        movingPlatforms = level.createMovingPlatforms();
+        endSprites = level.createEndSprites();
         stage.setScene(scene);
         stage.show();
         lavaImages = new ArrayList<>();
@@ -73,7 +74,10 @@ public class Game {
                     input.remove(code);
                 });
     }
-    private void moveClient(ArrayList<Sprite> platformSprites) {
+    private void moveClient() {
+        ArrayList<Sprite> platformSprites = level.getPlatformSprites();
+        ArrayList<Enemy> enemies = level.getEnemies();
+
         if (client.isAlive()) {
             if (input.contains("UP") && client.getSprite().getY() >= 5) {
                 client.jump();
@@ -99,7 +103,7 @@ public class Game {
     public void loop() {
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
-        renderSprites(platformSprites);
+        renderSprites(level.getPlatformSprites());
         renderSprites(groundSprites);
         renderSprites(endSprites);
         for (Sprite lavaSprite : lavaSprites) {
@@ -113,7 +117,7 @@ public class Game {
         }
         renderer.drawImage(cloud.getImage(), cloud.getX(), 50);
         if (client.isAlive()) {
-            moveClient(platformSprites);
+            moveClient();
             Sprite clientSprite = client.getSprite();
             renderer.drawImage(clientSprite.getImage(), clientSprite.getX(), clientSprite.getY());
             boolean intersectsCloud = clientSprite.intersects(cloud.getX() - 90, cloud.getY(), (int) cloud.getWidth(), (int) cloud.getHeight());
@@ -123,14 +127,14 @@ public class Game {
         }
         for (AI ai : aiPlayers) {
             ArrayList<Sprite> sprites = new ArrayList<>();
-            sprites.addAll(platformSprites);
+            sprites.addAll(level.getPlatformSprites());
             sprites.addAll(groundSprites);
             sprites.addAll(lavaSprites);
             aiLogic.moveSprite(ai, sprites);
             Sprite aiSprite = ai.getSprite();
             renderer.drawImage(aiSprite.getImage(), aiSprite.getX(), aiSprite.getY());
         }
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : level.getEnemies()) {
             enemy.moveEnemy();
             Sprite enemySprite = enemy.getSprite();
             renderer.drawImage(enemySprite.getImage(), enemySprite.getX(), enemySprite.getY());

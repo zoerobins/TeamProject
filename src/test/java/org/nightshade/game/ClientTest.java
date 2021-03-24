@@ -16,7 +16,7 @@ import java.util.ArrayList;
 @ExtendWith(ApplicationExtension.class)
 public class ClientTest {
     Renderer renderer;
-    LevelGen levelGen;
+    Level level;
     Game game;
     Client client;
     int speed;
@@ -31,8 +31,8 @@ public class ClientTest {
         Scene scene = new Scene(renderer.getGroup());
         stage.setScene(scene);
         stage.show();
-        levelGen = new LevelGen(120);
-        platformSprites = levelGen.createPlatformSprites();
+        level = new Level(120);
+        platformSprites = level.createPlatformSprites();
     }
 
     @Test
