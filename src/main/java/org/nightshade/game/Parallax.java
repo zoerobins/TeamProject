@@ -49,19 +49,21 @@ public class Parallax {
 
     public void move() {
         for (int i = 0; i < 2; i++) {
-            moveHelper(image2XPositions, i);
-            moveHelper(image3XPositions, i);
-            moveHelper(image4XPositions, i);
-            moveHelper(image5XPositions, i);
-            moveHelper(image6XPositions, i);
-            moveHelper(image7XPositions, i);
+            moveHelper(image2XPositions, i, -1);
+            System.out.println(image2XPositions);
+//            moveHelper(image3XPositions, i, -2);
+//            moveHelper(image4XPositions, i, -3);
+//            moveHelper(image5XPositions, i, -4);
+//            moveHelper(image6XPositions, i, -5);
+//            moveHelper(image7XPositions, i, -5);
         }
     }
 
-    private void moveHelper(ArrayList<Integer> imageXPositions, int index) {
+    private void moveHelper(ArrayList<Integer> imageXPositions, int index, int changeX) {
         int imageXPosition = imageXPositions.get(index);
+//        System.out.println(imageXPosition + changeX);
         if (imageXPosition > -scaledWidth) {
-            imageXPositions.set(index, imageXPosition - 1);
+            imageXPositions.set(index, imageXPosition + changeX);
         } else {
             imageXPositions.set(index, scaledWidth - 5);
         }
