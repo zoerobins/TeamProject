@@ -7,6 +7,7 @@ import org.nightshade.renderer.Renderer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 public class Client {
     private boolean isAlive;
     private boolean canJump;
@@ -55,6 +56,9 @@ public class Client {
         File soundFile = new File("src/main/resources/audio/die.mp3");
         spotEffects.playSoundUntilEnd(soundFile, true);
         isAlive =false;
+        //try {
+            //Thread.sleep(1000);
+        //} catch (Exception e) {}
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
 

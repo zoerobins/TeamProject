@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
+import org.nightshade.gui.GuiHandler;
 import org.nightshade.renderer.Renderer;
 import java.util.ArrayList;
 public class Game {
