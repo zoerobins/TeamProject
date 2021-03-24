@@ -20,7 +20,7 @@ public class MovingPlatformTest {
     @Start
     public void start(Stage stage) {
         speed=5;
-        movingPlatform = new MovingPlatform(50, 50, speed, true);
+        movingPlatform = new MovingPlatform(50, 50, speed, Direction.FORWARD);
         renderer = new Renderer();
         Scene scene = new Scene(renderer.getGroup());
         stage.setScene(scene);
