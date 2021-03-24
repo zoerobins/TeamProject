@@ -39,29 +39,36 @@ public class Parallax {
         initialXPositions.add(0);
         initialXPositions.add(scaledWidth);
 
-        image2XPositions = initialXPositions;
-        image3XPositions = initialXPositions;
-        image4XPositions = initialXPositions;
-        image5XPositions = initialXPositions;
-        image6XPositions = initialXPositions;
-        image7XPositions = initialXPositions;
+        image2XPositions = new ArrayList<>();
+        image3XPositions = new ArrayList<>();
+        image4XPositions = new ArrayList<>();
+        image5XPositions = new ArrayList<>();
+        image6XPositions = new ArrayList<>();
+        image7XPositions = new ArrayList<>();
+
+        image2XPositions.addAll(initialXPositions);
+        image3XPositions.addAll(initialXPositions);
+        image4XPositions.addAll(initialXPositions);
+        image5XPositions.addAll(initialXPositions);
+        image6XPositions.addAll(initialXPositions);
+        image7XPositions.addAll(initialXPositions);
     }
 
     public void move() {
         for (int i = 0; i < 2; i++) {
-            moveHelper(image2XPositions, i);
-            moveHelper(image3XPositions, i);
-            moveHelper(image4XPositions, i);
-            moveHelper(image5XPositions, i);
-            moveHelper(image6XPositions, i);
-            moveHelper(image7XPositions, i);
+            moveHelper(image2XPositions, i, -1);
+            moveHelper(image3XPositions, i, -2);
+            moveHelper(image4XPositions, i, -3);
+            moveHelper(image5XPositions, i, -4);
+            moveHelper(image6XPositions, i, -5);
+            moveHelper(image7XPositions, i, -5);
         }
     }
 
-    private void moveHelper(ArrayList<Integer> imageXPositions, int index) {
+    private void moveHelper(ArrayList<Integer> imageXPositions, int index, int changeX) {
         int imageXPosition = imageXPositions.get(index);
         if (imageXPosition > -scaledWidth) {
-            imageXPositions.set(index, imageXPosition - 1);
+            imageXPositions.set(index, imageXPosition + changeX);
         } else {
             imageXPositions.set(index, scaledWidth - 5);
         }
