@@ -6,27 +6,22 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Level {
-    private int width;
-    private int blockHeight;
-    private ArrayList<ArrayList<Node>> nodeArrayLists;
-    private ArrayList<Sprite> platformSprites;
-    private ArrayList<Sprite> lavaSprites;
-    private ArrayList<Sprite> groundSprites;
-    private ArrayList<Sprite> endSprites;
-    private ArrayList<Enemy> enemies;
-    private ArrayList<MovingPlatform> movingPlatforms;
+    private final ArrayList<Sprite> platformSprites;
+    private final ArrayList<Sprite> lavaSprites;
+    private final ArrayList<Sprite> groundSprites;
+    private final ArrayList<Sprite> endSprites;
+    private final ArrayList<Enemy> enemies;
+    private final ArrayList<MovingPlatform> movingPlatforms;
 
     Image grass = new Image("img/game/dark-grass.png");
-    Image water = new Image("img/game/lava/lava-1.png");
+    Image lava = new Image("img/game/lava/lava-1.png");
     Image ground = new Image("img/game/dirt.png");
     Image end = new Image("img/game/end.png");
 
-
     public Level(int width) {
-        this.width = width;
-        this.blockHeight = 12;
+        int blockHeight = 12;
 
-        this.nodeArrayLists = new ArrayList<>();
+        ArrayList<ArrayList<Node>> nodeArrayLists = new ArrayList<>();
         for (int i = 0; i < blockHeight; i ++) {
             ArrayList<Node> nodes = new ArrayList<>();
             int count = 0;
@@ -58,21 +53,68 @@ public class Level {
         }
 
         this.platformSprites = new ArrayList<>();
-        for (int i = 0; i < this.blockHeight; i++) {
+        this.lavaSprites = new ArrayList<>();
+        this.enemies = new ArrayList<>();
+        this.movingPlatforms = new ArrayList<>();
+        for (int i = 0; i < blockHeight; i++) {
             ArrayList<Node> nodes = nodeArrayLists.get(i);
-            for (int j = 0; j < this.width; j++) {
-                if (nodes.get(j) == Node.PLATFORM) {
-                    Sprite sprite = new Sprite(grass, j * 60, i * 60);
-                    platformSprites.add(sprite);
+            for (int j = 0; j < width; j++) {
+                int x = j * 60;
+                int y = i * 60;
+                Node node = nodes.get(j);
+                switch (node) {
+                    case PLATFORM: {
+                        Sprite sprite = new Sprite(grass, x, y);
+                        platformSprites.add(sprite);
+                        break;
+                    }
+                    case LAVA: {
+                        Sprite sprite = new Sprite(lava, x, y);
+                        lavaSprites.add(sprite);
+                        break;
+                    }
+                    case ENEMY: {
+                        int speed = ThreadLocalRandom.current().nextInt(0, 5 + 1);
+                        Enemy enemy = new Enemy(speed, x, y);
+                        enemies.add(enemy);
+                        break;
+                    }
+                    case MOVING_PLATFORM: {
+                        int speed = ThreadLocalRandom.current().nextInt(0, 5 + 1);
+                        Direction direction = Direction.getRandomDirection();
+                        Node prevNode = nodes.get(j - 1);
+                        if (prevNode == Node.MOVING_PLATFORM) {
+                            speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
+                            MovingPlatform lastMovingPlatform = movingPlatforms.get(movingPlatforms.size() - 1);
+                            direction = lastMovingPlatform.getDirection();
+                        }
+                        MovingPlatform newMovingPlatform = new MovingPlatform(x, y, speed, direction);
+                        movingPlatforms.add(newMovingPlatform);
+                        break;
+                    }
                 }
             }
         }
 
-        this.lavaSprites = new ArrayList<>();
         this.groundSprites = new ArrayList<>();
+        for (int i = 0; i < width; i++) {
+            ArrayList<Node> nodes = nodeArrayLists.get(11);
+            Node node = nodes.get(i);
+            if (node == Node.GROUND) {
+                int x = i * 60;
+                int y = 11 * 60;
+                Sprite sprite = new Sprite(ground, x, y);
+                groundSprites.add(sprite);
+            }
+        }
+
         this.endSprites = new ArrayList<>();
-        this.enemies = new ArrayList<>();
-        this.movingPlatforms = new ArrayList<>();
+        for (int i = 0; i < blockHeight; i++) {
+            int x = (width - 1) * 60;
+            int y = i * 60;
+            Sprite sprite = new Sprite(end, x, y);
+            endSprites.add(sprite);
+        }
     }
 
     public ArrayList<Sprite> getLavaSprites() {
@@ -95,63 +137,7 @@ public class Level {
         return this.movingPlatforms;
     }
 
-    public ArrayList<MovingPlatform> createMovingPlatforms() {
-
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < width; j++) {
-                if (nodeArrayLists.get(i).get(j) == Node.MOVING_PLATFORM) {
-                    int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
-                    int randomDirectionInt = ThreadLocalRandom.current().nextInt(0, (1) + 1);
-                    boolean direction = randomDirectionInt == 1;
-                    if (nodeArrayLists.get(i).get(j - 1) == Node.MOVING_PLATFORM) {
-                        speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
-                        direction = movingPlatforms.get(movingPlatforms.size() - 1).getDirection();
-                    }
-                    movingPlatforms.add(new MovingPlatform(j * 60, i * 60, speed, direction));
-                }
-            }
-        }
-
-        return movingPlatforms;
-
-    }
-
-    public ArrayList<Enemy> createEnemies() {
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < width; j++) {
-                if (nodeArrayLists.get(i).get(j) == Node.ENEMY) {
-                    int speed = ThreadLocalRandom.current().nextInt(0, (5) + 1);
-                    enemies.add(new Enemy(speed, j * 60, i * 60));
-                }
-            }
-        }
-        return enemies;
-    }
-
-    public ArrayList<Sprite> createLavaSprites() {
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < width; j++) {
-                if (nodeArrayLists.get(i).get(j) == Node.LAVA) {
-                    lavaSprites.add(new Sprite(water, j * 60, i * 60));
-                }
-            }
-        }
-        return lavaSprites;
-    }
-
-    public ArrayList<Sprite> createGroundSprites() {
-        for (int j = 0; j < width; j++) {
-            if (nodeArrayLists.get(11).get(j) == Node.GROUND) {
-                groundSprites.add(new Sprite(ground, j * 60, 11 * 60));
-            }
-        }
-        return groundSprites;
-    }
-
-    public ArrayList<Sprite> createEndSprites() {
-        for (int i = 0; i < 12; i++) {
-            endSprites.add(new Sprite(end, (width - 1) * 60, i * 60));
-        }
-        return endSprites;
+    public ArrayList<Sprite> getGroundSprites() {
+        return this.groundSprites;
     }
 }
