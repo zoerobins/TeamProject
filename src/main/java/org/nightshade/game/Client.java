@@ -2,6 +2,7 @@ package org.nightshade.game;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import org.nightshade.audio.SpotEffects;
+import org.nightshade.gui.GuiHandler;
 import org.nightshade.renderer.Renderer;
 import java.io.File;
 import java.util.ArrayList;
@@ -54,7 +55,9 @@ public class Client {
         File soundFile = new File("src/main/resources/audio/die.mp3");
         spotEffects.playSoundUntilEnd(soundFile, true);
         isAlive =false;
+        GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
+
     public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
         boolean movingRight = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
