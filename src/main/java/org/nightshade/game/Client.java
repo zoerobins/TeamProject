@@ -79,8 +79,8 @@ public class Client {
                 }
             }
 
-            for (MovingPlatform mPlatform : movingPlatforms){
-                if (mPlatform.getmvSprite().intersects(sprite)){
+            for (MovingPlatform movingPlatform : movingPlatforms){
+                if (movingPlatform.getSprite().intersects(sprite)){
                     if(movingRight){
                         getSprite().setX(getSprite().getX() - 1);
                     } else {
@@ -124,7 +124,7 @@ public class Client {
             }
 
             for (MovingPlatform mPlatform : movingPlatforms) {
-                if (mPlatform.getmvSprite().intersects(sprite) && movingDown){
+                if (mPlatform.getSprite().intersects(sprite) && movingDown){
                     getSprite().setY(getSprite().getY() - 1);
                     setCanJump(true);
                     return;

@@ -138,7 +138,7 @@ public class Game {
 
         for (MovingPlatform thisMV : movingPlatforms) {
             thisMV.movePlatform();
-            thisMV.displaySprite(renderer, thisMV.getmvSprite().getImage(), thisMV.getmvSprite());
+            thisMV.displaySprite(renderer, thisMV.getSprite().getImage(), thisMV.getSprite());
         }
 
         //Move camera
