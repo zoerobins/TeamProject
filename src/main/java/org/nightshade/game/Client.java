@@ -60,6 +60,12 @@ public class Client {
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(sprite)){
+                    if(movingRight){
+                        getSprite().setX(getSprite().getX() - 1);
+                    } else {
+                        getSprite().setX(getSprite().getX() + 1);
+                    }
+                    return;
                 }
             }
             for (Sprite ground : groundSprites) {
