@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.nightshade.Main;
-import org.nightshade.game.Game;
+import org.nightshade.multiplayer.Game;
 import org.nightshade.networking.Client;
 import org.nightshade.networking.ClientLogic;
 
