@@ -7,7 +7,7 @@ import org.nightshade.renderer.Renderer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
 public class Client {
     private boolean isAlive;
     private boolean canJump;
@@ -81,7 +81,7 @@ public class Client {
             }
 
             for (MovingPlatform mPlatform : movingPlatforms){
-                if (mPlatform.getmvSprite().intersects(sprite)){
+                if (mPlatform.getSprite().intersects(sprite)){
                     if(movingRight){
                         getSprite().setX(getSprite().getX() - 1);
                     } else {
@@ -125,7 +125,7 @@ public class Client {
             }
 
             for (MovingPlatform mPlatform : movingPlatforms) {
-                if (mPlatform.getmvSprite().intersects(sprite) && movingDown){
+                if (mPlatform.getSprite().intersects(sprite) && movingDown){
                     getSprite().setY(getSprite().getY() - 1);
                     setCanJump(true);
                     return;

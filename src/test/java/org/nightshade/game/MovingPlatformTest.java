@@ -29,19 +29,19 @@ public class MovingPlatformTest {
 
     @Test
     public void testGetMPSprite() {
-        Assertions.assertNotNull(movingPlatform.getmvSprite());
+        Assertions.assertNotNull(movingPlatform.getSprite());
     }
 
     @Test
     public void testDisplaySprite() {
-        movingPlatform.displaySprite(renderer, new Image("cat.png"), movingPlatform.getmvSprite());
+        movingPlatform.displaySprite(renderer, new Image("cat.png"), movingPlatform.getSprite());
     }
 
     @Test
     public void testMoveMP(){
-        int oldPosition = movingPlatform.getmvSprite().getPositionX();
+        int oldPosition = movingPlatform.getSprite().getPositionX();
         movingPlatform.movePlatform();
-        int newPosition = movingPlatform.getmvSprite().getPositionX();
+        int newPosition = movingPlatform.getSprite().getPositionX();
         Assertions.assertEquals(speed,newPosition-oldPosition);
     }
 

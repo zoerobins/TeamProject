@@ -5,14 +5,14 @@ import org.nightshade.renderer.Renderer;
 
 public class MovingPlatform {
 
-    private final Sprite mvSprite;
+    private final Sprite sprite;
     private int speed;
     private boolean direction;
     private int offset;
 
     public MovingPlatform(int x, int y, int speed, boolean direction){
 
-        this.mvSprite = new Sprite(new Image("view/GameComponents/DarkGrass.png"),x,y);
+        this.sprite = new Sprite(new Image("view/GameComponents/DarkGrass.png"),x,y);
         this.speed = speed;
         this.direction = direction;
         this.offset = 0;
@@ -27,8 +27,8 @@ public class MovingPlatform {
         return direction;
     }
 
-    public Sprite getmvSprite(){
-        return this.mvSprite;
+    public Sprite getSprite(){
+        return this.sprite;
     }
 
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
@@ -43,14 +43,14 @@ public class MovingPlatform {
             }
             else{
                 offset = offset + speed;
-                mvSprite.setX(mvSprite.getX() + speed);
+                sprite.setX(sprite.getX() + speed);
             }
         } else {
             if (offset < -180) {
                 direction = true;
             } else {
                 offset = offset - speed;
-                mvSprite.setX(mvSprite.getX() - speed);
+                sprite.setX(sprite.getX() - speed);
             }
         }
     }

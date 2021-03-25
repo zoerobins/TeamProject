@@ -6,7 +6,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
-import org.nightshade.gui.GuiHandler;
 import org.nightshade.renderer.Renderer;
 import java.util.ArrayList;
 public class Game {
@@ -144,7 +143,7 @@ public class Game {
 
         for (MovingPlatform thisMV : movingPlatforms) {
             thisMV.movePlatform();
-            thisMV.displaySprite(renderer, thisMV.getmvSprite().getImage(), thisMV.getmvSprite());
+            thisMV.displaySprite(renderer, thisMV.getSprite().getImage(), thisMV.getSprite());
         }
 
         //Move camera
