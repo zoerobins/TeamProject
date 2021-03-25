@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.nightshade.game.Game;
-import org.nightshade.game.LevelGen;
+import org.nightshade.game.Level;
 import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 import org.testfx.framework.junit5.ApplicationExtension;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 @ExtendWith(ApplicationExtension.class)
 public class AITest {
     Renderer renderer;
-    LevelGen levelGen;
+    Level level;
     Game game;
     AI ai;
     int speed;
@@ -36,9 +36,9 @@ public class AITest {
         Scene scene = new Scene(renderer.getGroup());
         stage.setScene(scene);
         stage.show();
-        levelGen = new LevelGen(120);
-        platformSprites = levelGen.createPlatformSprites();
-        waterSprites = levelGen.createLavaSprites();
+        level = new Level(120);
+        platformSprites = level.createPlatformSprites();
+        waterSprites = level.createLavaSprites();
     }
 
     @Test
@@ -92,7 +92,7 @@ public class AITest {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 ai.displaySprite(renderer,image,ai.getSprite());
-                ArrayList<Sprite> levelSprites = levelGen.createGroundSprites();
+                ArrayList<Sprite> levelSprites = level.createGroundSprites();
                 ArrayList<Sprite> sprites = new ArrayList<>();
                 sprites.addAll(platformSprites);
                 sprites.addAll(levelSprites);
@@ -107,7 +107,7 @@ public class AITest {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 ai.displaySprite(renderer,image,ai.getSprite());
-                ArrayList<Sprite> groundSprites = levelGen.createGroundSprites();
+                ArrayList<Sprite> groundSprites = level.createGroundSprites();
                 ArrayList<Sprite> sprites = new ArrayList<>();
                 sprites.addAll(platformSprites);
                 sprites.addAll(groundSprites);

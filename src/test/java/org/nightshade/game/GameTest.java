@@ -18,13 +18,13 @@ public class GameTest {
     Game game;
     ArrayList<Sprite> platformSprites;
     ArrayList<Sprite> movingPlatformSprites;
-    LevelGen levelGen;
+    Level level;
 
 
     @Start
     public void start(Stage stage) {
         game = new Game(stage);
-        levelGen = new LevelGen(120);
+        level = new Level(120);
         renderer = new Renderer(1280,720);
     }
 
@@ -37,13 +37,13 @@ public class GameTest {
         Image ground = new Image("Dirt.png");
         Image end = new Image("EndNode.png");
         Image aiImg = new Image("AIBody.png");
-        platformSprites = levelGen.createPlatformSprites();
+        platformSprites = level.createPlatformSprites();
 
 
         System.nanoTime();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                game.loop(1);
+                game.loop();
             }
         }.start();
     }

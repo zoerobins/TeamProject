@@ -14,14 +14,14 @@ import org.testfx.framework.junit5.Start;
 public class SpriteTest {
 
     Renderer renderer;
-    LevelGen level;
+    Level level;
     Game game;
 
     @Start
     public void start(Stage stage) {
         game = new Game(stage);
         renderer = new Renderer();
-        level = new LevelGen(120);
+        level = new Level(120);
         Scene scene = new Scene(renderer.getGroup());
         stage.setScene(scene);
         stage.show();

@@ -11,43 +11,31 @@ import java.util.ArrayList;
 public class Game {
     private final int levelWidth = 120;
     private final int blockWidth = 60;
+    private int verticalBlocksCount;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;
-    private int gameTickCounter = 0;
-    private ArrayList<AI> aiPlayers;
-    private ArrayList<Image> lavaImages;
+    private final ArrayList<AI> aiPlayers;
+    private final ArrayList<Image> lavaImages;
     private final ArrayList<String> input = new ArrayList<>();
-    private ArrayList<Sprite> platformSprites;
-    private ArrayList<Sprite> lavaSprites;
-    private ArrayList<Sprite> groundSprites;
-    private ArrayList<Sprite> endSprites;
-    private ArrayList<Enemy> enemies;
-    private ArrayList<MovingPlatform> movingPlatforms;
-    private Renderer renderer;
-    private Client client;
-    private AILogic aiLogic;
-    private Sprite cloud;
-    private Parallax parallax;
-    private final Image cloudImage = new Image("img/game/cloud.png");
+    private final Renderer renderer;
+    private final Client client;
+    private final AILogic aiLogic;
+    private final Sprite cloud;
+    private final Parallax parallax;
+    private Level level;
     public Game(Stage stage) {
-        cloud = new Sprite(cloudImage, -2300, 50);
+        this.level = new Level(levelWidth);
+        cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
         parallax = new Parallax();
         renderer = new Renderer();
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane, 1280, 720);
-        LevelGen levelGen = new LevelGen(levelWidth);
         aiLogic = new AILogic();
         client = new Client();
         aiPlayers = new ArrayList<>();
         cloud.setX(-1300);
         renderer.setHeight(720);
         renderer.setWidth(levelWidth * blockWidth);
-        platformSprites = levelGen.createPlatformSprites();
-        lavaSprites = levelGen.createLavaSprites();
-        groundSprites = levelGen.createGroundSprites();
-        enemies = levelGen.createEnemies();
-        movingPlatforms = levelGen.createMovingPlatforms();
-        endSprites = levelGen.createEndSprites();
         stage.setScene(scene);
         stage.show();
         lavaImages = new ArrayList<>();
@@ -57,7 +45,7 @@ public class Game {
         checkForInput(scene);
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                loop(gameTickCounter);
+                loop();
             }
         }.start();
     }
@@ -75,10 +63,13 @@ public class Game {
                     input.remove(code);
                 });
     }
-    public void updatePlatformSprites(Sprite spriteToRemove){
-        platformSprites.remove(spriteToRemove);
-    }
-    private void moveClient(ArrayList<Sprite> platformSprites) {
+    private void moveClient() {
+        // TODO: these arrays can just be moved to client (just pass level)
+        ArrayList<Sprite> platformSprites = level.getPlatformSprites();
+        ArrayList<Sprite> lavaSprites = level.getLavaSprites();
+        ArrayList<Sprite> groundSprites = level.getGroundSprites();
+        ArrayList<Enemy> enemies = level.getEnemies();
+        ArrayList<MovingPlatform> movingPlatforms = level.getMovingPlatforms();
         if (client.isAlive()) {
             if (input.contains("UP") && client.getSprite().getY() >= 5) {
                 client.jump();
@@ -101,13 +92,13 @@ public class Game {
     public ArrayList<AI> getAiPlayers() {
         return this.aiPlayers;
     }
-    public void loop(int gameTickCounter) {
-        parallax.moveParallax();
-        parallax.drawParallax(renderer, xViewCoordinate);
-        renderSprites(platformSprites);
-        renderSprites(groundSprites);
-        renderSprites(endSprites);
-        for (Sprite lavaSprite : lavaSprites) {
+    public void loop() {
+        parallax.move();
+        parallax.render(renderer, xViewCoordinate);
+        renderSprites(level.getPlatformSprites());
+        renderSprites(level.getGroundSprites());
+        renderSprites(level.getEndSprites());
+        for (Sprite lavaSprite : level.getLavaSprites()) {
             renderer.drawImage(lavaImages.get(animationIndex), lavaSprite.getX(), lavaSprite.getY());
         }
         // move cloud
@@ -118,7 +109,7 @@ public class Game {
         }
         renderer.drawImage(cloud.getImage(), cloud.getX(), 50);
         if (client.isAlive()) {
-            moveClient(platformSprites);
+            moveClient();
             Sprite clientSprite = client.getSprite();
             renderer.drawImage(clientSprite.getImage(), clientSprite.getX(), clientSprite.getY());
             boolean intersectsCloud = clientSprite.intersects(cloud.getX() - 90, cloud.getY(), (int) cloud.getWidth(), (int) cloud.getHeight());
@@ -128,24 +119,22 @@ public class Game {
         }
         for (AI ai : aiPlayers) {
             ArrayList<Sprite> sprites = new ArrayList<>();
-            sprites.addAll(platformSprites);
-            sprites.addAll(groundSprites);
-            sprites.addAll(lavaSprites);
+            sprites.addAll(level.getPlatformSprites());
+            sprites.addAll(level.getGroundSprites());
+            sprites.addAll(level.getLavaSprites());
             aiLogic.moveSprite(ai, sprites);
             Sprite aiSprite = ai.getSprite();
             renderer.drawImage(aiSprite.getImage(), aiSprite.getX(), aiSprite.getY());
         }
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : level.getEnemies()) {
             enemy.moveEnemy();
             Sprite enemySprite = enemy.getSprite();
             renderer.drawImage(enemySprite.getImage(), enemySprite.getX(), enemySprite.getY());
         }
-
-        for (MovingPlatform thisMV : movingPlatforms) {
-            thisMV.movePlatform();
-            thisMV.displaySprite(renderer, thisMV.getSprite().getImage(), thisMV.getSprite());
+        for (MovingPlatform movingPlatform : level.getMovingPlatforms()) {
+            movingPlatform.movePlatform();
+            movingPlatform.displaySprite(renderer, movingPlatform.getSprite().getImage(), movingPlatform.getSprite());
         }
-
         //Move camera
         double translateX = renderer.getCanvas().getTranslateX();
         if ((-1 *translateX) + 700 < client.getSprite().getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
@@ -159,17 +148,5 @@ public class Game {
         for (Sprite sprite : sprites) {
             renderer.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
         }
-    }
-
-    private int setAnimationIndex(int counter) {
-        if (counter % 3 == 0) {
-            animationIndex ++;
-            if (animationIndex == 17) {
-                animationIndex = 0;
-            }
-        }
-        return animationIndex;
-    }
-    private void drawPlatformsAndLavaAndGroundAndEnd(int animationIndex) {
     }
 }
