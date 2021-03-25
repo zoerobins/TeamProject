@@ -4,9 +4,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.nightshade.ai.AI;
-import org.nightshade.ai.AILogic;
-import org.nightshade.game.LevelGen;
+import org.nightshade.game.Level;
 import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 import org.testfx.framework.junit5.ApplicationExtension;
@@ -17,13 +15,13 @@ import java.util.ArrayList;
 @ExtendWith(ApplicationExtension.class)
 public class AILogicTest {
     Renderer renderer;
-    LevelGen levelGen;
+    Level level;
     AI ai;
     AILogic aiLogic;
     int speed = 5;
     ArrayList<Sprite> platformSprites;
-    ArrayList<Sprite> waterSprites;
     ArrayList<Sprite> groundSprites;
+    ArrayList<Sprite> sprites;
 
 
     @Start
@@ -33,15 +31,17 @@ public class AILogicTest {
         stage.setScene(scene);
         stage.show();
         aiLogic = new AILogic();
-        ai = new AI(speed);
-        levelGen = new LevelGen(120);
+        ai = new AI(Difficulty.EASY);
+        level = new Level(120);
+        platformSprites = level.createPlatformSprites();
+        groundSprites = level.createGroundSprites();
+        sprites = new ArrayList<>();
+        sprites.addAll(platformSprites);
+        sprites.addAll(groundSprites);
     }
 
     @Test
     public void testMoveChar(){
-       platformSprites = levelGen.createPlatformSprites();
-       waterSprites = levelGen.createWaterSprites();
-       groundSprites = levelGen.createGroundSprites();
-       aiLogic.moveChar(ai,platformSprites,waterSprites, groundSprites);
+       aiLogic.moveSprite(ai, sprites);
     }
 }

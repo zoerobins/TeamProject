@@ -16,7 +16,7 @@ import java.util.ArrayList;
 @ExtendWith(ApplicationExtension.class)
 public class ClientTest {
     Renderer renderer;
-    LevelGen levelGen;
+    Level level;
     Game game;
     Client client;
     int speed;
@@ -26,13 +26,13 @@ public class ClientTest {
     public void start(Stage stage) {
         speed=5;
         client = new Client();
-        game = new Game();
+        game = new Game(stage);
         renderer = new Renderer();
         Scene scene = new Scene(renderer.getGroup());
         stage.setScene(scene);
         stage.show();
-        levelGen = new LevelGen(120);
-        platformSprites = levelGen.createPlatformSprites();
+        level = new Level(120);
+        platformSprites = level.createPlatformSprites();
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ClientTest {
 
     @Test
     public void testGetClientSprite(){
-        Assertions.assertNotNull(client.getClientSprite());
+        Assertions.assertNotNull(client.getSprite());
     }
 
     @Test
@@ -67,14 +67,14 @@ public class ClientTest {
 
     @Test
     public void testIsLive(){
-        Assertions.assertTrue(client.isLive());
+        Assertions.assertTrue(client.isAlive());
     }
 
     @Test
     public void testKill(){
-        Assertions.assertTrue(client.isLive());
+        Assertions.assertTrue(client.isAlive());
         client.kill();
-        Assertions.assertFalse(client.isLive());
+        Assertions.assertFalse(client.isAlive());
     }
 
     @Test

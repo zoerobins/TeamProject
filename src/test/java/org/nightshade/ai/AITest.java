@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.nightshade.game.Game;
-import org.nightshade.game.LevelGen;
+import org.nightshade.game.Level;
 import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 import org.testfx.framework.junit5.ApplicationExtension;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 @ExtendWith(ApplicationExtension.class)
 public class AITest {
     Renderer renderer;
-    LevelGen levelGen;
+    Level level;
     Game game;
     AI ai;
     int speed;
@@ -30,15 +30,15 @@ public class AITest {
     @Start
     public void start(Stage stage) {
         speed=5;
-        ai = new AI(this.speed);
-        game = new Game();
+        ai = new AI(Difficulty.EASY);
+        game = new Game(stage);
         renderer = new Renderer();
         Scene scene = new Scene(renderer.getGroup());
         stage.setScene(scene);
         stage.show();
-        levelGen = new LevelGen(120);
-        platformSprites = levelGen.createPlatformSprites();
-        waterSprites = levelGen.createWaterSprites();
+        level = new Level(120);
+        platformSprites = level.createPlatformSprites();
+        waterSprites = level.createLavaSprites();
     }
 
     @Test
@@ -69,8 +69,8 @@ public class AITest {
     }
     @Test
     public void testJump(){
-        AI aiNoJump = new AI(0);
-        AI aiJump = new AI(0);
+        AI aiNoJump = new AI(Difficulty.EASY);
+        AI aiJump = new AI(Difficulty.EASY);
         aiJump.jump();
         Assertions.assertNotEquals(aiJump.getVelocity(),aiNoJump.getVelocity());
     }
@@ -92,7 +92,11 @@ public class AITest {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 ai.displaySprite(renderer,image,ai.getSprite());
-                ai.moveX(10,platformSprites, levelGen.createGroundSprites());
+                ArrayList<Sprite> levelSprites = level.createGroundSprites();
+                ArrayList<Sprite> sprites = new ArrayList<>();
+                sprites.addAll(platformSprites);
+                sprites.addAll(levelSprites);
+                ai.moveX(sprites);
             }
         }.start();
     }
@@ -103,7 +107,11 @@ public class AITest {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 ai.displaySprite(renderer,image,ai.getSprite());
-                ai.moveY(10,platformSprites,waterSprites, levelGen.createGroundSprites());
+                ArrayList<Sprite> groundSprites = level.createGroundSprites();
+                ArrayList<Sprite> sprites = new ArrayList<>();
+                sprites.addAll(platformSprites);
+                sprites.addAll(groundSprites);
+                ai.moveY(sprites);
             }
         }.start();
     }

@@ -17,34 +17,33 @@ public class GameTest {
     Renderer renderer;
     Game game;
     ArrayList<Sprite> platformSprites;
-    LevelGen levelGen;
+    ArrayList<Sprite> movingPlatformSprites;
+    Level level;
 
 
     @Start
     public void start(Stage stage) {
-        game = new Game();
-        game.initGame(stage);
-        levelGen = new LevelGen(120);
+        game = new Game(stage);
+        level = new Level(120);
         renderer = new Renderer(1280,720);
     }
 
     @Test
     public void testFullGame() {
 
-        Image enemy = new Image("view/enemy.png");
-        Image clientImg = new Image("view/Body.png");
+        Image enemy = new Image("img/game/enemy.png");
+        Image clientImg = new Image("img/game/player.png");
         Image grass = new Image("Grass.png");
-        Image grassLeft = new Image("GrassLeft.png");
-        Image grassRight = new Image("GrassRight.png");
-        Image water = new Image("Water.png");
         Image ground = new Image("Dirt.png");
         Image end = new Image("EndNode.png");
-        platformSprites = levelGen.createPlatformSprites();
+        Image aiImg = new Image("AIBody.png");
+        platformSprites = level.createPlatformSprites();
+
 
         System.nanoTime();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                game.gameLoop(platformSprites,grass,ground,water,enemy,end,clientImg);
+                game.loop();
             }
         }.start();
     }
