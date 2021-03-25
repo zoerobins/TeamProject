@@ -23,7 +23,6 @@ public class Game {
     private final Sprite cloud;
     private final Parallax parallax;
     private Level level;
-
     public Game(Stage stage) {
         this.level = new Level(levelWidth);
         cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
@@ -31,7 +30,6 @@ public class Game {
         renderer = new Renderer();
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane, 1280, 720);
-
         aiLogic = new AILogic();
         client = new Client();
         aiPlayers = new ArrayList<>();
@@ -72,7 +70,6 @@ public class Game {
         ArrayList<Sprite> groundSprites = level.getGroundSprites();
         ArrayList<Enemy> enemies = level.getEnemies();
         ArrayList<MovingPlatform> movingPlatforms = level.getMovingPlatforms();
-
         if (client.isAlive()) {
             if (input.contains("UP") && client.getSprite().getY() >= 5) {
                 client.jump();
@@ -134,12 +131,10 @@ public class Game {
             Sprite enemySprite = enemy.getSprite();
             renderer.drawImage(enemySprite.getImage(), enemySprite.getX(), enemySprite.getY());
         }
-
         for (MovingPlatform movingPlatform : level.getMovingPlatforms()) {
             movingPlatform.movePlatform();
             movingPlatform.displaySprite(renderer, movingPlatform.getSprite().getImage(), movingPlatform.getSprite());
         }
-
         //Move camera
         double translateX = renderer.getCanvas().getTranslateX();
         if ((-1 *translateX) + 700 < client.getSprite().getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {

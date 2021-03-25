@@ -20,6 +20,7 @@ public class GuiHandler {
     public static Scene titleScreen;
     public static Scene multiPlayer;
     public static Scene menu;
+    public static Scene gameOverScreen;
 
     public Scene loadGui(Stage window) throws IOException {
 
@@ -30,12 +31,14 @@ public class GuiHandler {
         Parent titleScreenRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/title_screen.fxml")));
         Parent menuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/menu.fxml")));
         Parent multiPlayerRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/multi_player.fxml")));
+        Parent gameOverRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/game_over.fxml")));
 
         menu = new Scene(menuRoot, 1280, 720);
         singlePlayer = new Scene(singlePlayerRoot, 1280, 720);
         titleScreen = new Scene(titleScreenRoot, 1280, 720);
         settings = new Scene(settingsRoot, 1280, 720);
         multiPlayer = new Scene(multiPlayerRoot, 1280, 720);
+        gameOverScreen = new Scene(gameOverRoot, 1280, 720);
 
         ArrayList<Scene> scenes = new ArrayList<>();
         scenes.add(menu);
@@ -43,6 +46,7 @@ public class GuiHandler {
         scenes.add(titleScreen);
         scenes.add(settings);
         scenes.add(multiPlayer);
+        scenes.add(gameOverScreen);
 
         String stylesheetPath = "css/style.css";
 
