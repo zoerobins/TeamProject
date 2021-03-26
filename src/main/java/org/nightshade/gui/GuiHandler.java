@@ -29,7 +29,7 @@ public class GuiHandler {
 
         Parent settingsRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/GuiComponents/settings.fxml")));
         Parent singlePlayerRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/GuiComponents/single_player.fxml")));
-        Parent titleScreenRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/GuiComponentstitle_screen.fxml")));
+        Parent titleScreenRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/GuiComponents/title_screen.fxml")));
         Parent menuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/GuiComponents/menu.fxml")));
         Parent multiPlayerRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/GuiComponents/multi_player.fxml")));
         Parent gameOverRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/GuiComponents/game_over.fxml")));
