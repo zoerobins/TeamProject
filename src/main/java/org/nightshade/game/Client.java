@@ -54,7 +54,7 @@ public class Client {
         isAlive =false;
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
-    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingRight = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
@@ -77,6 +77,13 @@ public class Client {
                     return;
                 }
             }
+            for (PowerUp box : powerUps) {
+                if (box.intersects(sprite)) {
+                    box.collect();
+
+                }
+            }
+
             for (MovingPlatform movingPlatform : movingPlatforms){
                 if (movingPlatform.getSprite().intersects(sprite)){
                     if(movingRight){
@@ -96,7 +103,7 @@ public class Client {
             getSprite().setX(getSprite().getX() + (movingRight ? 1 : -1));
         }
     }
-    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
@@ -119,6 +126,14 @@ public class Client {
                     return;
                 }
             }
+
+            for (PowerUp box : powerUps) {
+                if (box.intersects(sprite)) {
+                    box.collect();
+
+                }
+            }
+
             for (MovingPlatform mPlatform : movingPlatforms) {
                 if (mPlatform.getSprite().intersects(sprite) && movingDown){
                     getSprite().setY(getSprite().getY() - 1);
