@@ -106,7 +106,11 @@ public class Client {
             }
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)){
-                    kill();
+                    if (this.ability == Ability.SHIELD){
+                        return;
+                    }else {
+                        kill();
+                    }
                     return;
                 }
             }
@@ -155,8 +159,13 @@ public class Client {
             }
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)) {
-                    kill();
-                    return;
+                    if (this.ability != Ability.SHIELD){
+                        kill();
+                        return;
+                    }else if (movingDown) {
+                        getSprite().setY(getSprite().getY() - 1);
+                        setCanJump(true);
+                    }
                 }
             }
             getSprite().setY(getSprite().getY() + (movingDown ? 1 : -1));
