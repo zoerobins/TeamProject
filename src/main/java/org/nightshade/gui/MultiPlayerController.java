@@ -30,14 +30,16 @@ public class MultiPlayerController {
         int portValue = Integer.parseInt(portNumBox.getText());
         String playerName = nameBox.getText();
 
-        System.out.println(serverIp);
-        System.out.println(portValue);
+        GuiHandler.stage.setScene(GuiHandler.multiPlayerLobby);
 
-        Client client = new Client(serverIp, portValue);
+        //System.out.println(serverIp);
+        //System.out.println(portValue);
+
+        //Client client = new Client(serverIp, portValue);
         //clientLogic = new ClientLogic(serverIp, portValue, client);
 
 
-        Game game = new Game(Main.stage);
+        //Game game = new Game(Main.stage);
 
     }
 
