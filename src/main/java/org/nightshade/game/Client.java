@@ -46,7 +46,11 @@ public class Client {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
             spotEffects.playSound(soundFile, true);
-            velocity = velocity.add(0, -30);
+            if (this.ability == Ability.JUMPBOOST){
+                velocity = velocity.add(0, -40);
+            }else {
+                velocity = velocity.add(0, -30);
+            }
             canJump = false;
         }
     }

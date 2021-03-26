@@ -53,7 +53,12 @@ public class PowerUp extends Sprite {
             return Ability.SLOWCLOUD;
         }
         */
-         return Ability.SPEEDBOOST;
+
+        if (randomNum<0.5){
+            return Ability.SPEEDBOOST;
+        }else{
+            return Ability.JUMPBOOST;
+        }
     }
 
 
