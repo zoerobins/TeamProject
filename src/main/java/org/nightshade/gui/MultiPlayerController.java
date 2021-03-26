@@ -19,12 +19,17 @@ public class MultiPlayerController {
 
     @FXML
     private TextField portNumBox;
+    @FXML
+    private TextField nameBox;
 
     public void playButton() throws IOException {
 
         ClientLogic clientLogic;
+
         String serverIp = serverIpBox.getText();
         int portValue = Integer.parseInt(portNumBox.getText());
+        String playerName = nameBox.getText();
+
         System.out.println(serverIp);
         System.out.println(portValue);
 
