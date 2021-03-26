@@ -97,8 +97,11 @@ public class Game {
         return this.aiPlayers;
     }
     public void loop() {
+        /*
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
+
+         */
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());

@@ -14,6 +14,7 @@ public class Client {
     private final Sprite sprite;
     private SpotEffects spotEffects;
     private Random random;
+    private Ability ability;
     public Client() {
         this.isAlive = true;
         this.canJump = true;
@@ -21,6 +22,7 @@ public class Client {
         this.sprite = new Sprite(new Image("img/game/player.png"),300,50);
         this.spotEffects = new SpotEffects();
         this.random = new Random();
+        this.ability = null;
     }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
@@ -56,6 +58,10 @@ public class Client {
     }
     public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingRight = value > 0;
+        int speed =1;
+        if (this.ability == Ability.SPEEDBOOST){
+            speed = 2;
+        }
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(sprite)){
@@ -80,7 +86,7 @@ public class Client {
             for (PowerUp box : powerUps) {
                 if (box.intersects(sprite)) {
                     box.collect();
-
+                    this.ability = box.getAbility();
                 }
             }
 
@@ -100,7 +106,8 @@ public class Client {
                     return;
                 }
             }
-            getSprite().setX(getSprite().getX() + (movingRight ? 1 : -1));
+
+            getSprite().setX(getSprite().getX() + (movingRight ? speed : -speed));
         }
     }
     public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
@@ -130,6 +137,7 @@ public class Client {
             for (PowerUp box : powerUps) {
                 if (box.intersects(sprite)) {
                     box.collect();
+                    this.ability = box.getAbility();
 
                 }
             }

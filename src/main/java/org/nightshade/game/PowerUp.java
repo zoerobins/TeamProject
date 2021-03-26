@@ -11,7 +11,7 @@ public class PowerUp extends Sprite {
     private double height;
     private boolean collected;
 
-    private String ability;
+    private Ability ability;
 
     public PowerUp(Image image, int x, int y) {
         super(image, x, y);
@@ -24,7 +24,7 @@ public class PowerUp extends Sprite {
         this.ability = assignRandomAbility();
     }
 
-    public String getAbility(){
+    public Ability getAbility(){
         return this.ability;
     }
 
@@ -40,18 +40,20 @@ public class PowerUp extends Sprite {
         this.height = 0;
     }
 
-
-    private String assignRandomAbility (){
+    private Ability assignRandomAbility (){
         double randomNum = Math.random();
+        /*
         if (randomNum<0.25){
-            return "PROTECTIVE SHIELD";
+            return Ability.JUMPBOOST;
         } else if (randomNum<0.5){
-            return "SPEED BOOST";
+            return Ability.SPEEDBOOST;
         }else if (randomNum<0.75){
-            return "SLOW CLOUD";
+            return Ability.SHIELD;
         }else{
-            return "JUMP BOOST";
+            return Ability.SLOWCLOUD;
         }
+        */
+         return Ability.SPEEDBOOST;
     }
 
 

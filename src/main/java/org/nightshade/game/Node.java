@@ -39,9 +39,9 @@ public enum Node {
         if (i == 10) {
             if (randomNumber <= 4) {
                 return Node.PLATFORM;
-            } else if (randomNumber <= 7) {
+            } else if (randomNumber < 5) {
                 return Node.ENEMY;
-            } else if(randomNumber <= 8){
+            } else if(randomNumber < 10){
                 return Node.POWERUP;
             }else {
                 return Node.AIR;
