@@ -16,6 +16,7 @@ public class MultiPlayerController {
 
     @FXML
     private TextField serverIpBox;
+
     @FXML
     private TextField portNumBox;
     @FXML
@@ -23,11 +24,11 @@ public class MultiPlayerController {
 
     public void playButton() {
 
+        ClientLogic clientLogic;
 
-
-      //  String serverIp = serverIpBox.getText();
-       // int portValue = Integer.parseInt(portNumBox.getText());
-       // String playerName = nameBox.getText();
+        //String serverIp = serverIpBox.getText();
+        //int portValue = Integer.parseInt(portNumBox.getText());
+        //String playerName = nameBox.getText();
 
         GuiHandler.stage.setScene(GuiHandler.multiPlayerLobby);
 
