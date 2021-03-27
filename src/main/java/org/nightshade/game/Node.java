@@ -9,6 +9,7 @@ public enum Node {
     GROUND,
     LAVA,
     ENEMY,
+    POWERUP,
     END;
 
     public static Node getRandomNode(int i, int j, int width) {
@@ -38,9 +39,11 @@ public enum Node {
         if (i == 10) {
             if (randomNumber <= 4) {
                 return Node.PLATFORM;
-            } else if (randomNumber <= 7) {
+            } else if (randomNumber < 5) {
                 return Node.ENEMY;
-            } else {
+            } else if(randomNumber < 10){
+                return Node.POWERUP;
+            }else {
                 return Node.AIR;
             }
         }

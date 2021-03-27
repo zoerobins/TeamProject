@@ -9,6 +9,7 @@ import org.nightshade.ai.AILogic;
 import org.nightshade.renderer.Renderer;
 import java.util.ArrayList;
 public class Game {
+
     private final int levelWidth = 120;
     private final int blockWidth = 60;
     private int verticalBlocksCount;
@@ -23,6 +24,7 @@ public class Game {
     private final Sprite cloud;
     private final Parallax parallax;
     private Level level;
+
     public Game(Stage stage) {
         this.level = new Level(levelWidth);
         cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
@@ -70,20 +72,22 @@ public class Game {
         ArrayList<Sprite> groundSprites = level.getGroundSprites();
         ArrayList<Enemy> enemies = level.getEnemies();
         ArrayList<MovingPlatform> movingPlatforms = level.getMovingPlatforms();
+        ArrayList<PowerUp>powerUps = level.getPowerUps();
+
         if (client.isAlive()) {
             if (input.contains("UP") && client.getSprite().getY() >= 5) {
                 client.jump();
             }
             if (input.contains("LEFT") && client.getSprite().getX() >= 5) {
-                client.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms);
+                client.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms,powerUps);
             }
             if (input.contains("RIGHT") && client.getSprite().getX() <= (levelWidth * blockWidth) - 5) {
-                client.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms);
+                client.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms,powerUps);
             }
             if (client.getVelocity().getY() < 10) {
                 client.setVelocity(client.getVelocity().add(0, 1));
             }
-            client.moveY((int) client.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms);
+            client.moveY((int) client.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms,powerUps);
         }
     }
     public void addAiPlayer(AI ai) {
@@ -93,8 +97,11 @@ public class Game {
         return this.aiPlayers;
     }
     public void loop() {
+
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
+
+
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());
@@ -135,6 +142,14 @@ public class Game {
             movingPlatform.movePlatform();
             movingPlatform.displaySprite(renderer, movingPlatform.getSprite().getImage(), movingPlatform.getSprite());
         }
+        for (PowerUp powerUp : level.getPowerUps()) {
+            if (powerUp.getCollected()){
+                //System.out.println(powerUp.getAbility());
+            }else {
+                renderer.drawImage(powerUp.getImage(), powerUp.getX(), powerUp.getY());
+            }
+        }
+
         //Move camera
         double translateX = renderer.getCanvas().getTranslateX();
         if ((-1 *translateX) + 700 < client.getSprite().getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
