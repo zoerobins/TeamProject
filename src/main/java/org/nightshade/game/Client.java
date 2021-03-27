@@ -2,6 +2,7 @@ package org.nightshade.game;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import org.nightshade.audio.SpotEffects;
+import org.nightshade.gui.GuiHandler;
 import org.nightshade.renderer.Renderer;
 import java.io.File;
 import java.util.ArrayList;
@@ -33,14 +34,12 @@ public class Client {
     public Point2D getVelocity() {
         return velocity;
     }
-
     public Sprite getSprite() {
         return sprite;
     }
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
-
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
@@ -49,11 +48,11 @@ public class Client {
             canJump = false;
         }
     }
-
     public void kill() {
         File soundFile = new File("src/main/resources/audio/die.mp3");
         spotEffects.playSoundUntilEnd(soundFile, true);
         isAlive =false;
+        GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
     public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
         boolean movingRight = value > 0;
@@ -78,7 +77,6 @@ public class Client {
                     return;
                 }
             }
-
             for (MovingPlatform movingPlatform : movingPlatforms){
                 if (movingPlatform.getSprite().intersects(sprite)){
                     if(movingRight){
@@ -89,7 +87,6 @@ public class Client {
                     return;
                 }
             }
-
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)){
                     kill();
@@ -122,7 +119,6 @@ public class Client {
                     return;
                 }
             }
-
             for (MovingPlatform mPlatform : movingPlatforms) {
                 if (mPlatform.getSprite().intersects(sprite) && movingDown){
                     getSprite().setY(getSprite().getY() - 1);
@@ -130,7 +126,6 @@ public class Client {
                     return;
                 }
             }
-
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)) {
                     kill();
@@ -140,5 +135,4 @@ public class Client {
             getSprite().setY(getSprite().getY() + (movingDown ? 1 : -1));
         }
     }
-
 }

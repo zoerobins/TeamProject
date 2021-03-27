@@ -71,7 +71,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testKill(){
+    public void testKill() {
         Assertions.assertTrue(client.isAlive());
         client.kill();
         Assertions.assertFalse(client.isAlive());
