@@ -2,6 +2,7 @@ package org.nightshade.game;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import org.nightshade.audio.SpotEffects;
+import org.nightshade.gui.GuiHandler;
 import org.nightshade.renderer.Renderer;
 import java.io.File;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Client {
     private final Sprite sprite;
     private SpotEffects spotEffects;
     private Random random;
+    private Ability ability;
     public Client() {
         this.isAlive = true;
         this.canJump = true;
@@ -20,6 +22,7 @@ public class Client {
         this.sprite = new Sprite(new Image("img/game/player.png"),300,50);
         this.spotEffects = new SpotEffects();
         this.random = new Random();
+        this.ability = null;
     }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
@@ -33,30 +36,36 @@ public class Client {
     public Point2D getVelocity() {
         return velocity;
     }
-
     public Sprite getSprite() {
         return sprite;
     }
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
-
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
             spotEffects.playSound(soundFile, true);
-            velocity = velocity.add(0, -30);
+            if (this.ability == Ability.JUMPBOOST){
+                velocity = velocity.add(0, -40);
+            }else {
+                velocity = velocity.add(0, -30);
+            }
             canJump = false;
         }
     }
-
     public void kill() {
         File soundFile = new File("src/main/resources/audio/die.mp3");
         spotEffects.playSoundUntilEnd(soundFile, true);
         isAlive =false;
+        GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
-    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingRight = value > 0;
+        int speed =1;
+        if (this.ability == Ability.SPEEDBOOST){
+            speed = 2;
+        }
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(sprite)){
@@ -78,6 +87,12 @@ public class Client {
                     return;
                 }
             }
+            for (PowerUp box : powerUps) {
+                if (box.intersects(sprite)) {
+                    box.collect();
+                    this.ability = box.getAbility();
+                }
+            }
 
             for (MovingPlatform movingPlatform : movingPlatforms){
                 if (movingPlatform.getSprite().intersects(sprite)){
@@ -89,17 +104,21 @@ public class Client {
                     return;
                 }
             }
-
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)){
-                    kill();
+                    if (this.ability == Ability.SHIELD){
+                        return;
+                    }else {
+                        kill();
+                    }
                     return;
                 }
             }
-            getSprite().setX(getSprite().getX() + (movingRight ? 1 : -1));
+
+            getSprite().setX(getSprite().getX() + (movingRight ? speed : -speed));
         }
     }
-    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
@@ -123,6 +142,14 @@ public class Client {
                 }
             }
 
+            for (PowerUp box : powerUps) {
+                if (box.intersects(sprite)) {
+                    box.collect();
+                    this.ability = box.getAbility();
+
+                }
+            }
+
             for (MovingPlatform mPlatform : movingPlatforms) {
                 if (mPlatform.getSprite().intersects(sprite) && movingDown){
                     getSprite().setY(getSprite().getY() - 1);
@@ -130,15 +157,18 @@ public class Client {
                     return;
                 }
             }
-
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)) {
-                    kill();
-                    return;
+                    if (this.ability != Ability.SHIELD){
+                        kill();
+                        return;
+                    }else if (movingDown) {
+                        getSprite().setY(getSprite().getY() - 1);
+                        setCanJump(true);
+                    }
                 }
             }
             getSprite().setY(getSprite().getY() + (movingDown ? 1 : -1));
         }
     }
-
 }
