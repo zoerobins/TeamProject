@@ -14,5 +14,6 @@
             <TableColumn fx:id="readyColumn" prefWidth="161.0" text="Ready" />
         </columns>
       </TableView>
+        <Button id="ready-button" fx:id="readyButton" layoutX="600.0" layoutY="515.0" mnemonicParsing="false" onAction="#readyButton" prefHeight="32.0" prefWidth="80.0" text="Ready!" />
     </children>
 </AnchorPane>
