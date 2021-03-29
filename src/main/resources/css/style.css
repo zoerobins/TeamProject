@@ -79,3 +79,36 @@
     -fx-pref-height: 32;
     -fx-translate-x: 0;
 }
+
+#ready-button {
+    -fx-background-radius: 50, 50, 50;
+    -fx-background-color: #363636;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-cursor: pointer;
+    -fx-outline: none;
+    -fx-pref-width: 80;
+    -fx-pref-height: 32;
+}
+
+#ready-button:hover {
+    -fx-background-color: #4E4E4E;
+    -fx-pref-width: 100;
+    -fx-pref-height: 40;
+    -fx-translate-x: -10;
+    -fx-font-size: 20px;
+}
+
+
+/*re-align play button*/
+#ready-button:pressed {
+    -fx-background-radius: 50, 50, 50;
+    -fx-background-color: #232323;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-cursor: pointer;
+    -fx-outline: none;
+    -fx-pref-width: 80;
+    -fx-pref-height: 32;
+    -fx-translate-x: 0;
+}

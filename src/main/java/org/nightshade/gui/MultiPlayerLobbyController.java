@@ -23,6 +23,13 @@ public class MultiPlayerLobbyController implements Initializable {
         GuiHandler.stage.setScene(GuiHandler.menu);
     }
 
+    public void readyButton() {
+        GuiHandler.player.setReady("READY");
+        System.out.println("player ready");
+        // update table
+        // start game
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         nameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("Name"));
