@@ -22,8 +22,10 @@ public class GuiHandler {
     public static Scene menu;
     public static Scene gameOverScreen;
     public static Scene multiPlayerLobby;
+    public static Player player = new Player("Enter Name");
 
     public Scene loadGui(Stage window) throws IOException {
+
 
         stage = window;
 
