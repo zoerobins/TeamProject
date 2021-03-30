@@ -8,10 +8,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import org.nightshade.Main;
+import org.nightshade.multiplayer.Client;
+import org.nightshade.multiplayer.Game;
 
 public class MultiPlayerLobbyController implements Initializable {
 
@@ -27,7 +30,9 @@ public class MultiPlayerLobbyController implements Initializable {
         GuiHandler.player.setReady("READY");
         tableView.refresh();
         // start game
-        
+        Client client = new Client();
+        Game game = new Game(Main.stage); // need to create game in server and add to that instead
+        game.addClient(client);
     }
 
     @Override
@@ -37,6 +42,7 @@ public class MultiPlayerLobbyController implements Initializable {
 
         tableView.setItems(getPlayers());
     }
+
     public ObservableList<Player> getPlayers(){
         ObservableList<Player> players = FXCollections.observableArrayList();
         players.add(GuiHandler.player);

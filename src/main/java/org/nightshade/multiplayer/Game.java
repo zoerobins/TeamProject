@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.nightshade.ai.AI;
 import org.nightshade.renderer.Renderer;
 
 import java.util.ArrayList;
@@ -15,10 +16,11 @@ public class Game {
     private int verticalBlocksCount;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;
+    private final ArrayList<Client> clients;
     private final ArrayList<Image> lavaImages;
     private final ArrayList<String> input = new ArrayList<>();
     private final Renderer renderer;
-    private final Client client;
+    //private final Client client;
     private final Sprite cloud;
     private final Parallax parallax;
     private Level level;
@@ -29,7 +31,8 @@ public class Game {
         renderer = new Renderer();
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane, 1280, 720);
-        client = new Client();
+        //client = new Client();
+        clients = new ArrayList<>();
         cloud.setX(-1300);
         renderer.setHeight(720);
         renderer.setWidth(levelWidth * blockWidth);
@@ -46,6 +49,15 @@ public class Game {
             }
         }.start();
     }
+
+    public void addClient(Client client) {
+        clients.add(client);
+    }
+
+    public ArrayList<Client> getClients() {
+        return this.clients;
+    }
+
     private void checkForInput(Scene scene) {
         scene.setOnKeyPressed(
                 keyEvent -> {
@@ -67,7 +79,7 @@ public class Game {
         ArrayList<Sprite> groundSprites = level.getGroundSprites();
         ArrayList<Enemy> enemies = level.getEnemies();
         ArrayList<MovingPlatform> movingPlatforms = level.getMovingPlatforms();
-        if (client.isAlive()) {
+        /*if (client.isAlive()) {
             if (input.contains("UP") && client.getSprite().getY() >= 5) {
                 client.jump();
             }
@@ -81,7 +93,7 @@ public class Game {
                 client.setVelocity(client.getVelocity().add(0, 1));
             }
             client.moveY((int) client.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms);
-        }
+        }*/
     }
     public void loop() {
         parallax.move();
@@ -93,7 +105,7 @@ public class Game {
             renderer.drawImage(lavaImages.get(animationIndex), lavaSprite.getX(), lavaSprite.getY());
         }
         // move cloud
-        if (client.getSprite().getX() - cloud.getX() > 2000) {
+        /*if (client.getSprite().getX() - cloud.getX() > 2000) {
             cloud.setX(client.getSprite().getX() - 2000);
         } else {
             cloud.setX(cloud.getX() + 2);
@@ -107,7 +119,7 @@ public class Game {
             if (intersectsCloud) {
                 client.kill();
             }
-        }
+        }*/
         for (Enemy enemy : level.getEnemies()) {
             enemy.moveEnemy();
             Sprite enemySprite = enemy.getSprite();
@@ -119,11 +131,11 @@ public class Game {
         }
         //Move camera
         double translateX = renderer.getCanvas().getTranslateX();
-        if ((-1 *translateX) + 700 < client.getSprite().getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
+        /*if ((-1 *translateX) + 700 < client.getSprite().getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
             renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - client.getSprite().getX())));
         } else {
             renderer.getCanvas().setTranslateX((int) (translateX));
-        }
+        }*/
         xViewCoordinate = (int) (-1 * translateX);
     }
     private void renderSprites(ArrayList<Sprite> sprites) {
