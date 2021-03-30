@@ -25,9 +25,9 @@ public class MultiPlayerLobbyController implements Initializable {
 
     public void readyButton() {
         GuiHandler.player.setReady("READY");
-        System.out.println("player ready");
-        // update table
+        tableView.refresh();
         // start game
+        
     }
 
     @Override
