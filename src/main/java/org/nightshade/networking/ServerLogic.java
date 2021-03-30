@@ -20,7 +20,7 @@ public class ServerLogic {
         serverSocket = new ServerSocket(portValue);
         System.out.println("Started game server");
         //game = new GameLogic();
-        //game = new Game(Main.stage);
+        //game = new Game(Server.serverStage);
     }
 
     public static Game getGame() {
@@ -29,7 +29,7 @@ public class ServerLogic {
 
     public void waitForPlayers() throws IOException {
         int clientNo = 1;
-        while(true) {
+        while(clientNo < 5) {
             Socket client = serverSocket.accept();
             System.out.println("Client arrived");
             System.out.println("Starting thread for client " + clientNo);
