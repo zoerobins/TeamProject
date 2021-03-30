@@ -24,24 +24,20 @@ public class MultiPlayerController implements Initializable {
     @FXML
     private TextField nameBox;
 
-    public void playButton(){
-
-        ClientLogic clientLogic;
+    public void playButton() throws IOException {
 
         //String serverIp = serverIpBox.getText();
         //int portValue = Integer.parseInt(portNumBox.getText());
-        //String playerName = nameBox.getText();
 
         GuiHandler.player.setName(nameBox.getText());
-
-        changeScene();
 
         //System.out.println(serverIp);
         //System.out.println(portValue);
 
         //Client client = new Client(serverIp, portValue);
-        //clientLogic = new ClientLogic(serverIp, portValue, client);
+        //ClientLogic clientLogic = new ClientLogic(serverIp, portValue, client);
 
+        changeScene();
 
         //Game game = new Game(Main.stage);
 

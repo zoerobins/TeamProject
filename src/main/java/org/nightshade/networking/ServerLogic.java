@@ -11,7 +11,8 @@ import org.nightshade.multiplayer.Game;
 public class ServerLogic {
 
     private int portValue;
-    static GameLogic game = null;
+    //static GameLogic game = null;
+    static Game game;
     static ServerSocket serverSocket;
 
     public ServerLogic(int portValue) throws IOException {
@@ -19,7 +20,11 @@ public class ServerLogic {
         serverSocket = new ServerSocket(portValue);
         System.out.println("Started game server");
         //game = new GameLogic();
-        Game game = new Game(Main.stage);
+        //game = new Game(Main.stage);
+    }
+
+    public static Game getGame() {
+        return game;
     }
 
     public void waitForPlayers() throws IOException {
