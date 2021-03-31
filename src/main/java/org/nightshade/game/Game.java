@@ -97,10 +97,10 @@ public class Game {
         return this.aiPlayers;
     }
     public void loop() {
-
+/*
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
-
+*/
 
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
@@ -149,6 +149,12 @@ public class Game {
                 renderer.drawImage(powerUp.getImage(), powerUp.getX(), powerUp.getY());
             }
         }
+        if (client.powerUpTimer > 0){
+            client.reducePowerUpTimer();
+        }else {
+            client.removeAbility();
+        }
+
 
         //Move camera
         double translateX = renderer.getCanvas().getTranslateX();
