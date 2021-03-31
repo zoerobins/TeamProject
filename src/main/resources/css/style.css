@@ -66,7 +66,6 @@
     -fx-font-size: 20px;
 }
 
-
 /*re-align play button*/
 #play-button:pressed {
     -fx-background-radius: 50, 50, 50;
@@ -84,19 +83,19 @@
     -fx-background-radius: 50, 50, 50;
     -fx-background-color: #363636;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
+    -fx-font-size: 20px;
     -fx-cursor: pointer;
     -fx-outline: none;
-    -fx-pref-width: 80;
-    -fx-pref-height: 32;
+    -fx-pref-width: 160;
+    -fx-pref-height: 64;
 }
 
 #ready-button:hover {
     -fx-background-color: #4E4E4E;
-    -fx-pref-width: 100;
-    -fx-pref-height: 40;
+    -fx-pref-width: 200;
+    -fx-pref-height: 80;
     -fx-translate-x: -10;
-    -fx-font-size: 20px;
+    -fx-font-size: 24px;
 }
 
 
@@ -105,10 +104,10 @@
     -fx-background-radius: 50, 50, 50;
     -fx-background-color: #232323;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
+    -fx-font-size: 20px;
     -fx-cursor: pointer;
     -fx-outline: none;
-    -fx-pref-width: 80;
-    -fx-pref-height: 32;
+    -fx-pref-width: 160;
+    -fx-pref-height: 64;
     -fx-translate-x: 0;
 }
