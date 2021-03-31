@@ -37,6 +37,7 @@ public class MultiPlayerLobbyController implements Initializable {
         }else{
             GuiHandler.player.setReady("NOT READY");
             tableView.refresh();
+            readyButton.setText("Ready");
         }
 
         /*if(ServerLogic.getClientThreads() != null) {
