@@ -24,7 +24,7 @@ public class Game {
     private final Sprite cloud;
     private final Parallax parallax;
     private Level level;
-    public Game(Stage stage) {
+    public Game(Stage stage, int numClients) {
         this.level = new Level(levelWidth);
         cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
         parallax = new Parallax();
@@ -32,6 +32,9 @@ public class Game {
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane, 1280, 720);
         //client = new Client();
+        for(int i=0; i<numClients; i++) {
+            new Client();
+        }
         clients = new ArrayList<>();
         cloud.setX(-1300);
         renderer.setHeight(720);

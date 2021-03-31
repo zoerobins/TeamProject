@@ -59,11 +59,11 @@ public class MultiPlayerLobbyController implements Initializable {
         if(allReady) {
             // start game
             System.out.println("all players ready");
-
+            Game game = new Game(Main.stage, tableView.getItems().size()); // need to create game in server and add to that instead
+            //game.addClient(client);
+            
         }
 
-        //Game game = new Game(Main.stage); // need to create game in server and add to that instead
-        //game.addClient(client);
 
     }
 
