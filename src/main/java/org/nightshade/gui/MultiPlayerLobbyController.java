@@ -38,12 +38,14 @@ public class MultiPlayerLobbyController implements Initializable {
             GuiHandler.player.setReady("NOT READY");
             tableView.refresh();
         }
-        if(ServerLogic.getClientThreads() != null) {
+
+        /*if(ServerLogic.getClientThreads() != null) {
             int numClients = ServerLogic.getClientThreads().size();
             System.out.println("number of clients: " + numClients);
         } else {
             System.out.println("no client threads");
-        }
+        }*/
+
         //Game game = new Game(Main.stage); // need to create game in server and add to that instead
         //game.addClient(client);
     }
