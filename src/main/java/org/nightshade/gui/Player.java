@@ -10,6 +10,10 @@ public class Player {
         this.ready = "NOT READY";
     }
 
+    public Player(String name, String ready) {
+        this.name = name;
+        this.ready = ready;
+    }
 
     public String getIp(){
         return this.ip;

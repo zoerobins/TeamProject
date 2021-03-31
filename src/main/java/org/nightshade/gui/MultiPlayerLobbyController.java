@@ -47,8 +47,24 @@ public class MultiPlayerLobbyController implements Initializable {
             System.out.println("no client threads");
         }*/
 
+        boolean allReady = false;
+        for (Player ready : tableView.getItems()) {
+            if(readyColumn.getCellObservableValue(ready).getValue() == "NOT READY") {
+                allReady = false;
+                break;
+            } else {
+                allReady = true;
+            }
+        }
+        if(allReady) {
+            // start game
+            System.out.println("all players ready");
+
+        }
+
         //Game game = new Game(Main.stage); // need to create game in server and add to that instead
         //game.addClient(client);
+
     }
 
     public void makeTable(){
@@ -65,10 +81,10 @@ public class MultiPlayerLobbyController implements Initializable {
     public ObservableList<Player> getPlayers(){
         ObservableList<Player> players = FXCollections.observableArrayList();
         players.add(GuiHandler.player);
-        System.out.println(GuiHandler.player.getReady());
-        players.add(new Player("player 2"));
-        players.add(new Player("FifaPlayer52"));
-        players.add(new Player("brian1997"));
+        //System.out.println(GuiHandler.player.getReady());
+        players.add(new Player("player 2", "READY"));
+        players.add(new Player("FifaPlayer52", "READY"));
+        players.add(new Player("brian1997", "READY"));
 
         return players;
     }
