@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,6 +19,7 @@ public class MultiPlayerLobbyController implements Initializable {
     @FXML private TableView<Player> tableView;
     @FXML private TableColumn<Player,String>nameColumn;
     @FXML private TableColumn<Player,String>readyColumn;
+    @FXML private Button readyButton;
 
     public void backButton() {
         GuiHandler.stage.setScene(GuiHandler.menu);
@@ -27,6 +29,7 @@ public class MultiPlayerLobbyController implements Initializable {
         if (GuiHandler.player.getReady() == "NOT READY") {
             GuiHandler.player.setReady("READY");
             tableView.refresh();
+            readyButton.setText("Not Ready");
         }else{
             GuiHandler.player.setReady("NOT READY");
             tableView.refresh();
