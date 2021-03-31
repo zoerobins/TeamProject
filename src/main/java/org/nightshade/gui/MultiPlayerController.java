@@ -26,20 +26,14 @@ public class MultiPlayerController implements Initializable {
 
     public void playButton() throws IOException {
 
-        //String serverIp = serverIpBox.getText();
-        //int portValue = Integer.parseInt(portNumBox.getText());
+        String serverIp = serverIpBox.getText();
+        int portValue = Integer.parseInt(portNumBox.getText());
 
         GuiHandler.player.setName(nameBox.getText());
 
-        //System.out.println(serverIp);
-        //System.out.println(portValue);
-
-        //Client client = new Client(serverIp, portValue);
-        //ClientLogic clientLogic = new ClientLogic(serverIp, portValue, client);
+        Client client = new Client(serverIp, portValue);
 
         changeScene();
-
-        //Game game = new Game(Main.stage);
 
     }
     public void changeScene(){

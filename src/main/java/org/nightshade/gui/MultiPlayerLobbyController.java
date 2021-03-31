@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import org.nightshade.Main;
 import org.nightshade.multiplayer.Client;
 import org.nightshade.multiplayer.Game;
+import org.nightshade.networking.ServerLogic;
 
 public class MultiPlayerLobbyController implements Initializable {
 
@@ -37,11 +38,14 @@ public class MultiPlayerLobbyController implements Initializable {
             GuiHandler.player.setReady("NOT READY");
             tableView.refresh();
         }
-        // update table
-        // start game
-        Client client = new Client();
-        Game game = new Game(Main.stage); // need to create game in server and add to that instead
-        game.addClient(client);
+        if(ServerLogic.getClientThreads() != null) {
+            int numClients = ServerLogic.getClientThreads().size();
+            System.out.println("number of clients: " + numClients);
+        } else {
+            System.out.println("no client threads");
+        }
+        //Game game = new Game(Main.stage); // need to create game in server and add to that instead
+        //game.addClient(client);
     }
 
     public void makeTable(){
