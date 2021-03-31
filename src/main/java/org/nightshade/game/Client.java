@@ -14,7 +14,8 @@ public class Client {
     private final Sprite sprite;
     private SpotEffects spotEffects;
     private Random random;
-    private Ability ability;
+    public Ability ability;
+    public int powerUpTimer;
     public Client() {
         this.isAlive = true;
         this.canJump = true;
@@ -23,6 +24,7 @@ public class Client {
         this.spotEffects = new SpotEffects();
         this.random = new Random();
         this.ability = null;
+        this.powerUpTimer = 0;
     }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
@@ -41,6 +43,15 @@ public class Client {
     }
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
+    }
+    public void reducePowerUpTimer(){
+        this.powerUpTimer = powerUpTimer-1;
+    }
+    private void setPowerUpTimer(){
+        this.powerUpTimer = 50;
+    }
+    public void removeAbility(){
+        this.ability = null;
     }
     public void jump() {
         if (canJump) {
@@ -91,6 +102,7 @@ public class Client {
                 if (box.intersects(sprite)) {
                     box.collect();
                     this.ability = box.getAbility();
+                    this.setPowerUpTimer();
                 }
             }
 
@@ -146,6 +158,7 @@ public class Client {
                 if (box.intersects(sprite)) {
                     box.collect();
                     this.ability = box.getAbility();
+                    this.setPowerUpTimer();
 
                 }
             }
