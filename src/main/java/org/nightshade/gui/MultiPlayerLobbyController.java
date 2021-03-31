@@ -24,22 +24,33 @@ public class MultiPlayerLobbyController implements Initializable {
     }
 
     public void readyButton() {
-        GuiHandler.player.setReady("READY");
-        System.out.println("player ready");
+        if (GuiHandler.player.getReady() == "NOT READY") {
+            GuiHandler.player.setReady("READY");
+            tableView.refresh();
+        }else{
+            GuiHandler.player.setReady("NOT READY");
+            tableView.refresh();
+        }
         // update table
         // start game
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void makeTable(){
         nameColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("Name"));
         readyColumn.setCellValueFactory(new PropertyValueFactory<Player,String>("Ready"));
-
         tableView.setItems(getPlayers());
     }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        makeTable();
+    }
+
     public ObservableList<Player> getPlayers(){
         ObservableList<Player> players = FXCollections.observableArrayList();
         players.add(GuiHandler.player);
+        System.out.println(GuiHandler.player.getReady());
         players.add(new Player("player 2"));
         players.add(new Player("FifaPlayer52"));
         players.add(new Player("brian1997"));
