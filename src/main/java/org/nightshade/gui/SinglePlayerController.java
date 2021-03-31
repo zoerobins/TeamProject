@@ -51,17 +51,9 @@ public class SinglePlayerController implements Initializable {
         ai2ToggleGroup = new ToggleGroup();
         ai3ToggleGroup = new ToggleGroup();
 
-        ai1EasyRadio.setToggleGroup(ai1ToggleGroup);
-        ai1MediumRadio.setToggleGroup(ai1ToggleGroup);
-        ai1HardRadio.setToggleGroup(ai1ToggleGroup);
-
-        ai2EasyRadio.setToggleGroup(ai2ToggleGroup);
-        ai2MediumRadio.setToggleGroup(ai2ToggleGroup);
-        ai2HardRadio.setToggleGroup(ai2ToggleGroup);
-
-        ai3EasyRadio.setToggleGroup(ai3ToggleGroup);
-        ai3MediumRadio.setToggleGroup(ai3ToggleGroup);
-        ai3HardRadio.setToggleGroup(ai3ToggleGroup);
+        setToggleGroup(ai1EasyRadio,ai1MediumRadio,ai1HardRadio,ai1ToggleGroup);
+        setToggleGroup(ai2EasyRadio,ai2MediumRadio,ai2HardRadio,ai2ToggleGroup);
+        setToggleGroup(ai3EasyRadio,ai3MediumRadio,ai3HardRadio,ai3ToggleGroup);
 
         easyRadioButtons = new ArrayList<>();
         easyRadioButtons.add(ai1EasyRadio);
@@ -104,6 +96,13 @@ public class SinglePlayerController implements Initializable {
     }
 
     @FXML
+    private void setToggleGroup(RadioButton b1, RadioButton b2, RadioButton b3, ToggleGroup tg){
+        b1.setToggleGroup(tg);
+        b2.setToggleGroup(tg);
+        b3.setToggleGroup(tg);
+    }
+
+    @FXML
     public void backToMain(ActionEvent event) {
         GuiHandler.stage.setScene(GuiHandler.menu);
     }
@@ -116,12 +115,9 @@ public class SinglePlayerController implements Initializable {
     @FXML
     public void startButtonHandler(ActionEvent event) {
         Game game = new Game(Main.stage);
-
-        addAiPlayers(game, ai1Check, ai1ToggleGroup);
-
-        addAiPlayers(game, ai2Check, ai2ToggleGroup);
-
-        addAiPlayers(game, ai3Check, ai3ToggleGroup);
+        addAiPlayers(game,ai1Check,ai1ToggleGroup);
+        addAiPlayers(game,ai2Check,ai2ToggleGroup);
+        addAiPlayers(game,ai3Check,ai3ToggleGroup);
     }
 
     private void addAiPlayers(Game game, CheckBox checkBox, ToggleGroup toggleGroup) {
@@ -138,11 +134,9 @@ public class SinglePlayerController implements Initializable {
 
     @FXML
     public void checkBoxHandler(ActionEvent event) {
-        checkBoxHandlerHelper(ai1Check, ai1EasyRadio, ai1ToggleGroup, ai1RadioButtons);
-
-        checkBoxHandlerHelper(ai2Check, ai2EasyRadio, ai2ToggleGroup, ai2RadioButtons);
-
-        checkBoxHandlerHelper(ai3Check, ai3EasyRadio, ai3ToggleGroup, ai3RadioButtons);
+        checkBoxHandlerHelper(ai1Check,ai1EasyRadio,ai1ToggleGroup,ai1RadioButtons);
+        checkBoxHandlerHelper(ai2Check,ai2EasyRadio,ai2ToggleGroup,ai2RadioButtons);
+        checkBoxHandlerHelper(ai3Check,ai3EasyRadio,ai3ToggleGroup,ai3RadioButtons);
     }
 
     private void checkBoxHandlerHelper(CheckBox checkBox, RadioButton easyRadioButton, ToggleGroup toggleGroup, ArrayList<RadioButton> radioButtons) {
