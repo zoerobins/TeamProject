@@ -42,7 +42,7 @@ public class PowerUp extends Sprite {
 
     private Ability assignRandomAbility (){
         double randomNum = Math.random();
-/*
+
         if (randomNum<0.33){
             return Ability.JUMPBOOST;
         } else if (randomNum<0.67){
@@ -50,8 +50,7 @@ public class PowerUp extends Sprite {
         }else {
             return Ability.SHIELD;
         }
-*/
-        return Ability.SPEEDBOOST;
+
     }
 
 
