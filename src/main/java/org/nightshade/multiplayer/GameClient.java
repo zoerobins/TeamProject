@@ -10,20 +10,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Client {
+public class GameClient {
     private boolean isAlive;
     private boolean canJump;
     private Point2D velocity;
     private final Sprite sprite;
     private SpotEffects spotEffects;
     private Random random;
-    public Client() {
+    public String name;
+    public GameClient(String name) {
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
         this.sprite = new Sprite(new Image("img/game/player.png"),300,50);
         this.spotEffects = new SpotEffects();
         this.random = new Random();
+        this.name = name;
     }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;

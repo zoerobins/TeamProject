@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import org.nightshade.Main;
-import org.nightshade.multiplayer.Client;
 import org.nightshade.multiplayer.Game;
 
 public class ServerLogic {

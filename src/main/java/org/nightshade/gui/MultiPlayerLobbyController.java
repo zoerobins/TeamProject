@@ -10,13 +10,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.nightshade.Main;
-import org.nightshade.multiplayer.Client;
 import org.nightshade.multiplayer.Game;
-import org.nightshade.networking.ServerLogic;
+import org.nightshade.multiplayer.GameHandler;
 
 public class MultiPlayerLobbyController implements Initializable {
 
@@ -59,7 +57,7 @@ public class MultiPlayerLobbyController implements Initializable {
         if(allReady) {
             // start game
             System.out.println("all players ready");
-            Game game = new Game(Main.stage, tableView.getItems().size()); // need to create game in server and add to that instead
+            GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName()); // need to create game in server and add to that instead
             //game.addClient(client);
             
         }
