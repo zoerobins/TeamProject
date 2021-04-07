@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 public class Client {
 
     //private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private String name;
     private String serverIp;
     private int portValue;
     private ClientLogic clientLogic;
@@ -25,8 +26,9 @@ public class Client {
         }
     }*/
 
-    public Client(String serverIp, int portValue) throws IOException {
+    public Client(String name, String serverIp, int portValue) throws IOException {
         clientLogic = new ClientLogic(serverIp, portValue, this);
+        this.name = name;
     }
 
     /*public void actOnInput() throws IOException {
