@@ -6,12 +6,12 @@ import java.io.InputStreamReader;
 
 public class Client {
 
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    //private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private String serverIp;
     private int portValue;
     private ClientLogic clientLogic;
 
-    public Client() {
+    /*public Client() {
         try {
             System.out.println("Please enter the server name or IP address: ");
             serverIp = br.readLine();
@@ -23,13 +23,13 @@ public class Client {
         } catch (NumberFormatException e2) {
             System.out.println("port can only be a number");
         }
-    }
+    }*/
 
     public Client(String serverIp, int portValue) throws IOException {
         clientLogic = new ClientLogic(serverIp, portValue, this);
     }
 
-    public void actOnInput() throws IOException {
+    /*public void actOnInput() throws IOException {
         while(true) {
             System.out.println("Enter command: ");
             String command = br.readLine();
@@ -48,16 +48,16 @@ public class Client {
                     break;
             }
         }
-    }
+    }*/
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Client client = new Client();
         try {
             client.actOnInput();
         } catch (IOException e) {
             System.out.println("Buffered reader does not exist");
         }
-    }
+    }*/
 
     public void outputSent(String reply) {
         System.out.println(reply);

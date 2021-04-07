@@ -1,9 +1,6 @@
 package org.nightshade.networking;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -11,6 +8,8 @@ public class ClientLogic implements Runnable {
 
     private PrintWriter output;
     private BufferedReader input;
+    private ObjectOutputStream objectOutput;
+    private ObjectInputStream objectInput;
     private Client client;
     private Thread thread;
     private Socket server;
@@ -18,8 +17,10 @@ public class ClientLogic implements Runnable {
 
     public ClientLogic(String serverIp, int portValue, Client client) throws IOException {
         server = new Socket(serverIp, portValue);
-        output = new PrintWriter(server.getOutputStream(), false);
+        output = new PrintWriter(server.getOutputStream(), true);
         input = new BufferedReader(new InputStreamReader(server.getInputStream()));
+        objectOutput = new ObjectOutputStream(server.getOutputStream());
+        objectInput = new ObjectInputStream(server.getInputStream());
         csc = new ClientServerController();
         this.client = client;
         thread = new Thread(this);
@@ -36,22 +37,33 @@ public class ClientLogic implements Runnable {
             csc.clientToClientMessage(client, "Connection lost to server");
         } catch (RuntimeException e2) {
             csc.clientToClientMessage(client, "Connection lost to server");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
-    private void waitForServer() throws IOException, SocketException, RuntimeException {
+    private void waitForServer() throws IOException, SocketException, RuntimeException, ClassNotFoundException {
         while(true) {
-            String serverReply = input.readLine();
-            csc.clientToClientMessage(client, serverReply);
+            /*String serverReply;
+            while((serverReply = input.readLine()) != null) {
+                System.out.println(serverReply);
+                //csc.clientToClientMessage(client, serverReply);
+            }*/
+            PlayerMoveMsg moveMsg;
+            moveMsg = (PlayerMoveMsg)objectInput.readObject();
+
         }
     }
 
-    public void sendToServer(String message) {
-        csc.clientToServerMessage(output, message);
+    public void sendToServer(String name, int x, int y, boolean alive) throws IOException {
+        //csc.clientToServerMessage(output, message);
+        //output.println(message);
+        //output.println(new PlayerMoveMsg(name, x, y, alive));
+        objectOutput.writeObject(new PlayerMoveMsg(name, x, y, alive));
     }
 
 
-    public void moveL() {
+    /*public void moveL() {
         sendToServer("move left");
     }
 
@@ -61,6 +73,6 @@ public class ClientLogic implements Runnable {
 
     public void jump() {
         sendToServer("jump");
-    }
+    }*/
 
 }
