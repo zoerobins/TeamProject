@@ -36,7 +36,7 @@ public class Game {
         renderer = new Renderer();
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane, 1280, 720);
-        gameClients = new ArrayList<>();
+        //gameClients = new ArrayList<>();
         cloud.setX(-1300);
         renderer.setHeight(720);
         renderer.setWidth(levelWidth * blockWidth);
@@ -94,7 +94,30 @@ public class Game {
         //
         // send new isAlive, x and y of local client to the other clients and update their isAlive, x and y values to the new ones that they send
         //
+        sendUpdatedX(localGameClient.getSprite().getX());
+        sendUpdatedY(localGameClient.getSprite().getY());
+        sendIsAlive(localGameClient.isAlive());
+        getOtherPlayerPositions();  // need to read in values sent back and act on them
+
+
     }
+
+    public static void sendUpdatedX(int xPos) {
+
+    }
+
+    public static void sendUpdatedY(int yPos) {
+
+    }
+
+    public static void sendIsAlive(boolean isAlive) {
+
+    }
+
+    public static void getOtherPlayerPositions() {
+
+    }
+
     public void loop() {
         parallax.move();
         parallax.render(renderer, xViewCoordinate);

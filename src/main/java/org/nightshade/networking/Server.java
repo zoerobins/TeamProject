@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 
-public class Server extends Application {
+public class Server {
 
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static int serverPort;
@@ -26,17 +26,6 @@ public class Server extends Application {
     public Server() throws NumberFormatException, IOException {
         System.out.println("Please enter the server port number: ");
         serverPort = Integer.parseInt(br.readLine());
-    }
-
-    @Override
-    public void start(Stage window) throws Exception {
-
-        serverStage = window;
-        GuiHandler gh = new GuiHandler();
-
-        serverStage.setScene(gh.loadGui(serverStage));
-        serverStage.show();
-
     }
 
     public static void main(String[] args) {

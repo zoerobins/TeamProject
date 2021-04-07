@@ -15,6 +15,11 @@ public class ServerLogic {
     static ServerSocket serverSocket;
     private static ArrayList<ClientThread> clientThreads;
 
+    private static ArrayList<Integer> xPositions;
+    private static ArrayList<Integer> yPositions;
+    private static ArrayList<Boolean> alive;
+
+
     public ServerLogic(int portValue) throws IOException {
         this.portValue = portValue;
         serverSocket = new ServerSocket(portValue);
@@ -28,6 +33,23 @@ public class ServerLogic {
 
     public static ArrayList<ClientThread> getClientThreads() {
         return clientThreads;
+    }
+
+    public static void getPlayerPositions() {
+        // receive and store messages from clients containing their positions
+        int xPos = 0;
+        int yPos = 0;
+        boolean isAlive = true;
+        xPositions.add(xPos);
+        yPositions.add(yPos);
+        alive.add(isAlive);
+
+    }
+
+    public static void sendPlayerPositions() {
+        // send message to client with all Players' positions
+
+
     }
 
     public void waitForPlayers() throws IOException {
