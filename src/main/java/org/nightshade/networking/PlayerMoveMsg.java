@@ -3,7 +3,7 @@ package org.nightshade.networking;
 //import java.io.DataInputStream;
 //import java.net.DatagramSocket;
 
-public class PlayerMoveMsg implements Msg {
+public class PlayerMoveMsg /*implements Msg */{
 
     private int msgType = Msg.PLAYER_MOVE_MSG;
     private String name;

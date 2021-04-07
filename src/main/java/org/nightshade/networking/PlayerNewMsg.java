@@ -3,7 +3,7 @@ package org.nightshade.networking;
 import java.io.DataInputStream;
 import java.net.DatagramSocket;
 
-public class PlayerNewMsg implements Msg {
+public class PlayerNewMsg /*implements Msg*/ {
 
     private int msgType = Msg.PLAYER_NEW_MSG;
     private String name;
@@ -17,7 +17,7 @@ public class PlayerNewMsg implements Msg {
         this.c = c;
     }
 
-    @Override
+    /*@Override
     public void send(DatagramSocket ds, String IP, int UDP_Port) {
         // add code here
 
@@ -27,6 +27,6 @@ public class PlayerNewMsg implements Msg {
     public void parse(DataInputStream dis) {
         // add code here
 
-    }
+    }*/
 
 }

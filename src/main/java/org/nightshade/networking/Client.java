@@ -28,7 +28,7 @@ public class Client {
 
     public Client(String name, String serverIp, int portValue) throws IOException {
         clientLogic = new ClientLogic(serverIp, portValue, this);
-        this.name = name;
+        //this.name = name;
     }
 
     /*public void actOnInput() throws IOException {

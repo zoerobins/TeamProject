@@ -8,8 +8,8 @@ public class ClientLogic implements Runnable {
 
     private PrintWriter output;
     private BufferedReader input;
-    private ObjectOutputStream objectOutput;
-    private ObjectInputStream objectInput;
+    //private ObjectOutputStream objectOutput;
+    //private ObjectInputStream objectInput;
     private Client client;
     private Thread thread;
     private Socket server;
@@ -17,10 +17,10 @@ public class ClientLogic implements Runnable {
 
     public ClientLogic(String serverIp, int portValue, Client client) throws IOException {
         server = new Socket(serverIp, portValue);
-        output = new PrintWriter(server.getOutputStream(), true);
-        input = new BufferedReader(new InputStreamReader(server.getInputStream()));
-        objectOutput = new ObjectOutputStream(server.getOutputStream());
-        objectInput = new ObjectInputStream(server.getInputStream());
+        //output = new PrintWriter(server.getOutputStream(), true);
+        //input = new BufferedReader(new InputStreamReader(server.getInputStream()));
+        //objectOutput = new ObjectOutputStream(server.getOutputStream());
+        //objectInput = new ObjectInputStream(server.getInputStream());
         csc = new ClientServerController();
         this.client = client;
         thread = new Thread(this);
@@ -49,8 +49,10 @@ public class ClientLogic implements Runnable {
                 System.out.println(serverReply);
                 //csc.clientToClientMessage(client, serverReply);
             }*/
-            PlayerMoveMsg moveMsg;
-            moveMsg = (PlayerMoveMsg)objectInput.readObject();
+
+            // uncomment once implemented:
+            //PlayerMoveMsg moveMsg;
+            //moveMsg = (PlayerMoveMsg)objectInput.readObject();
 
         }
     }
@@ -59,7 +61,8 @@ public class ClientLogic implements Runnable {
         //csc.clientToServerMessage(output, message);
         //output.println(message);
         //output.println(new PlayerMoveMsg(name, x, y, alive));
-        objectOutput.writeObject(new PlayerMoveMsg(name, x, y, alive));
+
+        //objectOutput.writeObject(new PlayerMoveMsg(name, x, y, alive));
     }
 
 

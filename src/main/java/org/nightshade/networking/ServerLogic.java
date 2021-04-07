@@ -57,6 +57,7 @@ public class ServerLogic {
         while(clientNo < 5) {
             Socket client = serverSocket.accept();
             System.out.println("Client arrived");
+            System.out.println(client.getInetAddress().getHostName());
             System.out.println("Starting thread for client " + clientNo);
             ClientThread task = new ClientThread(client, game, clientNo);
             clientThreads.add(task);
