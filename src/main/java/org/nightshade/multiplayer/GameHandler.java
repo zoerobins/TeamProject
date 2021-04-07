@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class GameHandler {
     private final int levelWidth = 120;
     private Level level;
-    public void GameHandler(Stage stage, String localGameClientName){
+    public GameHandler(Stage stage, String localGameClientName){
 
         ArrayList<GameClient> gameClients = new ArrayList<>();
         GameClient localGameClient = new GameClient(localGameClientName);
@@ -19,7 +19,7 @@ public class GameHandler {
         level = makeLevel(levelWidth);
         //
 
-        Game game = new Game(stage , localGameClient, gameClients, level);
+        Game game = new Game(stage, localGameClient, gameClients, level);
     }
     public Level makeLevel(int levelWidth){
         return new Level(levelWidth);

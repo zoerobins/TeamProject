@@ -11,7 +11,6 @@ import org.nightshade.multiplayer.Game;
 public class ServerLogic {
 
     private int portValue;
-    //static GameLogic game = null;
     static Game game;
     static ServerSocket serverSocket;
     private static ArrayList<ClientThread> clientThreads;
@@ -21,13 +20,11 @@ public class ServerLogic {
         serverSocket = new ServerSocket(portValue);
         System.out.println("Started game server");
         clientThreads = new ArrayList<>();
-        //game = new GameLogic();
-        //game = new Game(Server.serverStage);
     }
 
-    public static Game getGame() {
+    /*public static Game getGame() {
         return game;
-    }
+    }*/
 
     public static ArrayList<ClientThread> getClientThreads() {
         return clientThreads;

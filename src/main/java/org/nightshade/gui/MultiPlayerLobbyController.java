@@ -32,7 +32,7 @@ public class MultiPlayerLobbyController implements Initializable {
             GuiHandler.player.setReady("READY");
             tableView.refresh();
             readyButton.setText("Not Ready");
-        }else{
+        } else{
             GuiHandler.player.setReady("NOT READY");
             tableView.refresh();
             readyButton.setText("Ready");
