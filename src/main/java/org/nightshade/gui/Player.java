@@ -1,9 +1,14 @@
 package org.nightshade.gui;
 
-public class Player {
+import org.nightshade.networking.Client;
+import java.io.Serializable;
+
+public class Player implements Serializable {
+
     private String ip;
     public String name;
     public String ready;
+    public Client client;
 
     public Player(String name){
         this.name = name;
@@ -15,6 +20,12 @@ public class Player {
         this.ready = ready;
     }
 
+    public Player(String name, String ready, Client client) {
+        this.name = name;
+        this.ready = ready;
+        this.client = client;
+    }
+
     public String getIp(){
         return this.ip;
     }
@@ -23,6 +34,9 @@ public class Player {
     }
     public String getReady(){
         return this.ready;
+    }
+    public Client getClient() {
+        return this.client;
     }
 
     public void setIp(String newIp){
