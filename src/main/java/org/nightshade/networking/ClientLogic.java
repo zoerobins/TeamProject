@@ -1,27 +1,26 @@
 package org.nightshade.networking;
 
+import org.nightshade.gui.Player;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 public class ClientLogic implements Runnable {
 
-    private PrintWriter output;
-    private BufferedReader input;
-    //private ObjectOutputStream objectOutput;
-    //private ObjectInputStream objectInput;
+    private ObjectOutputStream objectOutput;
+    private ObjectInputStream objectInput;
     private Client client;
     private Thread thread;
     private Socket server;
-    private ClientServerController csc;
+
+    private ArrayList<Player> playersList = new ArrayList<>();
 
     public ClientLogic(String serverIp, int portValue, Client client) throws IOException {
         server = new Socket(serverIp, portValue);
-        //output = new PrintWriter(server.getOutputStream(), true);
-        //input = new BufferedReader(new InputStreamReader(server.getInputStream()));
-        //objectOutput = new ObjectOutputStream(server.getOutputStream());
-        //objectInput = new ObjectInputStream(server.getInputStream());
-        csc = new ClientServerController();
+        objectOutput = new ObjectOutputStream(server.getOutputStream());
+        objectInput = new ObjectInputStream(server.getInputStream());
         this.client = client;
         thread = new Thread(this);
         thread.start();
@@ -30,39 +29,54 @@ public class ClientLogic implements Runnable {
     @Override
     public void run() {
         try {
-            waitForServer();
-        } catch (SocketException e1) {
-            csc.clientToClientMessage(client, "Connection lost to server");
-        } catch (IOException e) {
-            csc.clientToClientMessage(client, "Connection lost to server");
-        } catch (RuntimeException e2) {
-            csc.clientToClientMessage(client, "Connection lost to server");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            sendPlayer(this.client.getName(), "NOT READY");
+            receivePlayers();
+            while(true) {
+                sendToServer(this.client.getName(), 1, 2, true);
+                waitForServer();
+            }
+
+        } catch (IOException | RuntimeException | ClassNotFoundException e1) {
+            e1.printStackTrace();
         }
     }
 
     private void waitForServer() throws IOException, SocketException, RuntimeException, ClassNotFoundException {
-        while(true) {
-            /*String serverReply;
-            while((serverReply = input.readLine()) != null) {
-                System.out.println(serverReply);
-                //csc.clientToClientMessage(client, serverReply);
-            }*/
-
-            // uncomment once implemented:
-            //PlayerMoveMsg moveMsg;
-            //moveMsg = (PlayerMoveMsg)objectInput.readObject();
-
+        Object next = objectInput.readObject();
+        while(next instanceof Player) {
+            next = objectInput.readObject();
         }
+        PlayerMoveMsg moveMsg = (PlayerMoveMsg) next;
+        System.out.println(moveMsg.getName());
+        System.out.println(moveMsg.getX());
+        System.out.println(moveMsg.getY());
+        System.out.println(moveMsg.isAlive());
     }
 
     public void sendToServer(String name, int x, int y, boolean alive) throws IOException {
-        //csc.clientToServerMessage(output, message);
-        //output.println(message);
-        //output.println(new PlayerMoveMsg(name, x, y, alive));
+        objectOutput.writeObject(new PlayerMoveMsg(name, x, y, alive));
+    }
 
-        //objectOutput.writeObject(new PlayerMoveMsg(name, x, y, alive));
+    public void sendPlayer(String name, String ready) throws IOException {
+        objectOutput.writeObject(new Player(name, ready));
+    }
+
+    public void receivePlayers() throws IOException, ClassNotFoundException {
+        Player newPlayer;
+        Object next;
+        next = objectInput.readObject();
+        while(next instanceof Player) {
+            newPlayer = (Player) next;
+            playersList.add(newPlayer);
+            System.out.println(newPlayer.getName());
+            System.out.println(newPlayer.getReady());
+            if(objectInput.available() != 0) {
+                next = objectInput.readObject();
+            } else {
+                break;
+            }
+        }
+
     }
 
 
