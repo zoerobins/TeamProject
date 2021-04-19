@@ -16,7 +16,7 @@ public class ClientThread implements Runnable {
     private Game game;
     private ClientServerController csc;
 
-    public ClientThread(Socket client, Game game, int clientNo) {
+    public ClientThread(Socket client, int clientNo, ServerLogic serverLogic) {
 
         //this.game = game;
         this.clientNo = clientNo;
