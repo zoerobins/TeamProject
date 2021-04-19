@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -33,42 +34,56 @@ public class MultiPlayerLobbyController implements Initializable {
     }
 
     public void readyButton() {
-        if (GuiHandler.player.getReady() == "NOT READY") {
-            GuiHandler.player.setReady("READY");
-            tableView.setItems(getPlayers());
-            tableView.refresh();
-            readyButton.setText("Not Ready");
-        } else{
-            GuiHandler.player.setReady("NOT READY");
-            tableView.setItems(getPlayers());
-            tableView.refresh();
-            readyButton.setText("Ready");
-        }
 
-        /*if(ServerLogic.getClientThreads() != null) {
-            int numClients = ServerLogic.getClientThreads().size();
-            System.out.println("number of clients: " + numClients);
-        } else {
-            System.out.println("no client threads");
-        }*/
+        while(true) {
 
-        boolean allReady = false;
-        for (Player ready : tableView.getItems()) {
-            if(readyColumn.getCellObservableValue(ready).getValue() == "NOT READY") {
-                allReady = false;
-                break;
-            } else {
-                allReady = true;
+            try {
+                GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getClient().getName(), GuiHandler.player.getReady());
+                GuiHandler.player.getClient().getClientLogic().receivePlayers();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
+
+            if (GuiHandler.player.getReady() == "NOT READY") {
+                GuiHandler.player.setReady("READY");
+                tableView.setItems(getPlayers());
+                tableView.refresh();
+                readyButton.setText("Not Ready");
+            } else{
+                GuiHandler.player.setReady("NOT READY");
+                tableView.setItems(getPlayers());
+                tableView.refresh();
+                readyButton.setText("Ready");
+            }
+
+            /*if(ServerLogic.getClientThreads() != null) {
+                int numClients = ServerLogic.getClientThreads().size();
+                System.out.println("number of clients: " + numClients);
+            } else {
+                System.out.println("no client threads");
+            }*/
+
+            boolean allReady = false;
+            for (Player ready : tableView.getItems()) {
+                if(readyColumn.getCellObservableValue(ready).getValue() == "NOT READY") {
+                    allReady = false;
+                    break;
+                } else {
+                    allReady = true;
+                }
+            }
+            if(allReady) {
+                // start game
+                System.out.println("all players ready");
+                GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName());
+                //game.addClient(client);
+                clientLogic.gameLoop();
+
+            }
+
         }
-        if(allReady) {
-            // start game
-            System.out.println("all players ready");
-            GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName());
-            //game.addClient(client);
-            clientLogic.gameLoop();
-            
-        }
+
+
 
 
     }
@@ -82,6 +97,15 @@ public class MultiPlayerLobbyController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         makeTable();
+        //while(true) {
+
+            try {
+                GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getClient().getName(), GuiHandler.player.getReady());
+                GuiHandler.player.getClient().getClientLogic().receivePlayers();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        //}
     }
 
     public ObservableList<Player> getPlayers(){

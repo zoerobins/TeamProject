@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
-public class ClientLogic implements Runnable {
+public class ClientLogic /*implements Runnable*/ {
 
     private ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
@@ -23,11 +23,20 @@ public class ClientLogic implements Runnable {
         objectOutput = new ObjectOutputStream(server.getOutputStream());
         objectInput = new ObjectInputStream(server.getInputStream());
         this.client = client;
-        thread = new Thread(this);
-        thread.start();
+        //thread = new Thread(this);
+        //thread.start();
+        //run();
     }
 
-    @Override
+    public ClientLogic() throws IOException {
+        server = new Socket("127.0.0.1", 2222);
+        objectOutput = new ObjectOutputStream(server.getOutputStream());
+        objectInput = new ObjectInputStream(server.getInputStream());
+        return;
+
+    }
+
+    //@Override
     public void run() {
         try {
             //sendPlayer(this.client.getName(), "NOT READY");

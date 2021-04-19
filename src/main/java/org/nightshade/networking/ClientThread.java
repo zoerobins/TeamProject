@@ -66,6 +66,9 @@ public class ClientThread implements Runnable {
     public void receivePlayers() {
         Player player;
         try {
+            /*while(objectInput1.readObject() instanceof PlayerMoveMsg) {
+                //objectInput1.readObject();
+            };*/
             player = (Player) objectInput1.readObject();
             if(serverLogic.getPlayers().size() == 0) {
                 serverLogic.addPlayer(player);

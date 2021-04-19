@@ -23,6 +23,10 @@ public class MultiPlayerController implements Initializable {
     private TextField portNumBox;
     @FXML
     private TextField nameBox;
+    private Client defaultClient = new Client();
+
+    public MultiPlayerController() throws IOException {
+    }
 
     public void playButton() throws IOException {
 
@@ -50,6 +54,7 @@ public class MultiPlayerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         nameBox.setText(GuiHandler.player.getName());
+        GuiHandler.player.setClient(defaultClient);
     }
 }
 

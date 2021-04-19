@@ -26,6 +26,10 @@ public class Client {
         }
     }*/
 
+    public Client() throws IOException {
+        clientLogic = new ClientLogic();
+    }
+
     public Client(String name, String serverIp, int portValue) throws IOException {
         this.name = name;
         clientLogic = new ClientLogic(serverIp, portValue, this);
