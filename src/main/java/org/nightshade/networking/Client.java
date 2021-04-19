@@ -27,43 +27,17 @@ public class Client {
     }*/
 
     public Client(String name, String serverIp, int portValue) throws IOException {
+        this.name = name;
         clientLogic = new ClientLogic(serverIp, portValue, this);
-        //this.name = name;
     }
 
-    /*public void actOnInput() throws IOException {
-        while(true) {
-            System.out.println("Enter command: ");
-            String command = br.readLine();
-            switch (command) {
-                case "L":
-                    clientLogic.moveL();
-                    break;
-                case "R":
-                    clientLogic.moveR();
-                    break;
-                case "J":
-                    clientLogic.jump();
-                    break;
-                case "EXIT":
-                    System.exit(0);
-                    break;
-            }
-        }
-    }*/
-
-    /*public static void main(String[] args) {
-        Client client = new Client();
-        try {
-            client.actOnInput();
-        } catch (IOException e) {
-            System.out.println("Buffered reader does not exist");
-        }
-    }*/
-
-    public void outputSent(String reply) {
-        System.out.println(reply);
+    public String getName() {
+        return this.name;
     }
+
+    /*public static void main(String[] args) throws IOException {
+        new Client();
+    }*/
 
 }
 
