@@ -57,7 +57,7 @@ public class MultiPlayerLobbyController implements Initializable {
         if(allReady) {
             // start game
             System.out.println("all players ready");
-            GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName()); // need to create game in server and add to that instead
+            GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName());
             //game.addClient(client);
             
         }
@@ -80,9 +80,10 @@ public class MultiPlayerLobbyController implements Initializable {
         ObservableList<Player> players = FXCollections.observableArrayList();
         players.add(GuiHandler.player);
         //System.out.println(GuiHandler.player.getReady());
-        players.add(new Player("player 2", "READY"));
+        /*players.add(new Player("player 2", "READY"));
         players.add(new Player("FifaPlayer52", "READY"));
-        players.add(new Player("brian1997", "READY"));
+        players.add(new Player("brian1997", "READY"));*/
+
 
         return players;
     }

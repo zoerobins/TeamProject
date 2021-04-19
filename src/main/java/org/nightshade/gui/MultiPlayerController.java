@@ -33,6 +33,7 @@ public class MultiPlayerController implements Initializable {
         GuiHandler.player.setName(name);
 
         Client client = new Client(name, serverIp, portValue);
+        GuiHandler.player.setClient(client);
 
         changeScene();
 

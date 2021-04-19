@@ -66,16 +66,4 @@ public class ClientLogic implements Runnable {
     }
 
 
-    /*public void moveL() {
-        sendToServer("move left");
-    }
-
-    public void moveR() {
-        sendToServer("move right");
-    }
-
-    public void jump() {
-        sendToServer("jump");
-    }*/
-
 }

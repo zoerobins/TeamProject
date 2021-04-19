@@ -48,4 +48,7 @@ public class Player implements Serializable {
     public void setReady(String newReady){
         this.ready = newReady;
     }
+    public void setClient(Client newClient) {
+        this.client = newClient;
+    }
 }
