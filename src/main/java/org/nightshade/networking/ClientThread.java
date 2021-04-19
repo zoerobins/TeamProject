@@ -42,13 +42,17 @@ public class ClientThread implements Runnable {
 
         String command = "";
         try {
-            receivePlayers();
-            sendPlayers();
+            //receivePlayers();
+            //sendPlayers();
             while(true) {
+                receivePlayers();
+                sendPlayers();
+            }
+            /*while(true) {
                 PlayerMoveMsg moveMsg = receiveMoveMsgs();
                 sendMoveMsgs(moveMsg);
-            }
-        } catch (IOException | ClassNotFoundException e) {
+            }*/
+        } catch (IOException /*| ClassNotFoundException*/ e) {
             System.out.println("Client " + clientNo + " left");
             try {
                 socket.close();

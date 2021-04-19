@@ -35,6 +35,10 @@ public class Client {
         return this.name;
     }
 
+    public ClientLogic getClientLogic() {
+        return clientLogic;
+    }
+
     /*public static void main(String[] args) throws IOException {
         new Client();
     }*/

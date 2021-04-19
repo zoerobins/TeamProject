@@ -1,5 +1,6 @@
 package org.nightshade.networking;
 
+import org.nightshade.gui.GuiHandler;
 import org.nightshade.gui.Player;
 
 import java.io.*;
@@ -29,16 +30,31 @@ public class ClientLogic implements Runnable {
     @Override
     public void run() {
         try {
-            sendPlayer(this.client.getName(), "NOT READY");
-            receivePlayers();
+            //sendPlayer(this.client.getName(), "NOT READY");
+            //receivePlayers();
+            while(true) {
+                sendPlayer(this.client.getName(), GuiHandler.player.getReady());
+                receivePlayers();
+            }
+            /*while(true) {
+                sendToServer(this.client.getName(), 1, 2, true);
+                waitForServer();
+            }*/
+        } catch (IOException | RuntimeException | ClassNotFoundException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void gameLoop() {
+        try {
             while(true) {
                 sendToServer(this.client.getName(), 1, 2, true);
                 waitForServer();
             }
-
-        } catch (IOException | RuntimeException | ClassNotFoundException e1) {
-            e1.printStackTrace();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     private void waitForServer() throws IOException, SocketException, RuntimeException, ClassNotFoundException {
@@ -79,5 +95,7 @@ public class ClientLogic implements Runnable {
 
     }
 
-
+    public ArrayList<Player> getPlayersList() {
+        return playersList;
+    }
 }
