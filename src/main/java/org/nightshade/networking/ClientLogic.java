@@ -92,7 +92,23 @@ public class ClientLogic /*implements Runnable*/ {
         next = objectInput.readObject();
         while(next instanceof Player) {
             newPlayer = (Player) next;
-            playersList.add(newPlayer);
+            if(playersList.size() == 0) {
+                playersList.add(newPlayer);
+            }
+            boolean playerAdded = false;
+            for(int i=0; i<playersList.size(); i++) {
+                if(playersList.get(i).getName().equals(newPlayer.getName())) {
+                    playersList.set(i, newPlayer);
+                    playerAdded = true;
+                    break;
+                }
+            }
+            if(!playerAdded) {
+                playersList.add(newPlayer);
+            }
+
+
+            //playersList.add(newPlayer);
             System.out.println(newPlayer.getName());
             System.out.println(newPlayer.getReady());
             if(objectInput.available() != 0) {
