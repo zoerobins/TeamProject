@@ -74,9 +74,9 @@ public class ClientThread implements Runnable {
                 serverLogic.addPlayer(player);
             } else {
                 for(int j=0; j<serverLogic.getPlayers().size(); j++) {
-                    if(serverLogic.getPlayers().get(j).getName() == player.getName()) {
+                    if((serverLogic.getPlayers().get(j).getName() != null) && serverLogic.getPlayers().get(j).getName().equals(player.getName())) {
                         serverLogic.replacePlayer(j, player);
-                    } else {
+                    } else if(player.getName() != null) {
                         serverLogic.addPlayer(player);
                     }
                 }

@@ -35,7 +35,7 @@ public class MultiPlayerLobbyController implements Initializable {
 
     public void readyButton() {
 
-        while(true) {
+        //while(true) {
 
             try {
                 GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getClient().getName(), GuiHandler.player.getReady());
@@ -44,14 +44,16 @@ public class MultiPlayerLobbyController implements Initializable {
                 e.printStackTrace();
             }
 
-            if (GuiHandler.player.getReady() == "NOT READY") {
+            if (GuiHandler.player.getReady().equals("NOT READY")) {
                 GuiHandler.player.setReady("READY");
-                tableView.setItems(getPlayers());
+                tableView.getItems().clear();
+                tableView.getItems().addAll(getPlayers());
                 tableView.refresh();
                 readyButton.setText("Not Ready");
             } else{
                 GuiHandler.player.setReady("NOT READY");
-                tableView.setItems(getPlayers());
+                tableView.getItems().clear();
+                tableView.getItems().addAll(getPlayers());
                 tableView.refresh();
                 readyButton.setText("Ready");
             }
@@ -65,7 +67,7 @@ public class MultiPlayerLobbyController implements Initializable {
 
             boolean allReady = false;
             for (Player ready : tableView.getItems()) {
-                if(readyColumn.getCellObservableValue(ready).getValue() == "NOT READY") {
+                if(readyColumn.getCellObservableValue(ready).getValue().equals("NOT READY")) {
                     allReady = false;
                     break;
                 } else {
@@ -75,13 +77,12 @@ public class MultiPlayerLobbyController implements Initializable {
             if(allReady) {
                 // start game
                 System.out.println("all players ready");
-                GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName());
-                //game.addClient(client);
-                clientLogic.gameLoop();
+                //GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName());
+                //clientLogic.gameLoop();
 
             }
 
-        }
+        //}
 
 
 
@@ -99,18 +100,18 @@ public class MultiPlayerLobbyController implements Initializable {
         makeTable();
         //while(true) {
 
-            try {
+            /*try {
                 GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getClient().getName(), GuiHandler.player.getReady());
                 GuiHandler.player.getClient().getClientLogic().receivePlayers();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-            }
+            }*/
         //}
     }
 
     public ObservableList<Player> getPlayers(){
         ObservableList<Player> players = FXCollections.observableArrayList();
-        players.add(GuiHandler.player);
+        //players.add(GuiHandler.player);
         //System.out.println(GuiHandler.player.getReady());
         /*players.add(new Player("player 2", "READY"));
         players.add(new Player("FifaPlayer52", "READY"));

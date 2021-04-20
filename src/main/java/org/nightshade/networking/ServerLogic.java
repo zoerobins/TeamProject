@@ -69,7 +69,7 @@ public class ServerLogic {
 
     public void waitForPlayers() throws IOException {
         int clientNo = 1;
-        while(clientNo < 5) {
+        while(clientNo < 10) {
             client = serverSocket.accept();
             clientSockets.add(client);
             System.out.println("Client arrived");
