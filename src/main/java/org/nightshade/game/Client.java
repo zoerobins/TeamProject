@@ -6,6 +6,7 @@ import org.nightshade.renderer.Renderer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+
 public class Client {
     private boolean isAlive;
     private boolean canJump;
@@ -13,14 +14,16 @@ public class Client {
     private final Sprite sprite;
     private SpotEffects spotEffects;
     private Random random;
+
     public Client() {
-        this.isAlive = true;
-        this.canJump = true;
-        this.velocity = new Point2D(0,0);
-        this.sprite = new Sprite(new Image("img/game/player.png"),300,50);
-        this.spotEffects = new SpotEffects();
-        this.random = new Random();
+        isAlive = true;
+        canJump = true;
+        velocity = new Point2D(0,0);
+        sprite = new Sprite(new Image("img/game/player.png"),300,50);
+        spotEffects = new SpotEffects();
+        random = new Random();
     }
+
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
@@ -55,10 +58,11 @@ public class Client {
         spotEffects.playSoundUntilEnd(soundFile, true);
         isAlive =false;
     }
-    public void moveX(int value,ArrayList<Sprite> platformSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+
+    public void moveX(int value, Level level){
         boolean movingRight = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
-            for (Sprite platform : platformSprites) {
+            for (Sprite platform : level.getPlatformSprites()) {
                 if (platform.intersects(sprite)){
                     if(movingRight){
                         getSprite().setX(getSprite().getX() - 1);
@@ -68,7 +72,7 @@ public class Client {
                     return;
                 }
             }
-            for (Sprite ground : groundSprites) {
+            for (Sprite ground : level.getGroundSprites()) {
                 if (ground.intersects(sprite)){
                     if(movingRight){
                         getSprite().setX(getSprite().getX() - 1);
@@ -79,7 +83,7 @@ public class Client {
                 }
             }
 
-            for (MovingPlatform movingPlatform : movingPlatforms){
+            for (MovingPlatform movingPlatform : level.getMovingPlatforms()){
                 if (movingPlatform.getSprite().intersects(sprite)){
                     if(movingRight){
                         getSprite().setX(getSprite().getX() - 1);
@@ -90,7 +94,7 @@ public class Client {
                 }
             }
 
-            for (Enemy enemy : enemies) {
+            for (Enemy enemy : level.getEnemies()) {
                 if (enemy.getSprite().intersects(sprite)){
                     kill();
                     return;
@@ -99,6 +103,7 @@ public class Client {
             getSprite().setX(getSprite().getX() + (movingRight ? 1 : -1));
         }
     }
+
     public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
@@ -140,5 +145,4 @@ public class Client {
             getSprite().setY(getSprite().getY() + (movingDown ? 1 : -1));
         }
     }
-
 }
