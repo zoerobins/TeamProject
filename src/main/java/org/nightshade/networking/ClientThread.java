@@ -19,12 +19,15 @@ public class ClientThread implements Runnable {
     private ObjectOutputStream objectOutput1;
     private ObjectInputStream objectInput1;
 
+    private boolean allPlayersReady;
+
     public ClientThread(Socket client, int clientNo, ServerLogic serverLogic) {
 
         this.clientNo = clientNo;
         this.socket = client;
         this.serverLogic = serverLogic;
         this.moveMsgs = serverLogic.getMoveMsgs();
+        allPlayersReady = false;
 
         // create the streams:
         try {
@@ -40,11 +43,8 @@ public class ClientThread implements Runnable {
     @Override
     public void run() {
 
-        String command = "";
         try {
-            //receivePlayers();
-            //sendPlayers();
-            while(true) {
+            while(!allPlayersReady) {
                 receivePlayers();
                 sendPlayers();
             }
@@ -66,10 +66,14 @@ public class ClientThread implements Runnable {
     public void receivePlayers() {
         Player player;
         try {
-            /*while(objectInput1.readObject() instanceof PlayerMoveMsg) {
-                //objectInput1.readObject();
-            };*/
             player = (Player) objectInput1.readObject();
+
+            if(player.getName().equals("ALLPLAYERSREADY") && player.getReady().equals("ALLPLAYERSREADY")) {
+                allPlayersReady = true;
+                System.out.println("all players ready");
+                return;
+            }
+
             if(serverLogic.getPlayers().size() == 0) {
                 serverLogic.addPlayer(player);
             } else {
