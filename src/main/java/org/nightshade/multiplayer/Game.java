@@ -110,10 +110,13 @@ public class Game {
                 // move clients that are not the local client:
                 if(!(moveMsg.getName().equals(client.getName()))) {
                     if(moveMsg.isAlive()) {
-                        System.out.println(moveMsg.getName());
-                        System.out.println(moveMsg.getX());
-                        System.out.println(moveMsg.getY());
                         // act on info for other client:
+                        for (GameClient gameClient : gameClients){
+                            if (gameClient.getName().equals(moveMsg.getName())){
+                                gameClient.setX(moveMsg.getX());
+                                gameClient.setY(moveMsg.getY());
+                            }
+                        }
 
 
 

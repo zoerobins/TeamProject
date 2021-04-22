@@ -27,6 +27,15 @@ public class GameClient {
         this.random = new Random();
         this.name = name;
     }
+    public String getName(){
+        return name;
+    }
+    public void setX(Double x){
+        getSprite().setX(x);
+    }
+    public void setY(Double y){
+        getSprite().setY(y);
+    }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }

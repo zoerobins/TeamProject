@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class PlayerMoveMsg implements Serializable {
 
     private String name;
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private boolean alive;
 
     public PlayerMoveMsg(String name, int x, int y, boolean alive) {
@@ -20,11 +20,11 @@ public class PlayerMoveMsg implements Serializable {
         return name;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
