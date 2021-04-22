@@ -17,8 +17,12 @@ public class Server {
         serverLogic = new ServerLogic(serverPort);
     }
 
+    public Server(int serverPort) throws IOException {
+        serverLogic = new ServerLogic(serverPort);
+    }
+
     public static void main(String[] args) throws IOException {
-        new Server();
+        new Server(2222);
         //serverLogic.kill();
     }
 
