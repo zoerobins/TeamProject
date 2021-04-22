@@ -66,7 +66,7 @@ public class ClientLogic /*implements Runnable*/ {
 
     }
 
-    private void waitForServer() throws IOException, SocketException, RuntimeException, ClassNotFoundException {
+    public PlayerMoveMsg waitForServer() throws IOException, SocketException, RuntimeException, ClassNotFoundException {
         Object next = objectInput.readObject();
         while(next instanceof Player) {
             next = objectInput.readObject();
@@ -76,6 +76,7 @@ public class ClientLogic /*implements Runnable*/ {
         System.out.println(moveMsg.getX());
         System.out.println(moveMsg.getY());
         System.out.println(moveMsg.isAlive());
+        return moveMsg;
     }
 
     public void sendToServer(String name, int x, int y, boolean alive) throws IOException {

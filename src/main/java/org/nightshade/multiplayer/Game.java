@@ -5,8 +5,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.nightshade.networking.Client;
+import org.nightshade.networking.PlayerMoveMsg;
 import org.nightshade.renderer.Renderer;
 
+import java.io.IOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 public class Game {
@@ -18,18 +22,19 @@ public class Game {
     private final ArrayList<Image> lavaImages;
     private final ArrayList<String> input = new ArrayList<>();
     private final Renderer renderer;
-    //private final Client client;
     private final Sprite cloud;
     private final Parallax parallax;
     private Level level;
     private GameClient localGameClient;
     private ArrayList<GameClient> gameClients;
+    private Client client;
 
-    public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level) {
+    public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level, Client client) {
 
         this.level = level;
         this.localGameClient = localGameClient;
         this.gameClients = gameClients;
+        this.client = client;
 
         cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
         parallax = new Parallax();
@@ -69,6 +74,7 @@ public class Game {
                     input.remove(code);
                 });
     }
+
     private void moveClients() {
         // TODO: these arrays can just be moved to client (just pass level)
         ArrayList<Sprite> platformSprites = level.getPlatformSprites();
@@ -91,32 +97,22 @@ public class Game {
             }
             localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms);
         }
-        //
+
         // send new isAlive, x and y of local client to the other clients and update their isAlive, x and y values to the new ones that they send
-        //
-        sendUpdatedX(localGameClient.getSprite().getX());
-        sendUpdatedY(localGameClient.getSprite().getY());
-        sendIsAlive(localGameClient.isAlive());
-        getOtherPlayerPositions();  // need to read in values sent back and act on them
+        try {
+            client.getClientLogic().sendToServer(client.getName(), localGameClient.getSprite().getX(), localGameClient.getSprite().getY(), localGameClient.isAlive());
+            PlayerMoveMsg moveMsg = client.getClientLogic().waitForServer();
+            // act on info in moveMsg if for other clients
+
+
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
-    public static void sendUpdatedX(int xPos) {
-
-    }
-
-    public static void sendUpdatedY(int yPos) {
-
-    }
-
-    public static void sendIsAlive(boolean isAlive) {
-
-    }
-
-    public static void getOtherPlayerPositions() {
-
-    }
 
     public void loop() {
         parallax.move();

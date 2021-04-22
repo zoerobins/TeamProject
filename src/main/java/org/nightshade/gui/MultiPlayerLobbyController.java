@@ -71,7 +71,7 @@ public class MultiPlayerLobbyController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName());
+            GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName(), GuiHandler.player.getClient());
             //clientLogic.gameLoop();
 
         }

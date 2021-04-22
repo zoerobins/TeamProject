@@ -2,14 +2,17 @@ package org.nightshade.multiplayer;
 
 import javafx.stage.Stage;
 import org.nightshade.multiplayer.Game;
+import org.nightshade.networking.Client;
 
 import java.util.ArrayList;
 
 public class GameHandler {
     private final int levelWidth = 120;
     private Level level;
-    public GameHandler(Stage stage, String localGameClientName){
+    private Client client;
+    public GameHandler(Stage stage, String localGameClientName, Client client){
 
+        this.client = client;
         ArrayList<GameClient> gameClients = new ArrayList<>();
         GameClient localGameClient = new GameClient(localGameClientName);
 
@@ -19,7 +22,7 @@ public class GameHandler {
         level = makeLevel(levelWidth);
         //
 
-        Game game = new Game(stage, localGameClient, gameClients, level);
+        Game game = new Game(stage, localGameClient, gameClients, level, this.client);
     }
     public Level makeLevel(int levelWidth){
         return new Level(levelWidth);
