@@ -48,11 +48,11 @@ public class ClientThread implements Runnable {
                 receivePlayers();
                 sendPlayers();
             }
-            /*while(true) {
-                PlayerMoveMsg moveMsg = receiveMoveMsgs();
+            while(true) {
+                PlayerMoveMsg moveMsg = receiveMoveMsg();
                 sendMoveMsgs(moveMsg);
-            }*/
-        } catch (IOException /*| ClassNotFoundException*/ e) {
+            }
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println("Client " + clientNo + " left");
             try {
                 socket.close();
@@ -99,8 +99,13 @@ public class ClientThread implements Runnable {
         }
     }
 
-    public PlayerMoveMsg receiveMoveMsgs() throws IOException, ClassNotFoundException {
-        PlayerMoveMsg moveMsg = new PlayerMoveMsg("", 0, 0, true);
+    public PlayerMoveMsg receiveMoveMsg() throws IOException, ClassNotFoundException {
+        Object next = objectInput1.readObject();
+        while(next instanceof Player) {
+            next = objectInput1.readObject();
+        }
+        PlayerMoveMsg moveMsg = (PlayerMoveMsg) next;
+        //PlayerMoveMsg moveMsg = new PlayerMoveMsg("", 0, 0, true);
         if(moveMsg != null) {
             moveMsg = (PlayerMoveMsg) objectInput1.readObject();
             moveMsgs.add(moveMsg);
