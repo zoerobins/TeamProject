@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.nightshade.gui.Player;
 import org.nightshade.networking.Client;
 import org.nightshade.networking.PlayerMoveMsg;
 import org.nightshade.renderer.Renderer;
@@ -28,6 +29,7 @@ public class Game {
     private GameClient localGameClient;
     private ArrayList<GameClient> gameClients;
     private Client client;
+    private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
 
     public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level, Client client) {
 
@@ -101,15 +103,35 @@ public class Game {
         // send new isAlive, x and y of local client to the other clients and update their isAlive, x and y values to the new ones that they send
         try {
             client.getClientLogic().sendToServer(client.getName(), localGameClient.getSprite().getX(), localGameClient.getSprite().getY(), localGameClient.isAlive());
-            PlayerMoveMsg moveMsg = client.getClientLogic().waitForServer();
-            // act on info in moveMsg if for other clients
+            client.getClientLogic().receiveMoveMsgs();
+            msgsList = client.getClientLogic().getMsgsList();
+            System.out.println("msgsList size: " + msgsList.size());
+            for(PlayerMoveMsg moveMsg : msgsList) {
+                // move clients that are not the local client:
+                if(!(moveMsg.getName().equals(client.getName()))) {
+                    if(moveMsg.isAlive()) {
+                        System.out.println(moveMsg.getName());
+                        System.out.println(moveMsg.getX());
+                        System.out.println(moveMsg.getY());
+                        // act on info for other client:
 
 
+
+
+                    } else {
+                        System.out.println("player dead: " + moveMsg.getName());
+                        // remove other client as not alive:
+
+
+
+
+                    }
+                }
+            }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
 
     }
 

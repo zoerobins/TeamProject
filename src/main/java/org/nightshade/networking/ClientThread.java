@@ -49,8 +49,8 @@ public class ClientThread implements Runnable {
                 sendPlayers();
             }
             while(true) {
-                PlayerMoveMsg moveMsg = receiveMoveMsg();
-                sendMoveMsgs(moveMsg);
+                receiveMoveMsg();
+                sendMoveMsgs();
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Client " + clientNo + " left");
@@ -99,31 +99,36 @@ public class ClientThread implements Runnable {
         }
     }
 
-    public PlayerMoveMsg receiveMoveMsg() throws IOException, ClassNotFoundException {
-        Object next = objectInput1.readObject();
-        while(next instanceof Player) {
-            next = objectInput1.readObject();
-        }
-        PlayerMoveMsg moveMsg = (PlayerMoveMsg) next;
-        //PlayerMoveMsg moveMsg = new PlayerMoveMsg("", 0, 0, true);
-        if(moveMsg != null) {
-            moveMsg = (PlayerMoveMsg) objectInput1.readObject();
-            moveMsgs.add(moveMsg);
-            System.out.println(moveMsg.getName());
-            System.out.println(moveMsg.getX());
-            System.out.println(moveMsg.getY());
-            System.out.println(moveMsg.isAlive());
+    public void receiveMoveMsg() throws IOException, ClassNotFoundException {
+
+        try {
+            Object next = objectInput1.readObject();
+            while(next instanceof Player) {
+                next = objectInput1.readObject();
+            }
+            PlayerMoveMsg moveMsg = (PlayerMoveMsg) next;
+
+            if(serverLogic.getMoveMsgs().size() == 0) {
+                serverLogic.addMsg(moveMsg);
+            } else {
+                for(int j=0; j<serverLogic.getMoveMsgs().size(); j++) {
+                    if((serverLogic.getMoveMsgs().get(j).getName() != null) && serverLogic.getMoveMsgs().get(j).getName().equals(moveMsg.getName())) {
+                        serverLogic.replaceMsg(j, moveMsg);
+                    } else if(moveMsg.getName() != null) {
+                        serverLogic.addMsg(moveMsg);
+                    }
+                }
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-        return moveMsg;
     }
 
-    public void sendMoveMsgs(PlayerMoveMsg moveMsg) throws IOException {
+    public void sendMoveMsgs() throws IOException {
         moveMsgs = serverLogic.getMoveMsgs();
         for(int i=0; i<moveMsgs.size(); i++) {
-            if(moveMsgs.get(i).getName() == moveMsg.getName()) {
-                moveMsgs.set(i, moveMsg);
-            }
             objectOutput1.writeObject(moveMsgs.get(i));
         }
     }

@@ -19,7 +19,6 @@ public class ServerLogic {
     int numClients;
 
     ArrayList<Player> players = new ArrayList<>();
-
     ArrayList<PlayerMoveMsg> moveMsgs = new ArrayList<>();
 
 
@@ -33,6 +32,14 @@ public class ServerLogic {
 
     public ArrayList<PlayerMoveMsg> getMoveMsgs() {
         return moveMsgs;
+    }
+
+    public void addMsg(PlayerMoveMsg moveMsg) {
+        moveMsgs.add(moveMsg);
+    }
+
+    public void replaceMsg(int index, PlayerMoveMsg moveMsg) {
+        moveMsgs.set(index, moveMsg);
     }
 
     public static ArrayList<ClientThread> getClientThreads() {
