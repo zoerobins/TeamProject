@@ -117,10 +117,8 @@ public class Game {
     }
 
     public void loop() {
-/*
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
-*/
 
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
