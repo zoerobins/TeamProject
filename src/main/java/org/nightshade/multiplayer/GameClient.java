@@ -31,10 +31,10 @@ public class GameClient {
         return name;
     }
     public void setX(Double x){
-        getSprite().setX(x);
+        this.sprite.setX(x);
     }
     public void setY(Double y){
-        getSprite().setY(y);
+        this.sprite.setY(y);
     }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;

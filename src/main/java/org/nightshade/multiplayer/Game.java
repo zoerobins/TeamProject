@@ -98,35 +98,31 @@ public class Game {
                 localGameClient.setVelocity(localGameClient.getVelocity().add(0, 1));
             }
             localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms);
+            System.out.println("my name "+localGameClient.getName()+" my co-ords x: "+ localGameClient.getSprite().getX()+ " y: "+ localGameClient.getSprite().getY());
         }
 
         // send new isAlive, x and y of local client to the other clients and update their isAlive, x and y values to the new ones that they send
         try {
-            client.getClientLogic().sendToServer(client.getName(), localGameClient.getSprite().getX(), localGameClient.getSprite().getY(), localGameClient.isAlive());
+            client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getSprite().getX(), localGameClient.getSprite().getY(), localGameClient.isAlive());
             client.getClientLogic().receiveMoveMsgs();
             msgsList = client.getClientLogic().getMsgsList();
-            System.out.println("msgsList size: " + msgsList.size());
+            //System.out.println("msgsList size: " + msgsList.size());
             for(PlayerMoveMsg moveMsg : msgsList) {
+                System.out.println("message name " + moveMsg.getName() + "message coords x: " +moveMsg.getX()+ " y: "+moveMsg.getY());
                 // move clients that are not the local client:
-                if(!(moveMsg.getName().equals(client.getName()))) {
+                if ((!(moveMsg.getName().equals(localGameClient.getName())))){
                     if(moveMsg.isAlive()) {
                         // act on info for other client:
-                        for (GameClient gameClient : gameClients){
-                            if (gameClient.getName().equals(moveMsg.getName())){
+                        for (GameClient gameClient : gameClients) {
+                            if (gameClient.getName().equals(moveMsg.getName())) {
+                                System.out.println("respective game client name " + moveMsg.getName() + "game client coords x: " +moveMsg.getX()+ " y: "+moveMsg.getY());
                                 gameClient.setX(moveMsg.getX());
                                 gameClient.setY(moveMsg.getY());
                             }
                         }
-
-
-
-
                     } else {
                         System.out.println("player dead: " + moveMsg.getName());
                         // remove other client as not alive:
-
-
-
 
                     }
                 }
@@ -140,13 +136,21 @@ public class Game {
 
 
     public void loop() {
+        /*
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
+         */
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());
         for (Sprite lavaSprite : level.getLavaSprites()) {
             renderer.drawImage(lavaImages.get(animationIndex), lavaSprite.getX(), lavaSprite.getY());
+        }
+        for (GameClient gc : gameClients) {
+            if(!(gc.getName().equals(client.getName()))) {
+                Sprite gcSprite = gc.getSprite();
+                renderer.drawImage(gcSprite.getImage(), gcSprite.getX(), gcSprite.getY());
+            }
         }
         // move cloud
         /* // here local game client needs to be swapped out to whichever client is the furthest forward
@@ -161,10 +165,6 @@ public class Game {
             moveClients();
             Sprite clientSprite = localGameClient.getSprite();
             renderer.drawImage(clientSprite.getImage(), clientSprite.getX(), clientSprite.getY());
-            for (GameClient gc : gameClients) {
-                Sprite gcSprite = gc.getSprite();
-                renderer.drawImage(gcSprite.getImage(), gcSprite.getX(), gcSprite.getY());
-            }
             boolean intersectsCloud = clientSprite.intersects(cloud.getX() - 90, cloud.getY(), (int) cloud.getWidth(), (int) cloud.getHeight());
             if (intersectsCloud) {
                 localGameClient.kill();

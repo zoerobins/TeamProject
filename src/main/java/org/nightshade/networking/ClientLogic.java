@@ -61,10 +61,10 @@ public class ClientLogic /*implements Runnable*/ {
             next = objectInput.readObject();
         }
         PlayerMoveMsg moveMsg = (PlayerMoveMsg) next;
-        System.out.println(moveMsg.getName());
-        System.out.println(moveMsg.getX());
-        System.out.println(moveMsg.getY());
-        System.out.println(moveMsg.isAlive());
+        //System.out.println(moveMsg.getName());
+        //System.out.println(moveMsg.getX());
+        //System.out.println(moveMsg.getY());
+        //System.out.println(moveMsg.isAlive());
         return moveMsg;
     }
 
@@ -92,10 +92,10 @@ public class ClientLogic /*implements Runnable*/ {
                 msgsList.add(newMoveMsg);
             }
 
-            System.out.println(newMoveMsg.getName());
-            System.out.println(newMoveMsg.getX());
-            System.out.println(newMoveMsg.getY());
-            System.out.println(newMoveMsg.isAlive());
+            //System.out.println(newMoveMsg.getName());
+            //System.out.println(newMoveMsg.getX());
+            //System.out.println(newMoveMsg.getY());
+            //System.out.println(newMoveMsg.isAlive());
 
             if(objectInput.available() != 0) {
                 next = objectInput.readObject();
@@ -141,8 +141,8 @@ public class ClientLogic /*implements Runnable*/ {
             }
 
             //playersList.add(newPlayer);
-            System.out.println(newPlayer.getName());
-            System.out.println(newPlayer.getReady());
+            //System.out.println(newPlayer.getName());
+            //System.out.println(newPlayer.getReady());
             if(objectInput.available() != 0) {
                 next = objectInput.readObject();
             } else {
