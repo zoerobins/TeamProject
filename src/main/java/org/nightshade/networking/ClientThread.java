@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 import org.nightshade.gui.Player;
 
+/**
+ * ClientThread class
+ * Runs a thread for sending and receiving messages to and from one client
+ */
 public class ClientThread implements Runnable {
 
     private final ServerLogic serverLogic;
@@ -21,6 +25,13 @@ public class ClientThread implements Runnable {
 
     private boolean allPlayersReady;
 
+    /**
+     * Constructor for the ClientThread class
+     * Initialises the object streams
+     * @param client Socket that the Client used to connect to the Server
+     * @param clientNo Client number
+     * @param serverLogic ServerLogic object that which creates this ClientThread object
+     */
     public ClientThread(Socket client, int clientNo, ServerLogic serverLogic) {
 
         this.clientNo = clientNo;
@@ -40,6 +51,10 @@ public class ClientThread implements Runnable {
     }
 
 
+    /**
+     * Thread 'run' method
+     * Uses loops to make repeated calls to methods which send and receive objects
+     */
     @Override
     public void run() {
 
@@ -63,6 +78,9 @@ public class ClientThread implements Runnable {
 
     }
 
+    /**
+     * Reads in Player objects received from the Client and adds them to an ArrayList
+     */
     public void receivePlayers() {
         Player player;
         try {
@@ -91,6 +109,10 @@ public class ClientThread implements Runnable {
 
     }
 
+    /**
+     * Sends Player objects from the ArrayList to the Client
+     * @throws IOException
+     */
     public void sendPlayers() throws IOException {
         players = serverLogic.getPlayers();
         System.out.println(players.size());
@@ -99,6 +121,11 @@ public class ClientThread implements Runnable {
         }
     }
 
+    /**
+     * Reads in PlayerMoveMsgs received from the Client and adds them to an ArrayList
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void receiveMoveMsg() throws IOException, ClassNotFoundException {
 
         try {
@@ -126,6 +153,10 @@ public class ClientThread implements Runnable {
 
     }
 
+    /**
+     * Sends PlayerMoveMsg objects from the ArrayList to the Client
+     * @throws IOException
+     */
     public void sendMoveMsgs() throws IOException {
         moveMsgs = serverLogic.getMoveMsgs();
         for(int i=0; i<moveMsgs.size(); i++) {
