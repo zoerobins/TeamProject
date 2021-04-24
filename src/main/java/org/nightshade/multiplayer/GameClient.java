@@ -36,6 +36,12 @@ public class GameClient {
     public void setY(Double y){
         this.sprite.setY(y);
     }
+    public int getX(){
+        return sprite.getX();
+    }
+    public int getY(){
+        return sprite.getY();
+    }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
