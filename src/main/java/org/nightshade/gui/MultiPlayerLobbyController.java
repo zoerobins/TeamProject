@@ -68,11 +68,12 @@ public class MultiPlayerLobbyController implements Initializable {
             System.out.println("all players ready");
             try {
                 GuiHandler.player.getClient().getClientLogic().sendPlayer("ALLPLAYERSREADY", "ALLPLAYERSREADY");
-            } catch (IOException e) {
+                Thread.sleep(2000);
+                GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName(), GuiHandler.player.getClient(),getPlayers());
+
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
-            GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName(), GuiHandler.player.getClient(),getPlayers());
-            //clientLogic.gameLoop();
 
         }
 

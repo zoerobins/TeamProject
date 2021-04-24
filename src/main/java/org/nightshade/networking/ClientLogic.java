@@ -155,4 +155,9 @@ public class ClientLogic /*implements Runnable*/ {
     public ArrayList<Player> getPlayersList() {
         return playersList;
     }
+
+    public void closeSocket() throws IOException {
+        server.close();
+    }
+
 }

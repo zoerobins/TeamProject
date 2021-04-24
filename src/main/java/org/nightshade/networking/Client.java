@@ -11,6 +11,7 @@ public class Client {
     private String serverIp;
     private int portValue;
     private ClientLogic clientLogic;
+    private boolean host;
 
     /*public Client() {
         try {
@@ -32,6 +33,7 @@ public class Client {
 
     public Client(String name, String serverIp, int portValue) throws IOException {
         this.name = name;
+        this.host = false;
         clientLogic = new ClientLogic(serverIp, portValue, this);
     }
 
@@ -41,6 +43,14 @@ public class Client {
 
     public ClientLogic getClientLogic() {
         return clientLogic;
+    }
+
+    public void setHost() {
+        this.host = true;
+    }
+
+    public boolean isHost() {
+        return this.host;
     }
 
     /*public static void main(String[] args) throws IOException {
