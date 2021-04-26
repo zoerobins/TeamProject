@@ -31,7 +31,6 @@ public class Game {
     private Client client;
     private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
 
-
     public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level, Client client) {
 
         this.level = level;
@@ -61,7 +60,6 @@ public class Game {
             }
         }.start();
     }
-
 
     private void checkForInput(Scene scene) {
         scene.setOnKeyPressed(
@@ -103,8 +101,12 @@ public class Game {
 
         // send new isAlive, x and y of local client to the other clients and update their isAlive, x and y values to the new ones that they send
         try {
-            client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getSprite().getX() , localGameClient.getSprite().getY(), localGameClient.isAlive());
-            System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
+            if (!((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
+                client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getX(), localGameClient.getY(), localGameClient.isAlive());
+                System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
+            }else{
+                System.out.println("---------------------------");
+            }
             client.getClientLogic().receiveMoveMsgs();
             msgsList = client.getClientLogic().getMsgsList();
             //System.out.println("msgsList size: " + msgsList.size());
@@ -137,10 +139,10 @@ public class Game {
 
 
     public void loop() {
-        /*
+
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
-         */
+
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());

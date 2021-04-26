@@ -18,6 +18,8 @@ public class GameClient {
     private SpotEffects spotEffects;
     private Random random;
     public String name;
+    public int previousX;
+    public int previousY;
     public GameClient(String name) {
         this.isAlive = true;
         this.canJump = true;
@@ -26,15 +28,25 @@ public class GameClient {
         this.spotEffects = new SpotEffects();
         this.random = new Random();
         this.name = name;
+        this.previousX =previousX;
+        this.previousY =previousY;
     }
     public String getName(){
         return name;
     }
     public void setX(Double x){
+        previousX = this.sprite.getX();
         this.sprite.setX(x);
     }
     public void setY(Double y){
+        previousY = this.sprite.getY();
         this.sprite.setY(y);
+    }
+    public int getPreviousX(){
+        return previousX;
+    }
+    public int getPreviousY(){
+        return previousY;
     }
     public int getX(){
         return sprite.getX();
