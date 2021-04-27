@@ -24,30 +24,31 @@ public class AnimatedSprite {
         return this.image;
     }
 
-    public void setAnimatedImage(int type, boolean direction) {
-        if (type == 1 && direction == true) {
+    public void setAnimatedImage(int type, Direction direction) {
+        if (type == 1 && direction.equals(Direction.FORWARD)) {
             Image[] imageArray = new Image[8];
             for (int i = 0; i < 8; i++) {
-                imageArray[i] = new Image("img/game/player_run_right_" + i + ".png");
+                imageArray[i] = new Image("img/game/player_run_right/player_run_right_" + i + ".png");
             }
-            image.frames = imageArray;
-            image.duration = 0.150;
+            image.setFrames(imageArray);
+            image.setDuration(0.150);
         }
-        else if (type == 1 && direction == false) {
+        else if (type == 1 && direction.equals(Direction.BACKWARD)) {
             Image[] imageArray = new Image[8];
             for (int i = 0; i < 8; i++) {
-                imageArray[i] = new Image("img/game/player_run_left_" + i + ".png");
+                imageArray[i] = new Image("img/game/player_run_left/player_run_left_" + i + ".png");
             }
-            image.frames = imageArray;
-            image.duration = 0.150;
+            image.setFrames(imageArray);
+            image.setDuration(0.150);
+            System.out.println(image.getFrames()[0].getUrl());
         }
         if (type == 2) {
             Image[] imageArray = new Image[2];
             for (int i = 0; i < 2; i++) {
                 imageArray[i] = new Image("img/game/player_idle_" + i + ".png");
             }
-            image.frames = imageArray;
-            image.duration = 0.150;
+            image.setFrames(imageArray);
+            image.setDuration(0.150);
         }
     }
 
@@ -82,8 +83,12 @@ public class AnimatedSprite {
         return new Rectangle2D(x, y, width, height);
     }
 
-    public boolean intersects(Sprite spr) {
-        return spr.getBoundary().intersects(this.getBoundary());
+    public boolean intersects(Sprite sprite) {
+        return sprite.getBoundary().intersects(this.getBoundary());
+    }
+
+    public boolean intersects(AnimatedSprite animatedSprite) {
+        return animatedSprite.getBoundary().intersects(this.getBoundary());
     }
 
     public boolean intersects(int x, int y, int w, int h) {

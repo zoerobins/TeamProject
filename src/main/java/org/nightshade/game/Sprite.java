@@ -54,8 +54,12 @@ public class Sprite {
         return new Rectangle2D(x, y, width, height);
     }
 
-    public boolean intersects(Sprite spr) {
-        return spr.getBoundary().intersects(this.getBoundary());
+    public boolean intersects(Sprite sprite) {
+        return sprite.getBoundary().intersects(this.getBoundary());
+    }
+
+    public boolean intersects(AnimatedSprite animatedSprite) {
+        return animatedSprite.getBoundary().intersects(this.getBoundary());
     }
 
     public boolean intersects(int x, int y, int w, int h) {

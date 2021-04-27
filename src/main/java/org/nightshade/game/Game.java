@@ -178,8 +178,8 @@ public class Game {
 
         //Move camera
         double translateX = renderer.getCanvas().getTranslateX();
-        if ((-1 *translateX) + 700 < client.getSprite().getX() && (-1 * translateX) < (LEVEL_WIDTH * 60 - 1280)) {
-            renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - client.getSprite().getX())));
+        if ((-1 *translateX) + 700 < client.getAnimatedSprite().getX() && (-1 * translateX) < (LEVEL_WIDTH * 60 - 1280)) {
+            renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - client.getAnimatedSprite().getX())));
         } else {
             renderer.getCanvas().setTranslateX((int) (translateX));
         }

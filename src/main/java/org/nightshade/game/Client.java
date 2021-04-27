@@ -29,8 +29,8 @@ public class Client {
         Image[] imageArray = new Image[2];
         imageArray[0] = new Image("img/game/player_idle_0.png");
         imageArray[1] = new Image("img/game/player_idle_1.png");
-        animatedImage.frames = imageArray;
-        animatedImage.duration = 0.150;
+        animatedImage.setFrames(imageArray);
+        animatedImage.setDuration(0.150);
         this.animatedSprite = new AnimatedSprite(animatedImage, 300,50);
         this.sprite = new Sprite(new Image("img/game/player.png"),300,50);
         this.spotEffects = new SpotEffects();
@@ -92,35 +92,40 @@ public class Client {
     }
 
     public void moveX(int value, Level level){
-        boolean movingRight = value > 0;
-        animatedSprite.setAnimatedImage(1, movingRight);
+        boolean isMovingRight = value > 0;
+        if (isMovingRight) {
+            animatedSprite.setAnimatedImage(1, Direction.FORWARD);
+        } else {
+            animatedSprite.setAnimatedImage(1, Direction.BACKWARD);
+        }
+
         int speed =1;
         if (this.ability == Ability.SPEEDBOOST){
             speed = 2;
         }
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : level.getPlatformSprites()) {
-                if (platform.intersects(sprite)){
-                    if(movingRight){
-                        getSprite().setX(getSprite().getX() - 1);
+                if (platform.intersects(animatedSprite)){
+                    if(isMovingRight){
+                        animatedSprite.setX(animatedSprite.getX() - 1);
                     } else {
-                        getSprite().setX(getSprite().getX() + 1);
+                        animatedSprite.setX(animatedSprite.getX() + 1);
                     }
                     return;
                 }
             }
             for (Sprite ground : level.getGroundSprites()) {
-                if (ground.intersects(sprite)){
-                    if(movingRight){
-                        getSprite().setX(getSprite().getX() - 1);
+                if (ground.intersects(animatedSprite)){
+                    if(isMovingRight){
+                        animatedSprite.setX(animatedSprite.getX() - 1);
                     } else {
-                        getSprite().setX(getSprite().getX() + 1);
+                        animatedSprite.setX(animatedSprite.getX() + 1);
                     }
                     return;
                 }
             }
             for (PowerUp box : level.getPowerUps()) {
-                if (box.intersects(sprite)) {
+                if (box.intersects(animatedSprite)) {
                     box.collect();
                     this.ability = box.getAbility();
                     this.setPowerUpTimer();
@@ -128,18 +133,18 @@ public class Client {
             }
 
             for (MovingPlatform movingPlatform : level.getMovingPlatforms()){
-                if (movingPlatform.getSprite().intersects(sprite)){
-                    if(movingRight){
-                        getSprite().setX(getSprite().getX() - 1);
+                if (movingPlatform.getSprite().intersects(animatedSprite)){
+                    if(isMovingRight){
+                        animatedSprite.setX(animatedSprite.getX() - 1);
                     } else {
-                        getSprite().setX(getSprite().getX() + 1);
+                        animatedSprite.setX(animatedSprite.getX() + 1);
                     }
                     return;
                 }
             }
 
             for (Enemy enemy : level.getEnemies()) {
-                if (enemy.getSprite().intersects(sprite)){
+                if (enemy.getSprite().intersects(animatedSprite)){
                     if (this.ability == Ability.SHIELD){
                         return;
                     }else {
@@ -149,37 +154,45 @@ public class Client {
                 }
             }
 
-            getSprite().setX(getSprite().getX() + (movingRight ? speed : -speed));
+            double newX;
+            if (isMovingRight) {
+                newX = animatedSprite.getX() + speed;
+            } else {
+                newX = animatedSprite.getX() - speed;
+            }
+
+            animatedSprite.setX(newX);
+
         }
     }
 
     public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingDown = value > 0;
-        animatedSprite.setAnimatedImage(2, true);
+        animatedSprite.setAnimatedImage(2, Direction.FORWARD);
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
-                if (platform.intersects(sprite) && movingDown) {
-                    getSprite().setY(getSprite().getY() - 1);
+                if (platform.intersects(animatedSprite) && movingDown) {
+                    animatedSprite.setY(animatedSprite.getY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
             for (Sprite ground : groundSprites) {
-                if (ground.intersects(sprite) && movingDown) {
-                    getSprite().setY(getSprite().getY() - 1);
+                if (ground.intersects(animatedSprite) && movingDown) {
+                    animatedSprite.setY(animatedSprite.getY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
             for (Sprite water : waterSprites) {
-                if (water.intersects(sprite)){
-                    getSprite().setY(getSprite().getY() + 1);
+                if (water.intersects(animatedSprite)){
+                    animatedSprite.setY(animatedSprite.getY() + 1);
                     return;
                 }
             }
 
             for (PowerUp box : powerUps) {
-                if (box.intersects(sprite)) {
+                if (box.intersects(animatedSprite)) {
                     box.collect();
                     this.ability = box.getAbility();
                     this.setPowerUpTimer();
@@ -188,15 +201,15 @@ public class Client {
             }
 
             for (MovingPlatform mPlatform : movingPlatforms) {
-                if (mPlatform.getSprite().intersects(sprite) && movingDown){
-                    getSprite().setY(getSprite().getY() - 1);
+                if (mPlatform.getSprite().intersects(animatedSprite) && movingDown){
+                    animatedSprite.setY(animatedSprite.getY() - 1);
                     setCanJump(true);
                     return;
                 }
             }
 
             for (Enemy enemy : enemies) {
-                if (enemy.getSprite().intersects(sprite)) {
+                if (enemy.getSprite().intersects(animatedSprite)) {
                     if (this.ability != Ability.SHIELD){
                         kill();
                         return;
@@ -206,7 +219,16 @@ public class Client {
                     }
                 }
             }
-            getSprite().setY(getSprite().getY() + (movingDown ? 1 : -1));
+
+            double newY;
+            if (movingDown) {
+                newY = animatedSprite.getY() + 1;
+            } else {
+                newY = animatedSprite.getY() - 1;
+            }
+
+            animatedSprite.setY(newY);
+
         }
     }
 }
