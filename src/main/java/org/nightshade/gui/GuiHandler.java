@@ -27,6 +27,10 @@ public class GuiHandler {
         stage = window;
 
         Parent settingsRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/settings.fxml")));
+        //FXMLLoader loader = new FXMLLoader();
+        //loader.setLocation(getClass().getResource("settings.fxml"));
+        //Parent settingsRoot = loader.load();
+
         Parent singlePlayerRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/single_player.fxml")));
         Parent titleScreenRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/title_screen.fxml")));
         Parent menuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/menu.fxml")));

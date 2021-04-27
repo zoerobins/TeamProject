@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.nightshade.game.Game;
 import org.nightshade.gui.GuiHandler;
+import org.nightshade.gui.SinglePlayerController;
 
 import java.util.ArrayList;
 

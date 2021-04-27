@@ -45,6 +45,8 @@ public class SinglePlayerController implements Initializable {
     private ArrayList<RadioButton> ai2RadioButtons;
     private ArrayList<RadioButton> ai3RadioButtons;
 
+    public static Game game;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ai1ToggleGroup = new ToggleGroup();
@@ -110,7 +112,7 @@ public class SinglePlayerController implements Initializable {
 
     @FXML
     public void startGame(ActionEvent event) {
-        Game game = new Game(Main.stage);
+        game = new Game(Main.stage);
     }
 
     @FXML

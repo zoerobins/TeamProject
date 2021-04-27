@@ -6,8 +6,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
+import org.nightshade.gui.SettingsController;
 import org.nightshade.renderer.Renderer;
 import java.util.ArrayList;
+import javafx.scene.effect.ColorAdjust;
+
 public class Game {
     private final int levelWidth = 120;
     private final int blockWidth = 60;
@@ -17,7 +20,10 @@ public class Game {
     private final ArrayList<AI> aiPlayers;
     private final ArrayList<Image> lavaImages;
     private final ArrayList<String> input = new ArrayList<>();
-    private final Renderer renderer;
+    public static Renderer renderer;
+    public ColorAdjust colorAdjust;
+    public float brightnessVal;
+    public double volume;
     private final Client client;
     private final AILogic aiLogic;
     private final Sprite cloud;
@@ -28,10 +34,16 @@ public class Game {
         cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
         parallax = new Parallax();
         renderer = new Renderer();
+        colorAdjust = new ColorAdjust();
+        brightnessVal = SettingsController.bSliderVal / 100;
+        colorAdjust.setBrightness(brightnessVal);
+        //renderer.graphicsContext.setEffect(colorAdjust);
+        volume = SettingsController.mSliderVal / 100;
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane, 1280, 720);
         aiLogic = new AILogic();
         client = new Client();
+        client.setClientVolume(volume);
         aiPlayers = new ArrayList<>();
         cloud.setX(-1300);
         renderer.setHeight(720);

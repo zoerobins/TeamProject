@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class Renderer {
 
     private final Group group;
-    private final Canvas canvas;
-    private final GraphicsContext graphicsContext;
+    private Canvas canvas;
+    public static GraphicsContext graphicsContext;
 
     public Renderer() {
         group = new Group();
@@ -27,6 +27,10 @@ public class Renderer {
         canvas = new Canvas(w, h);
         group.getChildren().add(canvas);
         graphicsContext = canvas.getGraphicsContext2D();
+    }
+
+    public GraphicsContext getGraphicsContext() {
+        return graphicsContext;
     }
 
     public Group getGroup() {

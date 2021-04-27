@@ -30,7 +30,7 @@ public class SpotEffectsTest {
     @Test
     public void testPlaySound() {
         File soundFile = new File("src/test/resources/audio/jump_00.mp3");
-        spotEffects.playSound(soundFile, true);
+        spotEffects.playSound(soundFile, true, 0.2);
     }
 
     @Test
@@ -43,12 +43,12 @@ public class SpotEffectsTest {
         soundFiles.add(new File("src/test/resources/audio/jump_05.mp3"));
 
         Random random = new Random();
-        spotEffects.playSound(soundFiles.get(random.nextInt(5)), true);
+        spotEffects.playSound(soundFiles.get(random.nextInt(5)), true, 0.5);
     }
 
     @Test
     public void testPlaySoundUntilEnd() {
         File soundFile = new File("src/test/resources/audio/jump_00.mp3");
-        spotEffects.playSoundUntilEnd(soundFile, true);
+        spotEffects.playSoundUntilEnd(soundFile, true, 0.5);
     }
 }

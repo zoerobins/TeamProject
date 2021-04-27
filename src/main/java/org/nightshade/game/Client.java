@@ -13,6 +13,7 @@ public class Client {
     private Point2D velocity;
     private final Sprite sprite;
     private SpotEffects spotEffects;
+    public double volume;
     private Random random;
     public Client() {
         this.isAlive = true;
@@ -40,17 +41,20 @@ public class Client {
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
+    public void setClientVolume(double volume){
+        this.volume = volume;
+    }
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
-            spotEffects.playSound(soundFile, true);
+            spotEffects.playSound(soundFile, true, volume);
             velocity = velocity.add(0, -30);
             canJump = false;
         }
     }
     public void kill() {
         File soundFile = new File("src/main/resources/audio/die.mp3");
-        spotEffects.playSoundUntilEnd(soundFile, true);
+        spotEffects.playSoundUntilEnd(soundFile, true, volume);
         isAlive =false;
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }

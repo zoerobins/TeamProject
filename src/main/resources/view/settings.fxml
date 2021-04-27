@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nightshade.gui.SettingsController">
     <columnConstraints>
@@ -22,22 +21,30 @@
     <children>
         <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" GridPane.columnIndex="1">
             <children>
-                <Button id="back-button" layoutY="14.0" mnemonicParsing="false" onAction="#MainMenuButton" prefHeight="38.0" prefWidth="82.0" text="" />
-                <Label alignment="CENTER" layoutX="182.0" layoutY="14.0" prefHeight="38.0" prefWidth="109.0" text="Settings" textAlignment="CENTER" />
-                <Slider layoutX="70.0" layoutY="134.0" prefHeight="47.0" prefWidth="140.0" />
-                <Label alignment="TOP_CENTER" layoutX="58.0" layoutY="106.0" prefHeight="38.0" prefWidth="152.0" text="Master Volume" />
-                <Label alignment="TOP_CENTER" layoutX="70.0" layoutY="210.0" prefHeight="38.0" prefWidth="152.0" text="Sound Effects Volume" />
-                <Slider layoutX="70.0" layoutY="238.0" prefHeight="47.0" prefWidth="140.0" />
-                <Label alignment="TOP_CENTER" layoutX="70.0" layoutY="315.0" prefHeight="38.0" prefWidth="152.0" text="Music Volume" />
-                <Slider layoutX="76.0" layoutY="364.0" />
-                <Label alignment="TOP_CENTER" layoutX="273.0" layoutY="106.0" prefHeight="28.0" prefWidth="152.0" text="Brightness " />
-                <Slider layoutX="279.0" layoutY="134.0" prefHeight="47.0" prefWidth="140.0" />
-                <Label alignment="TOP_CENTER" layoutX="273.0" layoutY="210.0" prefHeight="38.0" prefWidth="152.0" text="Background Colour" />
-                <ComboBox layoutX="291.0" layoutY="249.0" prefHeight="25.0" prefWidth="125.0" promptText="Black">
-                    <effect>
-                        <Blend />
-                    </effect>
-                </ComboBox>
+                <Button id="back-button" layoutX="45.0" layoutY="28.0" mnemonicParsing="false" onAction="#MainMenuButton" prefHeight="72.0" prefWidth="130.0" text="BACK">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+                <Label alignment="CENTER" layoutX="529.0" layoutY="28.0" prefHeight="58.0" prefWidth="240.0" text="SETTINGS" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font></Label>
+                <Slider fx:id="mSlider" layoutX="573.0" layoutY="299.0" onMouseReleased="#OnmSliderChanged" prefHeight="47.0" prefWidth="152.0" showTickLabels="true" showTickMarks="true" value="20.0" />
+                <Label alignment="TOP_CENTER" layoutX="573.0" layoutY="249.0" prefHeight="38.0" prefWidth="152.0" text="SOUND EFFECTS VOLUME">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+                <Label alignment="TOP_CENTER" layoutX="547.0" layoutY="400.0" prefHeight="28.0" prefWidth="205.0" text="BACKGROUND MUSIC VOLUME">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+                <Slider id="sSlider" layoutX="573.0" layoutY="441.0" prefHeight="47.0" prefWidth="152.0" />
+                <Label alignment="TOP_CENTER" layoutX="566.0" layoutY="128.0" prefHeight="28.0" prefWidth="152.0" text="BRIGHTNESS">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font></Label>
+                <Slider fx:id="bSlider" layoutX="573.0" layoutY="183.0" majorTickUnit="50.0" min="-100.0" onMouseReleased="#OnSliderChanged" prefHeight="47.0" prefWidth="152.0" showTickLabels="true" showTickMarks="true" />
+            <Button layoutX="608.0" layoutY="525.0" mnemonicParsing="false" onAction="#SaveButton" prefHeight="47.0" prefWidth="82.0" text="SAVE" />
             </children>
         </Pane>
     </children>
