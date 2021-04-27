@@ -4,6 +4,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
@@ -33,6 +37,8 @@ public class Game {
         renderer = new Renderer();
         renderer.setHeight(720);
         renderer.setWidth(LEVEL_WIDTH * BLOCK_WIDTH);
+        renderer.getGraphicsContext().setFont(Font.font ("Arial", 40));
+        renderer.getGraphicsContext().setFill(Color.WHITE);
         Pane pane = new Pane(renderer.getGroup());
 
         int SCENE_WIDTH = 1280;
@@ -172,9 +178,11 @@ public class Game {
                 renderer.drawImage(powerUp.getImage(), powerUp.getX(), powerUp.getY());
             }
         }
+
         if (client.powerUpTimer > 0){
             client.reducePowerUpTimer();
-        }else {
+            renderer.getGraphicsContext().fillText(String.valueOf(client.ability +"   "+ client.powerUpTimer),-renderer.getCanvas().getTranslateX() + 20,30);
+        } else {
             client.removeAbility();
         }
 

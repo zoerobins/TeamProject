@@ -15,6 +15,10 @@ public class Renderer {
     private final Canvas canvas;
     private final GraphicsContext graphicsContext;
 
+    public GraphicsContext getGraphicsContext() {
+        return graphicsContext;
+    }
+
     public Renderer() {
         group = new Group();
         canvas = new Canvas(500, 500);
