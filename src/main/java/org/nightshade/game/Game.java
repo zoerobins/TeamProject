@@ -27,6 +27,7 @@ public class Game {
     private final Sprite cloudSprite;
     private final Parallax parallax;
     private final Level level;
+    private final long startNanoTime = System.nanoTime();
 
     public Game(Stage stage) {
         renderer = new Renderer();
@@ -60,7 +61,7 @@ public class Game {
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                loop();
+                loop(currentNanoTime);
             }
         }.start();
     }
@@ -116,7 +117,8 @@ public class Game {
         aiPlayers.add(ai);
     }
 
-    public void loop() {
+    public void loop(long currentNanoTime) {
+        double time = (currentNanoTime - startNanoTime) / 1000000000.0;
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
 
@@ -135,8 +137,8 @@ public class Game {
         renderer.drawImage(cloudSprite.getImage(), cloudSprite.getX(), 50);
         if (client.isAlive()) {
             moveClient();
-            Sprite clientSprite = client.getSprite();
-            renderer.drawImage(clientSprite.getImage(), clientSprite.getX(), clientSprite.getY());
+            AnimatedSprite clientSprite = client.getAnimatedSprite();
+            renderer.drawImage(clientSprite.getImage().getFrame(time), clientSprite.getX(), clientSprite.getY());
             boolean intersectsCloud = clientSprite.intersects(cloudSprite.getX() - 90, cloudSprite.getY(), (int) cloudSprite.getWidth(), (int) cloudSprite.getHeight());
             if (intersectsCloud) {
                 client.kill();

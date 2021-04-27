@@ -1,6 +1,7 @@
 package org.nightshade.game;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import org.nightshade.animation.AnimatedImage;
 import org.nightshade.audio.SpotEffects;
 import org.nightshade.gui.GuiHandler;
 import org.nightshade.renderer.Renderer;
@@ -13,7 +14,9 @@ public class Client {
     private boolean canJump;
     private Point2D velocity;
     private final Sprite sprite;
+    public AnimatedSprite animatedSprite;
     private SpotEffects spotEffects;
+    private AnimatedImage animatedImage;
     private Random random;
     public Ability ability;
     public int powerUpTimer;
@@ -22,6 +25,13 @@ public class Client {
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
+        this.animatedImage = new AnimatedImage();
+        Image[] imageArray = new Image[2];
+        imageArray[0] = new Image("img/game/player_idle_0.png");
+        imageArray[1] = new Image("img/game/player_idle_1.png");
+        animatedImage.frames = imageArray;
+        animatedImage.duration = 0.150;
+        this.animatedSprite = new AnimatedSprite(animatedImage, 300,50);
         this.sprite = new Sprite(new Image("img/game/player.png"),300,50);
         this.spotEffects = new SpotEffects();
         this.random = new Random();
@@ -44,8 +54,14 @@ public class Client {
     public Sprite getSprite() {
         return sprite;
     }
+    public AnimatedSprite getAnimatedSprite() {
+        return animatedSprite;
+    }
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
+    }
+    public void displayAnimatedSprite(Renderer renderer, AnimatedImage animatedImage, Sprite sprite, double t){
+        renderer.drawImage(animatedImage.getFrame(t), sprite.getX(), sprite.getY());
     }
     public void reducePowerUpTimer(){
         this.powerUpTimer = powerUpTimer-1;
@@ -77,6 +93,7 @@ public class Client {
 
     public void moveX(int value, Level level){
         boolean movingRight = value > 0;
+        animatedSprite.setAnimatedImage(1, movingRight);
         int speed =1;
         if (this.ability == Ability.SPEEDBOOST){
             speed = 2;
@@ -138,6 +155,7 @@ public class Client {
 
     public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingDown = value > 0;
+        animatedSprite.setAnimatedImage(2, true);
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(sprite) && movingDown) {
