@@ -17,7 +17,8 @@ public class Game {
     private final int BLOCK_WIDTH = 60;
 
     private int xViewCoordinate = 0;
-    private final int animationIndex = 0;
+    private int animationIndex = 0;
+    private int gameTickCounter = 0;
     private final ArrayList<AI> aiPlayers;
     private final ArrayList<Image> lavaImages;
     private ArrayList<KeyCode> keyCodes;
@@ -123,6 +124,10 @@ public class Game {
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());
+        gameTickCounter++;
+        animationIndex = setAnimationIndex(gameTickCounter);
+
+
         for (Sprite lavaSprite : level.getLavaSprites()) {
             renderer.drawImage(lavaImages.get(animationIndex), lavaSprite.getX(), lavaSprite.getY());
         }
@@ -182,6 +187,16 @@ public class Game {
             renderer.getCanvas().setTranslateX((int) (translateX));
         }
         xViewCoordinate = (int) (-1 * translateX);
+    }
+
+    private int setAnimationIndex(int counter) {
+        if (counter % 3 == 0) {
+            animationIndex++;
+            if (animationIndex == 17) {
+                animationIndex = 0;
+            }
+        }
+        return animationIndex;
     }
 
     private void renderSprites(ArrayList<Sprite> sprites) {
