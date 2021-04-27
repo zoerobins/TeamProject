@@ -3,6 +3,7 @@ package org.nightshade.game;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import org.nightshade.animation.AnimatedImage;
+import org.nightshade.animation.AnimationType;
 
 public class AnimatedSprite {
 
@@ -24,8 +25,8 @@ public class AnimatedSprite {
         return this.image;
     }
 
-    public void setAnimatedImage(int type, Direction direction) {
-        if (type == 1 && direction.equals(Direction.FORWARD)) {
+    public void setAnimatedImage(AnimationType animationType, Direction direction) {
+        if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.FORWARD)) {
             Image[] imageArray = new Image[8];
             for (int i = 0; i < 8; i++) {
                 imageArray[i] = new Image("img/game/player_run_right/player_run_right_" + i + ".png");
@@ -33,7 +34,7 @@ public class AnimatedSprite {
             image.setFrames(imageArray);
             image.setDuration(0.150);
         }
-        else if (type == 1 && direction.equals(Direction.BACKWARD)) {
+        else if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.BACKWARD)) {
             Image[] imageArray = new Image[8];
             for (int i = 0; i < 8; i++) {
                 imageArray[i] = new Image("img/game/player_run_left/player_run_left_" + i + ".png");
@@ -42,7 +43,7 @@ public class AnimatedSprite {
             image.setDuration(0.150);
             System.out.println(image.getFrames()[0].getUrl());
         }
-        if (type == 2) {
+        if (animationType.equals(AnimationType.IDLE)) {
             Image[] imageArray = new Image[2];
             for (int i = 0; i < 2; i++) {
                 imageArray[i] = new Image("img/game/player_idle_" + i + ".png");

@@ -2,6 +2,7 @@ package org.nightshade.game;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import org.nightshade.animation.AnimatedImage;
+import org.nightshade.animation.AnimationType;
 import org.nightshade.audio.SpotEffects;
 import org.nightshade.gui.GuiHandler;
 import org.nightshade.renderer.Renderer;
@@ -94,9 +95,9 @@ public class Client {
     public void moveX(int value, Level level){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
-            animatedSprite.setAnimatedImage(1, Direction.FORWARD);
+            animatedSprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD);
         } else {
-            animatedSprite.setAnimatedImage(1, Direction.BACKWARD);
+            animatedSprite.setAnimatedImage(AnimationType.RUNNING, Direction.BACKWARD);
         }
 
         int speed =1;
@@ -168,7 +169,7 @@ public class Client {
 
     public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingDown = value > 0;
-        animatedSprite.setAnimatedImage(2, Direction.FORWARD);
+        animatedSprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD);
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(animatedSprite) && movingDown) {
