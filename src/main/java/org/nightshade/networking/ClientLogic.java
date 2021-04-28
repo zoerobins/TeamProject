@@ -101,18 +101,20 @@ public class ClientLogic /*implements Runnable*/ {
             newMoveMsg = (PlayerMoveMsg) next;
             if(msgsList.size() == 0) {
                 msgsList.add(newMoveMsg);
-            }
-            boolean msgAdded = false;
-            for(int i=0; i<msgsList.size(); i++) {
-                if(newMoveMsg.getName().equals(msgsList.get(i).getName())) {
-                    msgsList.set(i, newMoveMsg);
-                    msgAdded = true;
-                    break;
+            } else {
+                boolean msgAdded = false;
+                for(int i=0; i<msgsList.size(); i++) {
+                    if(newMoveMsg.getName().equals(msgsList.get(i).getName())) {
+                        msgsList.set(i, newMoveMsg);
+                        msgAdded = true;
+                        break;
+                    }
+                }
+                if(!msgAdded) {
+                    msgsList.add(newMoveMsg);
                 }
             }
-            if(!msgAdded) {
-                msgsList.add(newMoveMsg);
-            }
+
 
             //System.out.println(newMoveMsg.getName());
             //System.out.println(newMoveMsg.getX());
@@ -136,6 +138,12 @@ public class ClientLogic /*implements Runnable*/ {
     public ArrayList<PlayerMoveMsg> getMsgsList() {
         return msgsList;
     }
+
+
+    public void clearMsgsList() {
+        msgsList.clear();
+    }
+
 
     /**
      * Sends a new PlayerMoveMsg object containing the Player's updated position to the Server

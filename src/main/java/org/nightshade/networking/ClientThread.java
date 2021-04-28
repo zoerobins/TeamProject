@@ -138,12 +138,18 @@ public class ClientThread implements Runnable {
             if(serverLogic.getMoveMsgs().size() == 0) {
                 serverLogic.addMsg(moveMsg);
             } else {
+                boolean msgAdded = false;
                 for(int j=0; j<serverLogic.getMoveMsgs().size(); j++) {
                     if((serverLogic.getMoveMsgs().get(j).getName() != null) && serverLogic.getMoveMsgs().get(j).getName().equals(moveMsg.getName())) {
                         serverLogic.replaceMsg(j, moveMsg);
-                    } else if(moveMsg.getName() != null) {
+                        msgAdded = true;
+                        break;
+                    } /*else if(moveMsg.getName() != null) {
                         serverLogic.addMsg(moveMsg);
-                    }
+                    }*/
+                }
+                if(!msgAdded) {
+                    serverLogic.addMsg(moveMsg);
                 }
             }
 

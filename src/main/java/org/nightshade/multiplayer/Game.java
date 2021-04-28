@@ -56,6 +56,7 @@ public class Game {
         checkForInput(scene);
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
+                //client.getClientLogic().clearMsgsList();
                 loop();
             }
         }.start();
@@ -104,6 +105,15 @@ public class Game {
             if (!((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
                 client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getX(), localGameClient.getY(), localGameClient.isAlive());
                 System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
+
+                /*msgsList = client.getClientLogic().getMsgsList();
+                for(PlayerMoveMsg msg: msgsList) {
+                    if(msg.getName().equals(localGameClient.getName()) && !(msg.getX() == localGameClient.getX()) && !(msg.getY() == localGameClient.getY())) {
+                        client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getX(), localGameClient.getY(), localGameClient.isAlive());
+                        System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
+                    }
+                }*/
+
             }else{
                 System.out.println("---------------------------");
             }
@@ -140,8 +150,8 @@ public class Game {
 
     public void loop() {
 
-        parallax.move();
-        parallax.render(renderer, xViewCoordinate);
+        /*parallax.move();
+        parallax.render(renderer, xViewCoordinate);*/
 
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
