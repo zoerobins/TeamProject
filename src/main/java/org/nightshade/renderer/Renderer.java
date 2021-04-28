@@ -4,16 +4,18 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import org.nightshade.game.Sprite;
-
+import javafx.scene.effect.ColorAdjust;
+import org.nightshade.gui.SettingsController;
 import java.util.ArrayList;
 
 public class Renderer {
 
     private final Group group;
     private Canvas canvas;
-    public static GraphicsContext graphicsContext;
+    private GraphicsContext graphicsContext;
 
     public Renderer() {
         group = new Group();
@@ -27,10 +29,6 @@ public class Renderer {
         canvas = new Canvas(w, h);
         group.getChildren().add(canvas);
         graphicsContext = canvas.getGraphicsContext2D();
-    }
-
-    public GraphicsContext getGraphicsContext() {
-        return graphicsContext;
     }
 
     public Group getGroup() {

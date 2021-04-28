@@ -9,7 +9,7 @@ import org.nightshade.ai.AILogic;
 import org.nightshade.gui.SettingsController;
 import org.nightshade.renderer.Renderer;
 import java.util.ArrayList;
-import javafx.scene.effect.ColorAdjust;
+
 
 public class Game {
     private final int levelWidth = 120;
@@ -21,8 +21,6 @@ public class Game {
     private final ArrayList<Image> lavaImages;
     private final ArrayList<String> input = new ArrayList<>();
     public static Renderer renderer;
-    public ColorAdjust colorAdjust;
-    public float brightnessVal;
     public double volume;
     private final Client client;
     private final AILogic aiLogic;
@@ -34,10 +32,6 @@ public class Game {
         cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
         parallax = new Parallax();
         renderer = new Renderer();
-        colorAdjust = new ColorAdjust();
-        brightnessVal = SettingsController.bSliderVal / 100;
-        colorAdjust.setBrightness(brightnessVal);
-        //renderer.graphicsContext.setEffect(colorAdjust);
         volume = SettingsController.mSliderVal / 100;
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane, 1280, 720);

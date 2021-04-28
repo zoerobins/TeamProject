@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -25,26 +27,41 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-                <Label alignment="CENTER" layoutX="529.0" layoutY="28.0" prefHeight="58.0" prefWidth="240.0" text="SETTINGS" textAlignment="CENTER">
+                <Label alignment="CENTER" layoutX="398.0" layoutY="35.0" prefHeight="58.0" prefWidth="484.0" text="SETTINGS AND CONTROLS" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="35.0" />
                </font></Label>
-                <Slider fx:id="mSlider" layoutX="573.0" layoutY="299.0" onMouseReleased="#OnmSliderChanged" prefHeight="47.0" prefWidth="152.0" showTickLabels="true" showTickMarks="true" value="20.0" />
-                <Label alignment="TOP_CENTER" layoutX="573.0" layoutY="249.0" prefHeight="38.0" prefWidth="152.0" text="SOUND EFFECTS VOLUME">
+                <Slider fx:id="mSlider" layoutX="574.0" layoutY="159.0" onMouseReleased="#OnmSliderChanged" prefHeight="47.0" prefWidth="152.0" showTickLabels="true" showTickMarks="true" value="20.0" />
+                <Label alignment="TOP_CENTER" layoutX="573.0" layoutY="121.0" prefHeight="38.0" prefWidth="152.0" text="SOUND EFFECTS VOLUME">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
-                <Label alignment="TOP_CENTER" layoutX="547.0" layoutY="400.0" prefHeight="28.0" prefWidth="205.0" text="BACKGROUND MUSIC VOLUME">
+                <Label alignment="TOP_CENTER" layoutX="555.0" layoutY="236.0" prefHeight="28.0" prefWidth="205.0" text="BACKGROUND MUSIC VOLUME">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
-                <Slider id="sSlider" layoutX="573.0" layoutY="441.0" prefHeight="47.0" prefWidth="152.0" />
-                <Label alignment="TOP_CENTER" layoutX="566.0" layoutY="128.0" prefHeight="28.0" prefWidth="152.0" text="BRIGHTNESS">
+                <Slider id="sSlider" layoutX="582.0" layoutY="272.0" prefHeight="47.0" prefWidth="152.0" />
+            <Button layoutX="609.0" layoutY="337.0" mnemonicParsing="false" onAction="#SaveButton" prefHeight="47.0" prefWidth="82.0" text="SAVE" />
+            <ImageView fitHeight="150.0" fitWidth="253.0" layoutX="243.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/gui/arrowkeys.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="573.0" layoutY="463.0" prefHeight="28.0" prefWidth="261.0" text="RIGHT ARROW KEY - MOVE RIGHT">
                <font>
-                  <Font name="System Bold" size="16.0" />
-               </font></Label>
-                <Slider fx:id="bSlider" layoutX="573.0" layoutY="183.0" majorTickUnit="50.0" min="-100.0" onMouseReleased="#OnSliderChanged" prefHeight="47.0" prefWidth="152.0" showTickLabels="true" showTickMarks="true" />
-            <Button layoutX="608.0" layoutY="525.0" mnemonicParsing="false" onAction="#SaveButton" prefHeight="47.0" prefWidth="82.0" text="SAVE" />
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="573.0" layoutY="497.0" prefHeight="28.0" prefWidth="261.0" text="LEFT ARROW KEY - MOVE LEFT">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="573.0" layoutY="532.0" prefHeight="28.0" prefWidth="261.0" text="TOP ARROW KEY - JUMP">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
             </children>
         </Pane>
     </children>

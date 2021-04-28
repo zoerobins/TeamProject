@@ -8,18 +8,8 @@ import javafx.scene.effect.ColorAdjust;
 public class SettingsController{
 
     @FXML
-    private Slider bSlider;
-    public static float bSliderVal;
-
-    @FXML
     private Slider mSlider;
     public static double mSliderVal = 20.0;
-
-    @FXML
-    public void OnSliderChanged(){
-        bSliderVal = (int) bSlider.getValue();
-        System.out.println(bSliderVal/100);
-    }
 
     @FXML
     public void OnmSliderChanged(){
@@ -32,7 +22,6 @@ public class SettingsController{
     }
 
     public void SaveButton() {
-        bSlider.setValue(bSliderVal);
         mSlider.setValue(mSliderVal);
         GuiHandler.stage.setScene(GuiHandler.menu);
     }
