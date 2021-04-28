@@ -25,6 +25,9 @@ public class ServerLogic {
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<PlayerMoveMsg> moveMsgs = new ArrayList<>();
 
+    boolean readyToStartGame;
+    ArrayList<Boolean> startGame = new ArrayList<>();
+
 
     /**
      * Constructor for the ServerLogic class
@@ -36,6 +39,7 @@ public class ServerLogic {
         this.portValue = portValue;
         serverSocket = new ServerSocket(portValue);
         this.numClients = 0;
+        readyToStartGame = false;
         System.out.println("Started game server");
         waitForPlayers();
     }
@@ -103,6 +107,20 @@ public class ServerLogic {
      */
     public void replacePlayer(int index, Player player) {
         players.set(index, player);
+    }
+
+    public void addReadyValue(Boolean ready) {
+        startGame.add(ready);
+    }
+
+    public boolean isReadyToStartGame() {
+        //System.out.println("startGame size: " + startGame.size());
+        //System.out.println(players.size());
+        if(startGame.size() == players.size()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Socket getClientSocket() {

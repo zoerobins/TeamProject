@@ -68,10 +68,21 @@ public class MultiPlayerLobbyController implements Initializable {
             System.out.println("all players ready");
             try {
                 GuiHandler.player.getClient().getClientLogic().sendPlayer("ALLPLAYERSREADY", "ALLPLAYERSREADY");
-                Thread.sleep(2000);
+                //Thread.sleep(2000);
+                boolean startGame = false;
+                Player start;
+                while(!startGame) {
+                    System.out.println("in loop");
+                    start = GuiHandler.player.getClient().getClientLogic().receiveStartMessage();
+                    if(start.getName().equals("START THE GAME")) {
+                        startGame = true;
+                        System.out.println("startGame = true");
+                    }
+                }
+                System.out.println("starting game...");
                 GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName(), GuiHandler.player.getClient(),getPlayers());
 
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
 
@@ -92,11 +103,11 @@ public class MultiPlayerLobbyController implements Initializable {
 
     public ObservableList<Player> getPlayers(){
         ObservableList<Player> players = FXCollections.observableArrayList();
-        clientLogic = GuiHandler.player.getClient().getClientLogic();
+        /*clientLogic = GuiHandler.player.getClient().getClientLogic();
         playersList = clientLogic.getPlayersList();
         for(Player player : playersList) {
             players.add(player);
-        }
+        }*/
         if(players.size() == 0) {
             players.add(GuiHandler.player);
         }

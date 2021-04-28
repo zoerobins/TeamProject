@@ -193,7 +193,6 @@ public class ClientLogic /*implements Runnable*/ {
                 playersList.add(newPlayer);
             }
 
-            //playersList.add(newPlayer);
             //System.out.println(newPlayer.getName());
             //System.out.println(newPlayer.getReady());
             if(objectInput.available() != 0) {
@@ -212,6 +211,31 @@ public class ClientLogic /*implements Runnable*/ {
     public ArrayList<Player> getPlayersList() {
         return playersList;
     }
+
+    public Player receiveStartMessage() throws IOException, ClassNotFoundException {
+        System.out.println("in receiveStartMessage");
+        Object next;
+        Player startGame = new Player("blank");
+        next = objectInput.readObject();
+        while(next instanceof Player) {
+            if(((Player) next).getName().equals("START THE GAME")) {
+                startGame = (Player) next;
+                System.out.println("game should start now");
+                return startGame;
+            } else if(objectInput.available() != 0) {
+                next = objectInput.readObject();
+            } else {
+                break;
+            }
+        }
+        return startGame;
+
+    }
+
+
+
+
+
 
     /**
      * Closes the Socket connection to the Server

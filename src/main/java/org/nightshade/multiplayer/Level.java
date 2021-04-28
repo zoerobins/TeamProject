@@ -2,10 +2,11 @@ package org.nightshade.multiplayer;
 
 import javafx.scene.image.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Level {
+public class Level implements Serializable {
     private final ArrayList<Sprite> platformSprites;
     private final ArrayList<Sprite> lavaSprites;
     private final ArrayList<Sprite> groundSprites;

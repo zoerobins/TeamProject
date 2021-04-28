@@ -63,6 +63,7 @@ public class ClientThread implements Runnable {
                 receivePlayers();
                 sendPlayers();
             }
+            sendStartMessage();
             while(true) {
                 receiveMoveMsg();
                 sendMoveMsgs();
@@ -87,20 +88,26 @@ public class ClientThread implements Runnable {
             player = (Player) objectInput1.readObject();
 
             if(player.getName().equals("ALLPLAYERSREADY") && player.getReady().equals("ALLPLAYERSREADY")) {
-                allPlayersReady = true;
                 System.out.println("all players ready");
+                serverLogic.addReadyValue(allPlayersReady);
+                System.out.println(serverLogic.isReadyToStartGame());
+                allPlayersReady = true;
                 return;
             }
 
             if(serverLogic.getPlayers().size() == 0) {
                 serverLogic.addPlayer(player);
             } else {
+                boolean playerAdded = false;
                 for(int j=0; j<serverLogic.getPlayers().size(); j++) {
                     if((serverLogic.getPlayers().get(j).getName() != null) && serverLogic.getPlayers().get(j).getName().equals(player.getName())) {
                         serverLogic.replacePlayer(j, player);
-                    } else if(player.getName() != null) {
-                        serverLogic.addPlayer(player);
+                        playerAdded = true;
+                        break;
                     }
+                }
+                if(!playerAdded) {
+                    serverLogic.addPlayer(player);
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
@@ -170,6 +177,16 @@ public class ClientThread implements Runnable {
         }
     }
 
+
+    public void sendStartMessage() throws IOException {
+        boolean started = false;
+        while(!started) {
+            if(serverLogic.isReadyToStartGame()) {
+                objectOutput1.writeObject(new Player("START THE GAME", "READY"));
+                started = true;
+            }
+        }
+    }
 
 
 }
