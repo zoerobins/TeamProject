@@ -24,6 +24,8 @@ public class GameHandler {
         //if host - send this
         level = makeLevel(levelWidth);
         //
+
+
         for(Player player : players){
             GameClient newGameClient = new GameClient(player.getName());
             gameClients.add(newGameClient);

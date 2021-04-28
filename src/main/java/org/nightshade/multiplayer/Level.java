@@ -33,8 +33,12 @@ public class Level {
                         nodes.add(Node.PLATFORM);
                         count += 2;
                         break;
-                    case MOVING_PLATFORM:
-                        nodes.add(Node.MOVING_PLATFORM);
+                    case RIGHT_MOVING_PLATFORM:
+                        nodes.add(Node.RIGHT_MOVING_PLATFORM);
+                        count += 2;
+                        break;
+                    case LEFT_MOVING_PLATFORM:
+                        nodes.add(Node.LEFT_MOVING_PLATFORM);
                         count += 2;
                         break;
                     case LAVA:
@@ -49,6 +53,7 @@ public class Level {
                         break;
                 }
             }
+            System.out.println(nodes);
             nodeArrayLists.add(nodes);
         }
 
@@ -73,17 +78,36 @@ public class Level {
                         lavaSprites.add(sprite);
                         break;
                     }
-                    case ENEMY: {
+                    case RIGHT_ENEMY: {
                         int speed = ThreadLocalRandom.current().nextInt(0, 5 + 1);
-                        Enemy enemy = new Enemy(speed, x, y);
+                        Enemy enemy = new Enemy(speed, x, y,Direction.FORWARD);
                         enemies.add(enemy);
                         break;
                     }
-                    case MOVING_PLATFORM: {
+                    case LEFT_ENEMY: {
                         int speed = ThreadLocalRandom.current().nextInt(0, 5 + 1);
-                        Direction direction = Direction.getRandomDirection();
+                        Enemy enemy = new Enemy(speed, x, y,Direction.BACKWARD);
+                        enemies.add(enemy);
+                        break;
+                    }
+                    case RIGHT_MOVING_PLATFORM: {
+                        int speed = ThreadLocalRandom.current().nextInt(0, 5 + 1);
+                        Direction direction = Direction.FORWARD;
                         Node prevNode = nodes.get(j - 1);
-                        if (prevNode == Node.MOVING_PLATFORM) {
+                        if (prevNode == Node.RIGHT_MOVING_PLATFORM) {
+                            speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
+                            MovingPlatform lastMovingPlatform = movingPlatforms.get(movingPlatforms.size() - 1);
+                            direction = lastMovingPlatform.getDirection();
+                        }
+                        MovingPlatform newMovingPlatform = new MovingPlatform(x, y, speed, direction);
+                        movingPlatforms.add(newMovingPlatform);
+                        break;
+                    }
+                    case LEFT_MOVING_PLATFORM: {
+                        int speed = ThreadLocalRandom.current().nextInt(0, 5 + 1);
+                        Direction direction = Direction.BACKWARD;
+                        Node prevNode = nodes.get(j - 1);
+                        if (prevNode == Node.LEFT_MOVING_PLATFORM) {
                             speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
                             MovingPlatform lastMovingPlatform = movingPlatforms.get(movingPlatforms.size() - 1);
                             direction = lastMovingPlatform.getDirection();

@@ -8,12 +8,12 @@ public class Enemy {
     private Direction direction;
     private int offset;
 
-    public Enemy(int speed, int x, int y) {
+    public Enemy(int speed, int x, int y,Direction direction) {
         Image spriteImage = new Image("img/game/enemy.png");
         this.sprite = new Sprite(spriteImage, x, y);
         this.speed = speed;
         this.offset = 0;
-        this.direction = Direction.getRandomDirection();
+        this.direction = direction;
     }
 
     public Sprite getSprite() {
