@@ -34,6 +34,9 @@ public class GameHandler {
 
     }
     public Level makeLevel(int levelWidth){
-        return new Level(levelWidth);
+        //ArrayList<ArrayList <Node>> nodes = Level.getRandomNodes(12);
+        //return new Level(12, nodes);
+        ArrayList<ArrayList <Node>> nodes = Level.getLevel1();
+        return new Level(levelWidth,nodes);
     }
 }

@@ -2,7 +2,7 @@ package org.nightshade;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.nightshade.game.Game;
+import org.nightshade.multiplayer.Game;
 import org.nightshade.gui.GuiHandler;
 
 import java.util.ArrayList;

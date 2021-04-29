@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Level implements Serializable {
@@ -19,44 +20,8 @@ public class Level implements Serializable {
     Image ground = new Image("img/game/dirt.png");
     Image end = new Image("img/game/end.png");
 
-    public Level(int width) {
+    public Level(int width, ArrayList<ArrayList<Node>> nodeArrayLists) {
         int blockHeight = 12;
-
-        ArrayList<ArrayList<Node>> nodeArrayLists = new ArrayList<>();
-        for (int i = 0; i < blockHeight; i ++) {
-            ArrayList<Node> nodes = new ArrayList<>();
-            int count = 0;
-            while (count < width) {
-                Node node = Node.getRandomNode(i, count, width);
-                nodes.add(node);
-                switch (node) {
-                    case PLATFORM:
-                        nodes.add(Node.PLATFORM);
-                        count += 2;
-                        break;
-                    case RIGHT_MOVING_PLATFORM:
-                        nodes.add(Node.RIGHT_MOVING_PLATFORM);
-                        count += 2;
-                        break;
-                    case LEFT_MOVING_PLATFORM:
-                        nodes.add(Node.LEFT_MOVING_PLATFORM);
-                        count += 2;
-                        break;
-                    case LAVA:
-                        int length = ThreadLocalRandom.current().nextInt(0, 2 + 1);
-                        for (int j = 0; j < length; j ++) {
-                            nodes.add(Node.LAVA);
-                        }
-                        count += length;
-                        break;
-                    default:
-                        count++;
-                        break;
-                }
-            }
-            System.out.println(nodes);
-            nodeArrayLists.add(nodes);
-        }
 
         this.platformSprites = new ArrayList<>();
         this.lavaSprites = new ArrayList<>();
@@ -142,6 +107,46 @@ public class Level implements Serializable {
         }
     }
 
+    public static ArrayList<ArrayList<Node>> getRandomNodes (int width){
+        int blockHeight = 12;
+        ArrayList<ArrayList<Node>> nodeArrayLists = new ArrayList<>();
+        for (int i = 0; i < blockHeight; i ++) {
+            ArrayList<Node> nodes = new ArrayList<>();
+            int count = 0;
+            while (count < width) {
+                Node node = Node.getRandomNode(i, count, width);
+                nodes.add(node);
+                switch (node) {
+                    case PLATFORM:
+                        nodes.add(Node.PLATFORM);
+                        count += 2;
+                        break;
+                    case RIGHT_MOVING_PLATFORM:
+                        nodes.add(Node.RIGHT_MOVING_PLATFORM);
+                        count += 2;
+                        break;
+                    case LEFT_MOVING_PLATFORM:
+                        nodes.add(Node.LEFT_MOVING_PLATFORM);
+                        count += 2;
+                        break;
+                    case LAVA:
+                        int length = ThreadLocalRandom.current().nextInt(0, 2 + 1);
+                        for (int j = 0; j < length; j ++) {
+                            nodes.add(Node.LAVA);
+                        }
+                        count += length;
+                        break;
+                    default:
+                        count++;
+                        break;
+                }
+            }
+            nodeArrayLists.add(nodes);
+            System.out.println(nodes);
+        }
+        return nodeArrayLists;
+    }
+
     public ArrayList<Sprite> getLavaSprites() {
         return this.lavaSprites;
     }
@@ -165,4 +170,35 @@ public class Level implements Serializable {
     public ArrayList<Sprite> getGroundSprites() {
         return this.groundSprites;
     }
+
+    public static ArrayList<ArrayList<Node>> getLevel1 (){
+        ArrayList<ArrayList<Node>> nodeArrayLists = new ArrayList<>();
+        ArrayList<Node> row1 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row2 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row3 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row4 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row5 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row6 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row7 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row8 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_ENEMY, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row9 = new ArrayList<>(Arrays.asList(Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.RIGHT_MOVING_PLATFORM, Node.RIGHT_MOVING_PLATFORM, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.RIGHT_MOVING_PLATFORM, Node.RIGHT_MOVING_PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_MOVING_PLATFORM, Node.LEFT_MOVING_PLATFORM, Node.RIGHT_MOVING_PLATFORM, Node.RIGHT_MOVING_PLATFORM, Node.END));
+        ArrayList<Node> row10 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.LEFT_MOVING_PLATFORM, Node.LEFT_MOVING_PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.RIGHT_MOVING_PLATFORM, Node.RIGHT_MOVING_PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row11 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.POWERUP, Node.AIR, Node.PLATFORM, Node.PLATFORM, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));
+        ArrayList<Node> row12 = new ArrayList<>(Arrays.asList(Node.LAVA, Node.LAVA, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.LAVA, Node.LAVA, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.LAVA, Node.LAVA, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.LAVA, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.LAVA, Node.LAVA, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.LAVA, Node.LAVA, Node.LAVA, Node.GROUND, Node.GROUND, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.LAVA, Node.LAVA, Node.LAVA, Node.LAVA, Node.LAVA, Node.LAVA, Node.GROUND, Node.LAVA, Node.LAVA, Node.LAVA, Node.LAVA, Node.LAVA, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.LAVA, Node.LAVA, Node.LAVA, Node.GROUND, Node.GROUND, Node.GROUND, Node.GROUND, Node.END));
+        nodeArrayLists.add(row1);
+        nodeArrayLists.add(row2);
+        nodeArrayLists.add(row3);
+        nodeArrayLists.add(row4);
+        nodeArrayLists.add(row5);
+        nodeArrayLists.add(row6);
+        nodeArrayLists.add(row7);
+        nodeArrayLists.add(row8);
+        nodeArrayLists.add(row9);
+        nodeArrayLists.add(row10);
+        nodeArrayLists.add(row11);
+        nodeArrayLists.add(row12);
+        System.out.println("yeet");
+        return nodeArrayLists;
+    }
+
 }
