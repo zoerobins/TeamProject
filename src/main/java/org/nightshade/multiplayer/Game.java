@@ -199,11 +199,11 @@ public class Game {
         }
         //Move camera
         double translateX = renderer.getCanvas().getTranslateX();
-        /*if ((-1 *translateX) + 700 < client.getSprite().getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
-            renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - client.getSprite().getX())));
+        if ((-1 *translateX) + 700 < localGameClient.getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
+            renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - localGameClient.getX())));
         } else {
             renderer.getCanvas().setTranslateX((int) (translateX));
-        }*/
+        }
         xViewCoordinate = (int) (-1 * translateX);
     }
     private void renderSprites(ArrayList<Sprite> sprites) {
