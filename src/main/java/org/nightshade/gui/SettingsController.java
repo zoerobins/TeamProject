@@ -14,7 +14,6 @@ public class SettingsController{
     @FXML
     public void OnmSliderChanged(){
         mSliderVal = mSlider.getValue();
-        System.out.println(mSliderVal);
     }
 
     public void MainMenuButton() {
