@@ -41,7 +41,7 @@ public class AnimatedSprite {
             }
             image.setFrames(imageArray);
             image.setDuration(0.150);
-            System.out.println(image.getFrames()[0].getUrl());
+//            System.out.println(image.getFrames()[0].getUrl());
         }
         if (animationType.equals(AnimationType.IDLE)) {
             Image[] imageArray = new Image[2];

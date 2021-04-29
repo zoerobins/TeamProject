@@ -98,6 +98,7 @@ public class Client {
             animatedSprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD);
         } else {
             animatedSprite.setAnimatedImage(AnimationType.RUNNING, Direction.BACKWARD);
+//            System.out.println(animatedSprite.getImage().getFrame(0).getUrl());
         }
 
         int speed =1;
@@ -169,7 +170,8 @@ public class Client {
 
     public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingDown = value > 0;
-        animatedSprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD);
+//        animatedSprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD);
+        // TODO: above line stops the animation from working, figure a way to integrate this properly
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(animatedSprite) && movingDown) {
