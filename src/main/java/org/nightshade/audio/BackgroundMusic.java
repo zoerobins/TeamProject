@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class BackgroundMusic {
 
     private MediaPlayer mediaPlayer;
+    private float volume = 100.0f;
     private int volumeDecrementTime = 30;
     private float volumeStepAmount = 100.0f;
 
@@ -24,9 +25,17 @@ public class BackgroundMusic {
     /**
      * This method takes a music file and an initial volume and begins to play it with the given settings.
      * @param file   The music file to be played
-     * @param volume The initial volume of the music
+     * @param volumeIn The initial volume of the music
      */
-    public void startBackgroundMusic(File file, float volume) {
+    public void startBackgroundMusic(File file, float volumeIn) {
+        Media media = new Media(file.toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(volumeIn);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+    }
+
+    public void startBackgroundMusic(File file) {
         Media media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setVolume(volume);
@@ -67,6 +76,10 @@ public class BackgroundMusic {
         mediaPlayer.stop();
     }
 
+    public void setVolume(float volumeIn) {
+        this.volume = volumeIn;
+        mediaPlayer.setVolume(volumeIn);
+    }
     /**
      * This method stops all the music from playing.
      */

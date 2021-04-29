@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
+import org.nightshade.audio.BackgroundMusic;
 import org.nightshade.renderer.Renderer;
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ public class Game {
     private final Sprite cloudSprite;
     private final Parallax parallax;
     private final Level level;
+    private final BackgroundMusic backgroundMusic;
     private final long startNanoTime = System.nanoTime();
 
     public Game(Stage stage) {
@@ -40,6 +42,8 @@ public class Game {
         scene = new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT);
         stage.setScene(scene);
         stage.show();
+
+        backgroundMusic = new BackgroundMusic();
 
         Image cloudImage = new Image("img/game/cloud.png");
         cloudSprite = new Sprite(cloudImage, -2300, 50);
