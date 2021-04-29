@@ -20,7 +20,7 @@ public class GameHandler {
         GameClient localGameClient = new GameClient(localGameClientName);
 
         //send out localGameClient object / its name so it can be replicated on the other machines
-        //add recieved objects into array / make new gameClient objects with the recieved names and add them into the array
+        //add received objects into array / make new gameClient objects with the received names and add them into the array
         //if host - send this
         level = makeLevel(levelWidth);
         //

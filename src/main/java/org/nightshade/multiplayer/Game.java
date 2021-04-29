@@ -156,6 +156,7 @@ public class Game {
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());
+        int largestGameClientX =localGameClient.getX();
         for (Sprite lavaSprite : level.getLavaSprites()) {
             renderer.drawImage(lavaImages.get(animationIndex), lavaSprite.getX(), lavaSprite.getY());
         }
@@ -164,15 +165,19 @@ public class Game {
                 Sprite gcSprite = gc.getSprite();
                 renderer.drawImage(gcSprite.getImage(), gcSprite.getX(), gcSprite.getY());
             }
+            if (gc.getX() > largestGameClientX){
+                largestGameClientX = gc.getX();
+            }
         }
         // move cloud
-        /* // here local game client needs to be swapped out to whichever client is the furthest forward
-        if (localGameClient.getSprite().getX() - cloud.getX() > 2000) {
-            cloud.setX(localGameClient.getSprite().getX() - 2000);
+
+         // here local game client needs to be swapped out to whichever client is the furthest forward
+        if (largestGameClientX - cloud.getX() > 2000) {
+            cloud.setX(largestGameClientX - 2000);
         } else {
             cloud.setX(cloud.getX() + 2);
         }
-        */
+
         renderer.drawImage(cloud.getImage(), cloud.getX(), 50);
         if (localGameClient.isAlive()) {
             moveClients();

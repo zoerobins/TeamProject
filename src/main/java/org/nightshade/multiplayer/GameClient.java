@@ -75,14 +75,14 @@ public class GameClient {
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
-            spotEffects.playSound(soundFile, true);
+            //spotEffects.playSound(soundFile, true);
             velocity = velocity.add(0, -30);
             canJump = false;
         }
     }
     public void kill() {
         File soundFile = new File("src/main/resources/audio/die.mp3");
-        spotEffects.playSoundUntilEnd(soundFile, true);
+        //spotEffects.playSoundUntilEnd(soundFile, true);
         isAlive =false;
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
