@@ -27,16 +27,16 @@ public class AnimatedSprite {
 
     public void setAnimatedImage(AnimationType animationType, Direction direction) {
         if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.FORWARD)) {
-            Image[] imageArray = new Image[8];
-            for (int i = 0; i < 8; i++) {
+            Image[] imageArray = new Image[5];
+            for (int i = 0; i < 5; i++) {
                 imageArray[i] = new Image("img/game/player_run_right/player_run_right_" + i + ".png");
             }
             image.setFrames(imageArray);
             image.setDuration(0.150);
         }
         else if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.BACKWARD)) {
-            Image[] imageArray = new Image[8];
-            for (int i = 0; i < 8; i++) {
+            Image[] imageArray = new Image[5];
+            for (int i = 0; i < 5; i++) {
                 imageArray[i] = new Image("img/game/player_run_left/player_run_left_" + i + ".png");
             }
             image.setFrames(imageArray);
@@ -49,7 +49,7 @@ public class AnimatedSprite {
                 imageArray[i] = new Image("img/game/player_idle_" + i + ".png");
             }
             image.setFrames(imageArray);
-            image.setDuration(0.150);
+            image.setDuration(0.200);
         }
     }
 
