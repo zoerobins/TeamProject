@@ -7,7 +7,7 @@ public class MovingPlatform {
     private Direction direction;
     private int offset;
     public MovingPlatform(int x, int y, int speed, Direction direction){
-        this.sprite = new Sprite(new Image("img/game/dark-grass.png"),x,y);
+        this.sprite = new Sprite(new Image("img/game/moving-platform.png"),x,y);
         this.speed = speed;
         this.direction = direction;
         this.offset = 0;
