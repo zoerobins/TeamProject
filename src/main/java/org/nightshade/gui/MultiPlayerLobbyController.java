@@ -17,7 +17,9 @@ import org.nightshade.Main;
 import org.nightshade.multiplayer.Client;
 import org.nightshade.multiplayer.Game;
 import org.nightshade.networking.ServerLogic;
-
+/**
+ *this class acts as a controller for the multi_player_lobby.fxml file
+ */
 public class MultiPlayerLobbyController implements Initializable {
 
     @FXML private TableView<Player> tableView;
