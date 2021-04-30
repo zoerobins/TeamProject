@@ -103,7 +103,7 @@ public class Game {
 
         // send new isAlive, x and y of local client to the other clients and update their isAlive, x and y values to the new ones that they send
         try {
-            if ((loopRun%2 == 0) && !((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
+            if (/*(loopRun%2 == 0) &&*/ !((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
                 client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getX(), localGameClient.getY(), localGameClient.isAlive());
                 System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
 
