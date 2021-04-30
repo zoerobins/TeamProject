@@ -12,6 +12,15 @@ public class SettingsController{
     public static double mSliderVal = 20.0;
 
     @FXML
+    private Slider bgSlider;
+    public static double bgSliderVal;
+
+    @FXML
+    public void onBGSliderChanged(){
+        bgSliderVal = bgSlider.getValue();
+    }
+
+    @FXML
     public void OnmSliderChanged(){
         mSliderVal = mSlider.getValue();
     }
@@ -22,6 +31,7 @@ public class SettingsController{
 
     public void SaveButton() {
         mSlider.setValue(mSliderVal);
+        bgSlider.setValue(bgSliderVal);
         GuiHandler.stage.setScene(GuiHandler.menu);
     }
 

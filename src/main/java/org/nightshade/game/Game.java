@@ -11,8 +11,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
+
 import org.nightshade.gui.SettingsController;
+
+import org.nightshade.audio.BackgroundMusic;
+
 import org.nightshade.renderer.Renderer;
+
+import java.io.File;
 import java.util.ArrayList;
 public class Game {
     private Scene scene;
@@ -30,7 +36,13 @@ public class Game {
     private final Sprite cloudSprite;
     private final Parallax parallax;
     private final Level level;
+
     public double volume;
+
+    private final BackgroundMusic backgroundMusic;
+    private final long startNanoTime = System.nanoTime();
+
+
     public Game(Stage stage) {
         renderer = new Renderer();
         renderer.setHeight(720);
@@ -43,6 +55,12 @@ public class Game {
         scene = new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT);
         stage.setScene(scene);
         stage.show();
+
+        volume = SettingsController.bgSliderVal / 100;
+        backgroundMusic = new BackgroundMusic();
+        backgroundMusic.startBackgroundMusic(new File("src/main/resources/audio/background_music.mp3"), volume);
+
+
         Image cloudImage = new Image("img/game/cloud.png");
         cloudSprite = new Sprite(cloudImage, -2300, 50);
         cloudSprite.setX(-1300);
@@ -52,8 +70,6 @@ public class Game {
         client = new Client();
         aiPlayers = new ArrayList<>();
         lavaImages = new ArrayList<>();
-        volume = SettingsController.mSliderVal / 100;
-        client.setClientVolume(volume);
         for (int i = 1; i < 18; i++) {
             Image lavaImage = new Image("img/game/lava/lava-" + i + ".png");
             lavaImages.add(lavaImage);
@@ -62,7 +78,7 @@ public class Game {
         listen();
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                loop();
+                loop(currentNanoTime);
             }
         }.start();
     }
@@ -108,7 +124,13 @@ public class Game {
     public void addAiPlayer(AI ai) {
         aiPlayers.add(ai);
     }
-    public void loop() {
+
+
+
+
+    public void loop(long currentNanoTime) {
+        double time = (currentNanoTime - startNanoTime) / 1000000000.0;
+
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
         renderSprites(level.getPlatformSprites());
@@ -129,8 +151,9 @@ public class Game {
         renderer.drawImage(cloudSprite.getImage(), cloudSprite.getX(), 50);
         if (client.isAlive()) {
             moveClient();
-            Sprite clientSprite = client.getSprite();
-            renderer.drawImage(clientSprite.getImage(), clientSprite.getX(), clientSprite.getY());
+            AnimatedSprite clientSprite = client.getAnimatedSprite();
+            renderer.drawImage(clientSprite.getImage().getFrame(time), clientSprite.getX(), clientSprite.getY());
+//            System.out.println(clientSprite.getImage().getFrame(time).getUrl());
             boolean intersectsCloud = clientSprite.intersects(cloudSprite.getX() - 90, cloudSprite.getY(), (int) cloudSprite.getWidth(), (int) cloudSprite.getHeight());
             if (intersectsCloud) {
                 client.kill();
@@ -170,8 +193,8 @@ public class Game {
 
         //Move camera
         double translateX = renderer.getCanvas().getTranslateX();
-        if ((-1 *translateX) + 700 < client.getSprite().getX() && (-1 * translateX) < (LEVEL_WIDTH * 60 - 1280)) {
-            renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - client.getSprite().getX())));
+        if ((-1 *translateX) + 700 < client.getAnimatedSprite().getX() && (-1 * translateX) < (LEVEL_WIDTH * 60 - 1280)) {
+            renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - client.getAnimatedSprite().getX())));
         } else {
             renderer.getCanvas().setTranslateX((int) (translateX));
         }

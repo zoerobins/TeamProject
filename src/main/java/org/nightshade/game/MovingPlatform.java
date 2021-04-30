@@ -19,7 +19,7 @@ public class MovingPlatform {
      * @param direction The direction of the moving platform
      */
     public MovingPlatform(int x, int y, int speed, Direction direction){
-        this.sprite = new Sprite(new Image("img/game/dark-grass.png"),x,y);
+        this.sprite = new Sprite(new Image("img/game/moving-platform.png"),x,y);
         this.speed = speed;
         this.direction = direction;
         this.offset = 0;
