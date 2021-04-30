@@ -9,6 +9,8 @@ import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
 import org.nightshade.audio.BackgroundMusic;
 import org.nightshade.renderer.Renderer;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class Game {
@@ -29,6 +31,7 @@ public class Game {
     private final Parallax parallax;
     private final Level level;
     private final BackgroundMusic backgroundMusic;
+    private float volume;
     private final long startNanoTime = System.nanoTime();
 
     public Game(Stage stage) {
@@ -44,6 +47,7 @@ public class Game {
         stage.show();
 
         backgroundMusic = new BackgroundMusic();
+        backgroundMusic.startBackgroundMusic(new File("audio/background_music.mp3"), volume);
 
         Image cloudImage = new Image("img/game/cloud.png");
         cloudSprite = new Sprite(cloudImage, -2300, 50);

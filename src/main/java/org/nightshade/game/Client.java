@@ -19,6 +19,7 @@ public class Client {
     private SpotEffects spotEffects;
     private AnimatedImage animatedImage;
     private Random random;
+    public float volume;
     public Ability ability;
     public int powerUpTimer;
 
@@ -76,7 +77,7 @@ public class Client {
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
-            spotEffects.playSound(soundFile, true);
+            spotEffects.playSound(soundFile, true, volume);
             if (this.ability == Ability.JUMPBOOST){
                 velocity = velocity.add(0, -40);
             }else {
@@ -87,7 +88,7 @@ public class Client {
     }
     public void kill() {
         File soundFile = new File("src/main/resources/audio/die.mp3");
-        spotEffects.playSoundUntilEnd(soundFile, true);
+        spotEffects.playSoundUntilEnd(soundFile, true, volume);
         isAlive =false;
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
@@ -118,6 +119,8 @@ public class Client {
             }
             for (Sprite ground : level.getGroundSprites()) {
                 if (ground.intersects(animatedSprite)){
+                    File soundFile = new File("src/main/resources/audio/step.mp3");
+                    spotEffects.playSoundUntilEnd(soundFile, true, volume);
                     if(isMovingRight){
                         animatedSprite.setX(animatedSprite.getX() - 1);
                     } else {
