@@ -30,6 +30,7 @@ public class Game {
     private ArrayList<GameClient> gameClients;
     private Client client;
     private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
+    private int loopRun = 0;
 
     public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level, Client client) {
 
@@ -102,7 +103,7 @@ public class Game {
 
         // send new isAlive, x and y of local client to the other clients and update their isAlive, x and y values to the new ones that they send
         try {
-            if (!((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
+            if ((loopRun%2 == 0) && !((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
                 client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getX(), localGameClient.getY(), localGameClient.isAlive());
                 System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
 
@@ -114,9 +115,9 @@ public class Game {
                     }
                 }*/
 
-            }else{
+            }/*else{
                 System.out.println("---------------------------");
-            }
+            }*/
             client.getClientLogic().receiveMoveMsgs();
             msgsList = client.getClientLogic().getMsgsList();
             //System.out.println("msgsList size: " + msgsList.size());
@@ -144,6 +145,7 @@ public class Game {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        loopRun++;
 
     }
 

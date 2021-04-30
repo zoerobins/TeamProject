@@ -93,12 +93,8 @@ public class MultiPlayerLobbyController implements Initializable {
 
         try {
             GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getName(), "READY");
-            boolean startGame = false;
-            ArrayList<String> gamePlayers = new ArrayList<>();
             StartGameMsg start;
-            //while(!startGame) {
             start = GuiHandler.player.getClient().getClientLogic().receiveStartMsg();
-            //}
             GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName(), GuiHandler.player.getClient(), start.getPlayers());
 
 
