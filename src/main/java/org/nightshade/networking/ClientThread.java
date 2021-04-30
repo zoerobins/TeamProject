@@ -19,11 +19,13 @@ public class ClientThread implements Runnable {
     private ArrayList<ClientThread> clientsThreads;
     private ArrayList<PlayerMoveMsg> moveMsgs;
     private ArrayList<Player> players;
+    private ArrayList<String> playerNames = new ArrayList<>();
 
     private ObjectOutputStream objectOutput1;
     private ObjectInputStream objectInput1;
 
     private boolean allPlayersReady;
+    private boolean localPlayerReady;
 
     /**
      * Constructor for the ClientThread class
@@ -39,6 +41,7 @@ public class ClientThread implements Runnable {
         this.serverLogic = serverLogic;
         this.moveMsgs = serverLogic.getMoveMsgs();
         allPlayersReady = false;
+        localPlayerReady = false;
 
         // create the streams:
         try {
@@ -59,11 +62,15 @@ public class ClientThread implements Runnable {
     public void run() {
 
         try {
-            while(!allPlayersReady) {
+            /*while(!allPlayersReady) {
                 receivePlayers();
                 sendPlayers();
             }
-            sendStartMessage();
+            sendStartMessage();*/
+            while(!localPlayerReady) {
+                receivePlayers();
+            }
+            sendStartMsg();
             while(true) {
                 receiveMoveMsg();
                 sendMoveMsgs();
@@ -87,7 +94,7 @@ public class ClientThread implements Runnable {
         try {
             player = (Player) objectInput1.readObject();
 
-            if(player.getName().equals("ALLPLAYERSREADY") && player.getReady().equals("ALLPLAYERSREADY")) {
+            /*if(player.getName().equals("ALLPLAYERSREADY") && player.getReady().equals("ALLPLAYERSREADY")) {
                 System.out.println("all players ready");
                 serverLogic.addReadyValue(allPlayersReady);
                 System.out.println(serverLogic.isReadyToStartGame());
@@ -109,7 +116,14 @@ public class ClientThread implements Runnable {
                 if(!playerAdded) {
                     serverLogic.addPlayer(player);
                 }
+            }*/
+            if(player.getReady().equals("READY")) {
+                serverLogic.addPlayerName(player.getName());
+                localPlayerReady = true;
             }
+
+
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -186,6 +200,18 @@ public class ClientThread implements Runnable {
                 started = true;
             }
         }
+    }
+
+    public void sendStartMsg() throws IOException {
+        boolean allReady = false;
+        while(!allReady) {
+            playerNames = serverLogic.getPlayerNames();
+            if(playerNames.size() == serverLogic.getNumClients()/2) {
+                objectOutput1.writeObject(new StartGameMsg(playerNames.size(), playerNames));
+                allReady = true;
+            }
+        }
+
     }
 
 

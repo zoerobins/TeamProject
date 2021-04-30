@@ -23,6 +23,7 @@ public class ServerLogic {
     int numClients;
 
     ArrayList<Player> players = new ArrayList<>();
+    ArrayList<String> playerNames = new ArrayList<>();
     ArrayList<PlayerMoveMsg> moveMsgs = new ArrayList<>();
 
     boolean readyToStartGame;
@@ -108,6 +109,16 @@ public class ServerLogic {
     public void replacePlayer(int index, Player player) {
         players.set(index, player);
     }
+
+
+    public ArrayList<String> getPlayerNames() {
+        return playerNames;
+    }
+
+    public void addPlayerName(String playerName) {
+        playerNames.add(playerName);
+    }
+
 
     public void addReadyValue(Boolean ready) {
         startGame.add(ready);

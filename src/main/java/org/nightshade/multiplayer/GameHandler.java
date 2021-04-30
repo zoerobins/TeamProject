@@ -13,7 +13,7 @@ public class GameHandler {
     private final int levelWidth = 120;
     private Level level;
     private Client client;
-    public GameHandler(Stage stage, String localGameClientName, Client client, ObservableList<Player> players){
+    public GameHandler(Stage stage, String localGameClientName, Client client, ArrayList<String> players){
 
         this.client = client;
         ArrayList<GameClient> gameClients = new ArrayList<>();
@@ -26,8 +26,8 @@ public class GameHandler {
         //
 
 
-        for(Player player : players){
-            GameClient newGameClient = new GameClient(player.getName());
+        for(String player : players){
+            GameClient newGameClient = new GameClient(player);
             gameClients.add(newGameClient);
         }
         Game game = new Game(stage, localGameClient, gameClients, level, this.client);

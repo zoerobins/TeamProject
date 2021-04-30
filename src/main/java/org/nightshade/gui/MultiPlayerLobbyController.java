@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -19,6 +20,7 @@ import org.nightshade.multiplayer.Game;
 import org.nightshade.multiplayer.GameHandler;
 import org.nightshade.networking.Client;
 import org.nightshade.networking.ClientLogic;
+import org.nightshade.networking.StartGameMsg;
 
 public class MultiPlayerLobbyController implements Initializable {
 
@@ -43,7 +45,7 @@ public class MultiPlayerLobbyController implements Initializable {
             readyButton.setText("Ready");
         }
 
-        try {
+        /*try {
             GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getClient().getName(), GuiHandler.player.getReady());
             GuiHandler.player.getClient().getClientLogic().receivePlayers();
         } catch (IOException | ClassNotFoundException e) {
@@ -86,7 +88,24 @@ public class MultiPlayerLobbyController implements Initializable {
                 e.printStackTrace();
             }
 
+        }*/
+
+
+        try {
+            GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getName(), "READY");
+            boolean startGame = false;
+            ArrayList<String> gamePlayers = new ArrayList<>();
+            StartGameMsg start;
+            //while(!startGame) {
+            start = GuiHandler.player.getClient().getClientLogic().receiveStartMsg();
+            //}
+            GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName(), GuiHandler.player.getClient(), start.getPlayers());
+
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
 
     }
 

@@ -232,7 +232,14 @@ public class ClientLogic /*implements Runnable*/ {
 
     }
 
+    public StartGameMsg receiveStartMsg() throws IOException, ClassNotFoundException {
+        StartGameMsg startGame = (StartGameMsg) objectInput.readObject();
+        return startGame;
 
+
+
+
+    }
 
 
 
