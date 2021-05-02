@@ -36,6 +36,7 @@ public class Game {
     private final Sprite cloudSprite;
     private final Parallax parallax;
     private final Level level;
+    private final Image powerupTextBackground;
 
     public double volume;
 
@@ -47,8 +48,8 @@ public class Game {
         renderer = new Renderer();
         renderer.setHeight(720);
         renderer.setWidth(LEVEL_WIDTH * BLOCK_WIDTH);
-        renderer.getGraphicsContext().setFont(Font.font ("Arial", 40));
-        renderer.getGraphicsContext().setFill(Color.WHITE);
+        renderer.getGraphicsContext().setFont(Font.font ("Arial", 32));
+        renderer.getGraphicsContext().setFill(Color.INDIANRED);
         Pane pane = new Pane(renderer.getGroup());
         int SCENE_WIDTH = 1280;
         int SCENE_HEIGHT = 720;
@@ -62,6 +63,7 @@ public class Game {
 
 
         Image cloudImage = new Image("img/game/cloud.png");
+        powerupTextBackground = new Image("img/game/powerup_text_background.png");
         cloudSprite = new Sprite(cloudImage, -2300, 50);
         cloudSprite.setX(-1300);
         parallax = new Parallax();
@@ -70,6 +72,7 @@ public class Game {
         client = new Client();
         aiPlayers = new ArrayList<>();
         lavaImages = new ArrayList<>();
+
         for (int i = 1; i < 18; i++) {
             Image lavaImage = new Image("img/game/lava/lava-" + i + ".png");
             lavaImages.add(lavaImage);
@@ -186,7 +189,15 @@ public class Game {
         }
         if (client.powerUpTimer > 0){
             client.reducePowerUpTimer();
-            renderer.getGraphicsContext().fillText(String.valueOf(client.ability +"   "+ client.powerUpTimer),-renderer.getCanvas().getTranslateX() + 20,30);
+            renderer.drawImage(powerupTextBackground, (int) (-renderer.getCanvas().getTranslateX() + 20),5,305,70);
+            if (client.ability == Ability.SHIELD) {
+                renderer.getGraphicsContext().fillText("      " + client.ability + " " + client.powerUpTimer, -renderer.getCanvas().getTranslateX() + 36, 50);
+            } else if (client.ability == Ability.SPEEDBOOST) {
+                renderer.getGraphicsContext().fillText(" " + client.ability + " " + client.powerUpTimer, -renderer.getCanvas().getTranslateX() + 36, 50);
+            } else{
+                    renderer.getGraphicsContext().fillText("    " + client.ability, -renderer.getCanvas().getTranslateX() + 36, 50);
+            }
+
         } else {
             client.removeAbility();
         }
