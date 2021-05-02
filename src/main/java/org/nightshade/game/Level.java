@@ -89,11 +89,13 @@ public class Level {
                     case MOVING_PLATFORM: {
                         int speed = ThreadLocalRandom.current().nextInt(0, 5 + 1);
                         Direction direction = Direction.getRandomDirection();
-                        Node prevNode = nodes.get(j - 1);
-                        if (prevNode == Node.MOVING_PLATFORM) {
-                            speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
-                            MovingPlatform lastMovingPlatform = movingPlatforms.get(movingPlatforms.size() - 1);
-                            direction = lastMovingPlatform.getDirection();
+                        if (j>1){
+                            Node previousNode = nodes.get(j - 1);
+                            if (previousNode == Node.MOVING_PLATFORM) {
+                                speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
+                                MovingPlatform lastMovingPlatform = movingPlatforms.get(movingPlatforms.size() - 1);
+                                direction = lastMovingPlatform.getDirection();
+                            }
                         }
                         MovingPlatform newMovingPlatform = new MovingPlatform(x, y, speed, direction);
                         movingPlatforms.add(newMovingPlatform);
