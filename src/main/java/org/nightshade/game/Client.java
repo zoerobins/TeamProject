@@ -182,7 +182,7 @@ public class Client {
         }
     }
 
-    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
+    public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> lavaSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingDown = value > 0;
 //        animatedSprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD);
         // TODO: above line stops the animation from working, figure a way to integrate this properly
@@ -201,9 +201,12 @@ public class Client {
                     return;
                 }
             }
-            for (Sprite water : waterSprites) {
-                if (water.intersects(animatedSprite)){
+            for (Sprite lava : lavaSprites) {
+                if (lava.intersects(animatedSprite)){
                     animatedSprite.setY(animatedSprite.getY() + 1);
+                    if(lava.intersects(animatedSprite.getX(), animatedSprite.getY()-60, (int) Math. round(animatedSprite.getWidth()), (int) Math. round(animatedSprite.getHeight()))){
+                        kill();
+                    }
                     return;
                 }
             }
