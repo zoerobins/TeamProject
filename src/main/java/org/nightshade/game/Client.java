@@ -18,6 +18,7 @@ public class Client {
     private final Sprite sprite;
     public AnimatedSprite animatedSprite;
     private SpotEffects spotEffects;
+    private boolean deathSoundPlayed;
 
     public double volume;
 
@@ -27,6 +28,7 @@ public class Client {
     //public float volume1;
     public Ability ability;
     public int powerUpTimer;
+
 
     public Client() {
         this.isAlive = true;
@@ -45,6 +47,7 @@ public class Client {
         this.ability = null;
         this.powerUpTimer = 0;
         this.volume = SettingsController.mSliderVal / 100;
+        this.deathSoundPlayed = false;
     }
 
     public void setVelocity(Point2D velocity) {
@@ -98,8 +101,10 @@ public class Client {
         }
     }
     public void kill() {
-        File soundFile = new File("src/main/resources/audio/die.mp3");
-        spotEffects.playSoundUntilEnd(soundFile, true, volume);
+        if (!deathSoundPlayed) {
+            File soundFile = new File("src/main/resources/audio/die.mp3");
+            spotEffects.playSoundUntilEnd(soundFile, true, volume);
+        }
         isAlive =false;
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
@@ -210,6 +215,7 @@ public class Client {
                     animatedSprite.setY(animatedSprite.getY() + 1);
                     if(lava.intersects(animatedSprite.getX(), animatedSprite.getY()-60, (int) Math. round(animatedSprite.getWidth()), (int) Math. round(animatedSprite.getHeight()))){
                         kill();
+                        deathSoundPlayed = true;
                     }
                     return;
                 }
