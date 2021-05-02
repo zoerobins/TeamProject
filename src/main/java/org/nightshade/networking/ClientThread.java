@@ -15,8 +15,6 @@ public class ClientThread implements Runnable {
     private final ServerLogic serverLogic;
     private int clientNo;
     private Socket socket;
-    private ArrayList<Socket> clientSockets;
-    private ArrayList<ClientThread> clientsThreads;
     private ArrayList<PlayerMoveMsg> moveMsgs;
     private ArrayList<Player> players;
     private ArrayList<String> playerNames = new ArrayList<>();
@@ -24,7 +22,6 @@ public class ClientThread implements Runnable {
     private ObjectOutputStream objectOutput1;
     private ObjectInputStream objectInput1;
 
-    private boolean allPlayersReady;
     private boolean localPlayerReady;
 
     /**
@@ -40,10 +37,8 @@ public class ClientThread implements Runnable {
         this.socket = client;
         this.serverLogic = serverLogic;
         this.moveMsgs = serverLogic.getMoveMsgs();
-        allPlayersReady = false;
         localPlayerReady = false;
 
-        // create the streams:
         try {
             objectOutput1 = new ObjectOutputStream(socket.getOutputStream());
             objectInput1 = new ObjectInputStream(socket.getInputStream());
@@ -62,11 +57,6 @@ public class ClientThread implements Runnable {
     public void run() {
 
         try {
-            /*while(!allPlayersReady) {
-                receivePlayers();
-                sendPlayers();
-            }
-            sendStartMessage();*/
             while(!localPlayerReady) {
                 receivePlayers();
             }
@@ -93,37 +83,10 @@ public class ClientThread implements Runnable {
         Player player;
         try {
             player = (Player) objectInput1.readObject();
-
-            /*if(player.getName().equals("ALLPLAYERSREADY") && player.getReady().equals("ALLPLAYERSREADY")) {
-                System.out.println("all players ready");
-                serverLogic.addReadyValue(allPlayersReady);
-                System.out.println(serverLogic.isReadyToStartGame());
-                allPlayersReady = true;
-                return;
-            }
-
-            if(serverLogic.getPlayers().size() == 0) {
-                serverLogic.addPlayer(player);
-            } else {
-                boolean playerAdded = false;
-                for(int j=0; j<serverLogic.getPlayers().size(); j++) {
-                    if((serverLogic.getPlayers().get(j).getName() != null) && serverLogic.getPlayers().get(j).getName().equals(player.getName())) {
-                        serverLogic.replacePlayer(j, player);
-                        playerAdded = true;
-                        break;
-                    }
-                }
-                if(!playerAdded) {
-                    serverLogic.addPlayer(player);
-                }
-            }*/
             if(player.getReady().equals("READY")) {
                 serverLogic.addPlayerName(player.getName());
                 localPlayerReady = true;
             }
-
-
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -165,9 +128,7 @@ public class ClientThread implements Runnable {
                         serverLogic.replaceMsg(j, moveMsg);
                         msgAdded = true;
                         break;
-                    } /*else if(moveMsg.getName() != null) {
-                        serverLogic.addMsg(moveMsg);
-                    }*/
+                    }
                 }
                 if(!msgAdded) {
                     serverLogic.addMsg(moveMsg);
@@ -191,17 +152,6 @@ public class ClientThread implements Runnable {
         }
     }
 
-
-    public void sendStartMessage() throws IOException {
-        boolean started = false;
-        while(!started) {
-            if(serverLogic.isReadyToStartGame()) {
-                objectOutput1.writeObject(new Player("START THE GAME", "READY"));
-                started = true;
-            }
-        }
-    }
-
     public void sendStartMsg() throws IOException {
         boolean allReady = false;
         while(!allReady) {
@@ -213,6 +163,5 @@ public class ClientThread implements Runnable {
         }
 
     }
-
 
 }

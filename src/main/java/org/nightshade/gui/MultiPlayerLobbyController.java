@@ -45,51 +45,9 @@ public class MultiPlayerLobbyController implements Initializable {
             readyButton.setText("Ready");
         }
 
-        /*try {
-            GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getClient().getName(), GuiHandler.player.getReady());
-            GuiHandler.player.getClient().getClientLogic().receivePlayers();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
         tableView.getItems().clear();
         tableView.getItems().addAll(getPlayers());
         tableView.refresh();
-
-        boolean allReady = false;
-        for (Player ready : tableView.getItems()) {
-            if(readyColumn.getCellObservableValue(ready).getValue().equals("NOT READY")) {
-                allReady = false;
-                break;
-            } else {
-                allReady = true;
-            }
-        }
-        if(allReady) {
-            // start game
-            System.out.println("all players ready");
-            try {
-                GuiHandler.player.getClient().getClientLogic().sendPlayer("ALLPLAYERSREADY", "ALLPLAYERSREADY");
-                //Thread.sleep(2000);
-                boolean startGame = false;
-                Player start;
-                while(!startGame) {
-                    System.out.println("in loop");
-                    start = GuiHandler.player.getClient().getClientLogic().receiveStartMessage();
-                    if(start.getName().equals("START THE GAME")) {
-                        startGame = true;
-                        System.out.println("startGame = true");
-                    }
-                }
-                System.out.println("starting game...");
-                GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName(), GuiHandler.player.getClient(),getPlayers());
-
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-        }*/
-
 
         try {
             GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getName(), "READY");

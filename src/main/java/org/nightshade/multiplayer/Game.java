@@ -44,7 +44,6 @@ public class Game {
         renderer = new Renderer();
         Pane pane = new Pane(renderer.getGroup());
         Scene scene = new Scene(pane, 1280, 720);
-        //gameClients = new ArrayList<>();
         cloud.setX(-1300);
         renderer.setHeight(720);
         renderer.setWidth(levelWidth * blockWidth);
@@ -57,7 +56,6 @@ public class Game {
         checkForInput(scene);
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                //client.getClientLogic().clearMsgsList();
                 loop();
             }
         }.start();

@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
 
-    private String ip;
     public String name;
     public String ready;
     public Client client;
@@ -20,15 +19,6 @@ public class Player implements Serializable {
         this.ready = ready;
     }
 
-    public Player(String name, String ready, Client client) {
-        this.name = name;
-        this.ready = ready;
-        this.client = client;
-    }
-
-    public String getIp(){
-        return this.ip;
-    }
     public String getName(){
         return this.name;
     }
@@ -39,9 +29,6 @@ public class Player implements Serializable {
         return this.client;
     }
 
-    public void setIp(String newIp){
-        this.ip = newIp;
-    }
     public void setName(String newName){
         this.name = newName;
     }

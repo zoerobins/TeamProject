@@ -26,9 +26,6 @@ public class ServerLogic {
     ArrayList<String> playerNames = new ArrayList<>();
     ArrayList<PlayerMoveMsg> moveMsgs = new ArrayList<>();
 
-    boolean readyToStartGame;
-    ArrayList<Boolean> startGame = new ArrayList<>();
-
 
     /**
      * Constructor for the ServerLogic class
@@ -40,7 +37,6 @@ public class ServerLogic {
         this.portValue = portValue;
         serverSocket = new ServerSocket(portValue);
         this.numClients = 0;
-        readyToStartGame = false;
         System.out.println("Started game server");
         waitForPlayers();
     }
@@ -68,10 +64,6 @@ public class ServerLogic {
      */
     public void replaceMsg(int index, PlayerMoveMsg moveMsg) {
         moveMsgs.set(index, moveMsg);
-    }
-
-    public static ArrayList<ClientThread> getClientThreads() {
-        return clientThreads;
     }
 
     public int getNumClients() {
@@ -119,29 +111,6 @@ public class ServerLogic {
         playerNames.add(playerName);
     }
 
-
-    public void addReadyValue(Boolean ready) {
-        startGame.add(ready);
-    }
-
-    public boolean isReadyToStartGame() {
-        //System.out.println("startGame size: " + startGame.size());
-        //System.out.println(players.size());
-        if(startGame.size() == players.size()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public Socket getClientSocket() {
-        return client;
-    }
-
-    public ArrayList<Socket> getClientSockets() {
-        return clientSockets;
-    }
-
     /**
      * Waits for clients & accepts connections, and creates a new ClientThread for each Client
      * @throws IOException
@@ -152,8 +121,6 @@ public class ServerLogic {
             client = serverSocket.accept();
             clientSockets.add(client);
             System.out.println("Client arrived");
-            //System.out.println(client.getInetAddress().getHostName());
-            //System.out.println("Starting thread for client " + clientNo);
             ClientThread task = new ClientThread(client, clientNo, this);
             clientThreads.add(task);
             clientNo++;
@@ -173,4 +140,5 @@ public class ServerLogic {
         }
 
     }
+
 }

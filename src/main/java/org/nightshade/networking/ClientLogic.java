@@ -1,23 +1,19 @@
 package org.nightshade.networking;
 
-import org.nightshade.gui.GuiHandler;
 import org.nightshade.gui.Player;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 
 /**
  * ClientLogic class
  * The logic for the Client, which connects the Client to the Server
  */
-public class ClientLogic /*implements Runnable*/ {
+public class ClientLogic {
 
     private ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
-    private Client client;
-    //private Thread thread;
     private Socket server;
 
     private ArrayList<Player> playersList = new ArrayList<>();
@@ -35,10 +31,6 @@ public class ClientLogic /*implements Runnable*/ {
         server = new Socket(serverIp, portValue);
         objectOutput = new ObjectOutputStream(server.getOutputStream());
         objectInput = new ObjectInputStream(server.getInputStream());
-        this.client = client;
-        //thread = new Thread(this);
-        //thread.start();
-        //run();
     }
 
     /**
@@ -53,37 +45,6 @@ public class ClientLogic /*implements Runnable*/ {
         return;
 
     }
-
-    //@Override
-    /*public void run() {
-        try {
-            //sendPlayer(this.client.getName(), "NOT READY");
-            //receivePlayers();
-            while(true) {
-                sendPlayer(this.client.getName(), GuiHandler.player.getReady());
-                receivePlayers();
-            }
-            //while(true) {
-                //sendToServer(this.client.getName(), 1, 2, true);
-                //waitForServer();
-            //}
-        } catch (IOException | RuntimeException | ClassNotFoundException e1) {
-            e1.printStackTrace();
-        }
-    }*/
-
-    /*public PlayerMoveMsg waitForServer() throws IOException, SocketException, RuntimeException, ClassNotFoundException {
-        Object next = objectInput.readObject();
-        while(next instanceof Player) {
-            next = objectInput.readObject();
-        }
-        PlayerMoveMsg moveMsg = (PlayerMoveMsg) next;
-        //System.out.println(moveMsg.getName());
-        //System.out.println(moveMsg.getX());
-        //System.out.println(moveMsg.getY());
-        //System.out.println(moveMsg.isAlive());
-        return moveMsg;
-    }*/
 
     /**
      * Reads in PlayerMoveMsgs received from the Server and adds them to an ArrayList
@@ -114,13 +75,6 @@ public class ClientLogic /*implements Runnable*/ {
                     msgsList.add(newMoveMsg);
                 }
             }
-
-
-            //System.out.println(newMoveMsg.getName());
-            //System.out.println(newMoveMsg.getX());
-            //System.out.println(newMoveMsg.getY());
-            //System.out.println(newMoveMsg.isAlive());
-
             if(objectInput.available() != 0) {
                 next = objectInput.readObject();
             } else {
@@ -212,37 +166,10 @@ public class ClientLogic /*implements Runnable*/ {
         return playersList;
     }
 
-    public Player receiveStartMessage() throws IOException, ClassNotFoundException {
-        System.out.println("in receiveStartMessage");
-        Object next;
-        Player startGame = new Player("blank");
-        next = objectInput.readObject();
-        while(next instanceof Player) {
-            if(((Player) next).getName().equals("START THE GAME")) {
-                startGame = (Player) next;
-                System.out.println("game should start now");
-                return startGame;
-            } else if(objectInput.available() != 0) {
-                next = objectInput.readObject();
-            } else {
-                break;
-            }
-        }
-        return startGame;
-
-    }
-
     public StartGameMsg receiveStartMsg() throws IOException, ClassNotFoundException {
         StartGameMsg startGame = (StartGameMsg) objectInput.readObject();
         return startGame;
-
-
-
-
     }
-
-
-
 
     /**
      * Closes the Socket connection to the Server
