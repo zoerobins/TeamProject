@@ -78,7 +78,7 @@ public class Client {
         this.powerUpTimer = powerUpTimer-1;
     }
     private void setPowerUpTimer(){
-        this.powerUpTimer = 50;
+        this.powerUpTimer = 99;
     }
     public void removeAbility(){
         this.ability = null;
@@ -140,11 +140,15 @@ public class Client {
                     return;
                 }
             }
-            for (PowerUp box : level.getPowerUps()) {
-                if (box.intersects(animatedSprite)) {
-                    box.collect();
-                    this.ability = box.getAbility();
-                    this.setPowerUpTimer();
+            for (PowerUp powerUp : level.getPowerUps()) {
+                if (powerUp.intersects(animatedSprite)) {
+                    System.out.println(1);
+                    if (powerUp.getCollected() == false) {
+                        System.out.println(2);
+                        this.ability = powerUp.getAbility();
+                        this.setPowerUpTimer();
+                        powerUp.collect();
+                    }
                 }
             }
 
@@ -211,12 +215,15 @@ public class Client {
                 }
             }
 
-            for (PowerUp box : powerUps) {
-                if (box.intersects(animatedSprite)) {
-                    box.collect();
-                    this.ability = box.getAbility();
-                    this.setPowerUpTimer();
-
+            for (PowerUp powerUp : powerUps) {
+                if (powerUp.intersects(animatedSprite)) {
+                    System.out.println(1);
+                    if (powerUp.getCollected() == false) {
+                        System.out.println(2);
+                        this.ability = powerUp.getAbility();
+                        this.setPowerUpTimer();
+                        powerUp.collect();
+                    }
                 }
             }
 

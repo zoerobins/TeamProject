@@ -181,12 +181,11 @@ public class Game {
             movingPlatform.displaySprite(renderer, movingPlatform.getSprite().getImage(), movingPlatform.getSprite());
         }
         for (PowerUp powerUp : level.getPowerUps()) {
-            if (powerUp.getCollected()){
-                //System.out.println(powerUp.getAbility());
-            }else {
+            if (powerUp.getCollected() == false) {
                 renderer.drawImage(powerUp.getImage(), powerUp.getX(), powerUp.getY());
             }
         }
+
         if (client.powerUpTimer > 0){
             client.reducePowerUpTimer();
             renderer.drawImage(powerupTextBackground, (int) (-renderer.getCanvas().getTranslateX() + 20),5,305,70);
@@ -195,7 +194,7 @@ public class Game {
             } else if (client.ability == Ability.SPEEDBOOST) {
                 renderer.getGraphicsContext().fillText(" " + client.ability + " " + client.powerUpTimer, -renderer.getCanvas().getTranslateX() + 36, 50);
             } else{
-                    renderer.getGraphicsContext().fillText("    " + client.ability, -renderer.getCanvas().getTranslateX() + 36, 50);
+                renderer.getGraphicsContext().fillText("    " + client.ability, -renderer.getCanvas().getTranslateX() + 36, 50);
             }
 
         } else {

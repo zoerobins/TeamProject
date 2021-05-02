@@ -28,16 +28,12 @@ public class PowerUp extends Sprite {
         return this.ability;
     }
 
-    public void setCollected(boolean collected){
-        this.collected = collected;
-    }
     public boolean getCollected(){
         return this.collected;
     }
+
     public void collect(){
         this.collected = true;
-        this.width = 0;
-        this.height = 0;
     }
 
     private Ability assignRandomAbility (){
@@ -47,7 +43,7 @@ public class PowerUp extends Sprite {
             return Ability.JUMPBOOST;
         } else if (randomNum<0.67){
             return Ability.SPEEDBOOST;
-        }else {
+        } else {
             return Ability.SHIELD;
         }
 
