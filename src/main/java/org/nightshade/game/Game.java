@@ -156,7 +156,6 @@ public class Game {
             moveClient();
             AnimatedSprite clientSprite = client.getAnimatedSprite();
             renderer.drawImage(clientSprite.getImage().getFrame(time), clientSprite.getX(), clientSprite.getY());
-//            System.out.println(clientSprite.getImage().getFrame(time).getUrl());
             boolean intersectsCloud = clientSprite.intersects(cloudSprite.getX() - 90, cloudSprite.getY(), (int) cloudSprite.getWidth(), (int) cloudSprite.getHeight());
             if (intersectsCloud) {
                 client.kill();

@@ -40,6 +40,11 @@ public class Level {
                         count += 2;
                         break;
                     case LAVA:
+                        if(nodes.size()>3) {
+                            if (nodes.get(nodes.size()-3) == Node.LAVA) {
+                                nodes.add(Node.GROUND);
+                            }
+                        }
                         int length = ThreadLocalRandom.current().nextInt(0, 2 + 1);
                         for (int j = 0; j < length; j ++) {
                             nodes.add(Node.LAVA);

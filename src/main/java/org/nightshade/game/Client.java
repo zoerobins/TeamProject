@@ -147,7 +147,6 @@ public class Client {
             }
             for (PowerUp powerUp : level.getPowerUps()) {
                 if (powerUp.intersects(animatedSprite)) {
-                    System.out.println(1);
                     if (powerUp.getCollected() == false) {
                         System.out.println(2);
                         this.ability = powerUp.getAbility();
