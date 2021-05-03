@@ -4,51 +4,36 @@ import javafx.scene.image.Image;
 
 public class PowerUp extends Sprite {
 
-    private final Image image;
-    private double x;
-    private double y;
-    private double width;
-    private double height;
     private boolean collected;
-
-    private Ability ability;
+    private final Ability ability;
 
     public PowerUp(Image image, int x, int y) {
         super(image, x, y);
-        this.image = image;
-        this.width = image.getWidth();
-        this.height = image.getHeight();
-        this.x = x;
-        this.y = y;
         this.collected = false;
         this.ability = assignRandomAbility();
     }
 
-    public Ability getAbility(){
+    public Ability getAbility() {
         return this.ability;
     }
 
-    public boolean getCollected(){
-        return this.collected;
+    public boolean getCollected() {
+        return !this.collected;
     }
 
-    public void collect(){
+    public void collect() {
         this.collected = true;
     }
 
-    private Ability assignRandomAbility (){
+    private Ability assignRandomAbility() {
         double randomNum = Math.random();
 
-        if (randomNum<0.33){
+        if (randomNum < 0.33) {
             return Ability.JUMPBOOST;
-        } else if (randomNum<0.67){
+        } else if (randomNum < 0.67) {
             return Ability.SPEEDBOOST;
         } else {
             return Ability.SHIELD;
         }
-
     }
-
-
-
 }
