@@ -197,7 +197,7 @@ public class Client {
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(animatedSprite) && movingDown) {
-                    animatedSprite.setY(animatedSprite.getY() - 1);
+                    animatedSprite.setY(animatedSprite.getY() - 7);
                     setCanJump(true);
                     return;
                 }
@@ -234,7 +234,7 @@ public class Client {
 
             for (MovingPlatform mPlatform : movingPlatforms) {
                 if (mPlatform.getSprite().intersects(animatedSprite) && movingDown){
-                    animatedSprite.setY(animatedSprite.getY() - 1);
+                    animatedSprite.setY(animatedSprite.getY() - 7);
                     setCanJump(true);
                     return;
                 }
