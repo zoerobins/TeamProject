@@ -101,9 +101,40 @@ public class Game {
 
         // send new isAlive, x and y of local client to the other clients and update their isAlive, x and y values to the new ones that they send
         try {
-            if (/*(loopRun%2 == 0) &&*/ !((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
+            if ((loopRun%2 == 0) && !((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
                 client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getX(), localGameClient.getY(), localGameClient.isAlive());
                 System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
+
+
+                System.out.println("updated");
+                client.getClientLogic().receiveMoveMsgs();
+                if(loopRun>2) {
+                    client.getClientLogic().receiveMoveMsgs();
+                }
+                msgsList = client.getClientLogic().getMsgsList();
+                //System.out.println("msgsList size: " + msgsList.size());
+                for(PlayerMoveMsg moveMsg : msgsList) {
+                    System.out.println("received " + moveMsg.getName() + " x: "+moveMsg.getX()+" y: "+moveMsg.getY());
+                    // move clients that are not the local client:
+                    if ((!(moveMsg.getName().equals(localGameClient.getName())))){
+                        if(moveMsg.isAlive()) {
+                            // act on info for other client:
+                            for (GameClient gameClient : gameClients) {
+                                if (moveMsg.getName().equals(gameClient.getName())) {
+                                    gameClient.setX(moveMsg.getX());
+                                    gameClient.setY(moveMsg.getY());
+                                    break;
+                                }
+                            }
+                        } else {
+                            System.out.println("player dead: " + moveMsg.getName());
+                            // remove other client as not alive:
+
+                        }
+                    }
+                }
+
+
 
                 /*msgsList = client.getClientLogic().getMsgsList();
                 for(PlayerMoveMsg msg: msgsList) {
@@ -116,29 +147,10 @@ public class Game {
             }/*else{
                 System.out.println("---------------------------");
             }*/
-            client.getClientLogic().receiveMoveMsgs();
-            msgsList = client.getClientLogic().getMsgsList();
-            //System.out.println("msgsList size: " + msgsList.size());
-            for(PlayerMoveMsg moveMsg : msgsList) {
-                System.out.println("received " + moveMsg.getName() + " x: "+moveMsg.getX()+" y: "+moveMsg.getY());
-                // move clients that are not the local client:
-                if ((!(moveMsg.getName().equals(localGameClient.getName())))){
-                    if(moveMsg.isAlive()) {
-                        // act on info for other client:
-                        for (GameClient gameClient : gameClients) {
-                            if (moveMsg.getName().equals(gameClient.getName())) {
-                                gameClient.setX(moveMsg.getX());
-                                gameClient.setY(moveMsg.getY());
-                                break;
-                            }
-                        }
-                    } else {
-                        System.out.println("player dead: " + moveMsg.getName());
-                        // remove other client as not alive:
 
-                    }
-                }
-            }
+
+
+
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
