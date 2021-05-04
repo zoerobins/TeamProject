@@ -2,11 +2,14 @@ package org.nightshade.game;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+import org.nightshade.animation.AnimatedImage;
+import org.nightshade.animation.AnimationType;
 
 public class Sprite {
 
-    private final Image image;
+    private Image image;
     private double x;
+    private AnimatedImage animatedImage;
     private double y;
     private final double width;
     private final double height;
@@ -29,8 +32,20 @@ public class Sprite {
      * getImage getter method returning the image
      * @return the image of the sprite
      */
+    public Sprite(AnimatedImage animatedImage, int x, int y) {
+        this.animatedImage = animatedImage;
+        this.width = animatedImage.getWidth();
+        this.height = animatedImage.getHeight();
+        this.x = x;
+        this.y = y;
+    }
+
     public Image getImage() {
         return this.image;
+    }
+
+    public AnimatedImage getAnimatedImage() {
+        return this.animatedImage;
     }
 
     /**
@@ -68,19 +83,11 @@ public class Sprite {
     }
 
     /**
-     * setX setter method setting the y-coordinate of the sprite
+     * setY setter method setting the y-coordinate of the sprite
      * @param y y-coordinate of sprite
      */
     public void setY(double y) {
         this.y = y;
-    }
-
-    /**
-     * getX getter method returning the x-coordinate of sprite
-     * @return x-coordinate of sprite
-     */
-    public int getX() {
-        return (int) x;
     }
 
     /**
@@ -89,6 +96,14 @@ public class Sprite {
      */
     public int getY() {
         return (int) y;
+    }
+
+    /**
+     * getX getter method returning the x-coordinate of sprite
+     * @return x-coordinate of sprite
+     */
+    public int getX() {
+        return (int) x;
     }
 
     /**
@@ -107,15 +122,6 @@ public class Sprite {
      */
     public boolean intersects(Sprite sprite) {
         return sprite.getBoundary().intersects(this.getBoundary());
-    }
-
-    /**
-     * intersects function returning if the animated sprite is out of bounce
-     * @param animatedSprite animated character
-     * @return a boolean whether the character intersects the boundaries
-     */
-    public boolean intersects(AnimatedSprite animatedSprite) {
-        return animatedSprite.getBoundary().intersects(this.getBoundary());
     }
 
     /**
@@ -146,4 +152,35 @@ public class Sprite {
         this.x -= 1;
     }
 
+    public void setAnimatedImage(AnimationType animationType, Direction direction) {
+        if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.FORWARD)) {
+            Image[] imageArray = new Image[5];
+            for (int i = 0; i < 5; i++) {
+                imageArray[i] = new Image("img/game/player_run_right/player_run_right_" + i + ".png");
+            }
+            animatedImage.setFrames(imageArray);
+            animatedImage.setDuration(0.150);
+        }
+
+        else if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.BACKWARD)) {
+            Image[] imageArray = new Image[5];
+
+            for (int i = 0; i < 5; i++) {
+                imageArray[i] = new Image("img/game/player_run_left/player_run_left_" + i + ".png");
+            }
+
+            animatedImage.setFrames(imageArray);
+            animatedImage.setDuration(0.150);
+//            System.out.println(image.getFrames()[0].getUrl());
+        }
+
+        if (animationType.equals(AnimationType.IDLE)) {
+            Image[] imageArray = new Image[2];
+            for (int i = 0; i < 2; i++) {
+                imageArray[i] = new Image("img/game/player_idle_" + i + ".png");
+            }
+            animatedImage.setFrames(imageArray);
+            animatedImage.setDuration(0.200);
+        }
+    }
 }

@@ -44,6 +44,11 @@ public class Level {
                         count += 2;
                         break;
                     case LAVA:
+                        if(nodes.size()>3) {
+                            if (nodes.get(nodes.size()-3) == Node.LAVA) {
+                                nodes.add(Node.GROUND);
+                            }
+                        }
                         int length = ThreadLocalRandom.current().nextInt(0, 2 + 1);
                         for (int j = 0; j < length; j ++) {
                             nodes.add(Node.LAVA);
@@ -93,11 +98,13 @@ public class Level {
                     case MOVING_PLATFORM: {
                         int speed = ThreadLocalRandom.current().nextInt(0, 5 + 1);
                         Direction direction = Direction.getRandomDirection();
-                        Node prevNode = nodes.get(j - 1);
-                        if (prevNode == Node.MOVING_PLATFORM) {
-                            speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
-                            MovingPlatform lastMovingPlatform = movingPlatforms.get(movingPlatforms.size() - 1);
-                            direction = lastMovingPlatform.getDirection();
+                        if (j>1){
+                            Node previousNode = nodes.get(j - 1);
+                            if (previousNode == Node.MOVING_PLATFORM) {
+                                speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
+                                MovingPlatform lastMovingPlatform = movingPlatforms.get(movingPlatforms.size() - 1);
+                                direction = lastMovingPlatform.getDirection();
+                            }
                         }
                         MovingPlatform newMovingPlatform = new MovingPlatform(x, y, speed, direction);
                         movingPlatforms.add(newMovingPlatform);

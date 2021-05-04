@@ -84,4 +84,11 @@ public class SpriteTest {
         sprite.setY(50);
         Assertions.assertEquals(50,sprite.getY());
     }
+
+    @Test
+    public void testGetAnimatedImageUsingImageConstructor() {
+        Image image = new Image("cat.png");
+        Sprite sprite = new Sprite(image, 0, 0);
+        Assertions.assertNull(sprite.getAnimatedImage());
+    }
 }
