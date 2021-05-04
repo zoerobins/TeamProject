@@ -1,5 +1,4 @@
 package org.nightshade.game;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Node {
@@ -12,10 +11,17 @@ public enum Node {
     POWERUP,
     END;
 
+    /**
+     * getRandomNode is tge method generating the track, obstacles, moving platforms,
+     * water, enemies, ground, power ups and lava in the level
+     * @param i
+     * @param j
+     * @param width
+     * @return air, platform, moving platform, ground, lava, enemy power or end
+     */
     public static Node getRandomNode(int i, int j, int width) {
         //random number between 1 and 100, used for randomly choosing nodes.
         int randomNumber = ThreadLocalRandom.current().nextInt(0, 100 + 1);
-
         //This is the starting platform, so the characters land on it when spawning in
         if (i == 6 && j == 5 || i == 6 && j == 6 || i == 6 && j == 7) {
             return Node.PLATFORM;
@@ -37,7 +43,7 @@ public enum Node {
             }
         }
         if (i == 10) {
-           if (randomNumber == 1) {
+            if (randomNumber == 1) {
                 return Node.ENEMY;
             } else if(randomNumber == 2){
                 return Node.POWERUP;

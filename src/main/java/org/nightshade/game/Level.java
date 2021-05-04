@@ -20,6 +20,10 @@ public class Level {
     Image end = new Image("img/game/end.png");
     Image powerUp = new Image("img/game/powerup.png");
 
+    /**
+     * Level method is a method creating the level the player chose to play
+     * @param width of the track
+     */
     public Level(int width) {
         int blockHeight = 12;
 
@@ -131,30 +135,58 @@ public class Level {
         }
     }
 
+    /**
+     * getLavaSprites getter method returning lava sprites
+     * @return array list of lava sprites
+     */
     public ArrayList<Sprite> getLavaSprites() {
         return this.lavaSprites;
     }
 
+    /**
+     * getEndSprites getter method returning end sprites
+     * @return array list of end sprites
+     */
     public ArrayList<Sprite> getEndSprites() {
         return this.endSprites;
     }
 
+    /**
+     * getPlatformSprites getter method returning platform sprites
+     * @return array list of platform sprites
+     */
     public ArrayList<Sprite> getPlatformSprites() {
         return this.platformSprites;
     }
 
+    /**
+     * getEnemies getter method returning enemies
+     * @return array list of enemies
+     */
     public ArrayList<Enemy> getEnemies() {
         return this.enemies;
     }
 
+    /**
+     * getMovingPlatforms getter method returning moving platforms
+     * @return array list of moving platforms
+     */
     public ArrayList<MovingPlatform> getMovingPlatforms() {
         return this.movingPlatforms;
     }
 
+    /**
+     * getPowerUps getter method returning random power ups the character can obtain in the track
+     * @return array list of power ups
+     */
     public ArrayList<PowerUp> getPowerUps() {
         return this.powerUps;
     }
 
+    /**
+     * getGroundSprites getter method returning ground spites
+     * @return array list of ground sprites
+     */
     public ArrayList<Sprite> getGroundSprites() {
         return this.groundSprites;
     }

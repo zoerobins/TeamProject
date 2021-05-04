@@ -6,8 +6,7 @@ import java.io.File;
 
 public class SpotEffects {
 
-
-    /*
+    /**
      * This method starts playing the specified music file
      * @param file     The music file to be played
      * @param autoPlay Boolean for determining if the music should be played immediately
@@ -20,9 +19,6 @@ public class SpotEffects {
         mediaPlayer.setVolume(volume);
         mediaPlayer.setAutoPlay(autoPlay);
     }
-
-
-
 
     /**
      * This method plays the specified music file until it has finished
@@ -38,7 +34,6 @@ public class SpotEffects {
         mediaPlayer.setOnEndOfMedia(() -> {
             mediaPlayer.stop();
         });
-
         mediaPlayer.setAutoPlay(autoPlay);
     }
 }

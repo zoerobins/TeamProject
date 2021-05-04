@@ -27,7 +27,9 @@ public class Client {
     public Ability ability;
     public int powerUpTimer;
 
-
+    /**
+     * Client is the constructor of the whole client
+     */
     public Client() {
         this.isAlive = true;
         this.canJump = true;
@@ -47,26 +49,52 @@ public class Client {
         this.deathSoundPlayed = false;
     }
 
+    /**
+     * setVelocity setter method for setting the velocity of the character
+     * @param velocity the velocity of the character/the speed of the character that is moving
+     */
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
-    
+
+    /**
+     * isAlive a method returning whether the character is alive or not
+     * @return boolean if the character is alive or not
+     */
     public boolean isAlive() {
         return isAlive;
     }
-    
+
+    /**
+     * setCanJump setter method setting the character to jump
+     * @param canJump boolean if the character can jump or not
+     */
     public void setCanJump(boolean canJump) {
         this.canJump = canJump;
     }
-    
+
+    /**
+     * getVelocity getter method returning the velocity of the character
+     * @return velocity of the character
+     */
     public Point2D getVelocity() {
         return velocity;
     }
-    
+
+    /**
+     * getSprite getter method returning the character
+     * @return the character
+     */
     public Sprite getSprite() {
         return sprite;
     }
-    
+
+    /**
+     * displaySprite a method displaying the image of the character
+     * @param renderer
+     * @param image the image of the character
+     * @param sprite the character
+     */
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
@@ -74,19 +102,32 @@ public class Client {
     public void displaysprite(Renderer renderer, AnimatedImage animatedImage, Sprite sprite, double t){
         renderer.drawImage(animatedImage.getFrame(t), sprite.getX(), sprite.getY());
     }
-    
+
+    /**
+     * reducePowerUpTimer method reducing by one unit the time of the power up the character has
+     */
     public void reducePowerUpTimer(){
         this.powerUpTimer = powerUpTimer-1;
     }
-    
+
+    /**
+     * setPowerUpTimer setter method for the power up the character can have
+     * setting it to 50 units
+     */
     private void setPowerUpTimer(){
         this.powerUpTimer = 99;
     }
-    
+
+    /**
+     * removeAbility method removing the special power/power up the character gained
+     */
     public void removeAbility(){
         this.ability = null;
     }
-    
+
+    /**
+     * jump method is the method that does the character jump
+     */
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
@@ -100,7 +141,11 @@ public class Client {
             canJump = false;
         }
     }
-    
+
+    /**
+     * kill method setting the isAlive variable to false
+     * makes the character die
+     */
     public void kill() {
         if (!deathSoundPlayed) {
             File soundFile = new File("src/main/resources/audio/die.mp3");
@@ -110,6 +155,11 @@ public class Client {
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
 
+    /**
+     * moveX method is the method moving the character in the x-axis
+     * @param value the value of how much the character will move
+     * @param level used to retrieve sprites
+     */
     public void moveX(int value, Level level){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
@@ -187,10 +237,14 @@ public class Client {
             }
 
             sprite.setX(newX);
-
         }
     }
 
+    /**
+     * moveY method is the method moving the character in the y-axis
+     * @param value he value of how much the character will move
+     * @param level used to retrieve sprites
+     */
     public void moveY(int value, Level level) {
         boolean movingDown = value > 0;
 //        sprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD);
@@ -261,7 +315,6 @@ public class Client {
             }
 
             sprite.setY(newY);
-
         }
     }
 }

@@ -38,6 +38,10 @@ public class Game {
     private final long startNanoTime = System.nanoTime();
 
 
+    /**
+     *
+     * @param stage
+     */
     public Game(Stage stage) {
         renderer = new Renderer();
         renderer.setHeight(720);
@@ -79,6 +83,9 @@ public class Game {
         }.start();
     }
 
+    /**
+     * listen method listens for KeyEvents and keeps track of keys pressed
+     */
     // listens for KeyEvents and keeps track of keys pressed
     private void listen() {
         scene.setOnKeyPressed(
@@ -95,6 +102,10 @@ public class Game {
                 });
     }
 
+    /**
+     * moveClient method moves everything in the client
+     * moves animated character, platforms, enemies, water and lava
+     */
     private void moveClient() {
         if (client.isAlive()) {
             if (keyCodes.contains(KeyCode.UP) && client.getSprite().getY() >= 5) {
@@ -113,10 +124,18 @@ public class Game {
         }
     }
 
+    /**
+     * addAiPlayer adds an ai player to the game
+     * @param ai ai player, opponent
+     */
     public void addAiPlayer(AI ai) {
         aiPlayers.add(ai);
     }
 
+    /**
+     * loop method is a method running over and over so the game flows
+     * @param currentNanoTime current time in nano seconds
+     */
     public void loop(long currentNanoTime) {
         double time = (currentNanoTime - startNanoTime) / 1000000000.0;
 
@@ -146,7 +165,6 @@ public class Game {
             Sprite clientSprite = client.getSprite();
             renderer.drawImage(clientSprite.getAnimatedImage().getFrame(time), clientSprite.getX(), clientSprite.getY());
             boolean intersectsCloud = clientSprite.intersects(cloudSprite.getX() - 90, cloudSprite.getY(), (int) cloudSprite.getWidth(), (int) cloudSprite.getHeight());
-
             if (intersectsCloud) {
                 client.kill();
             }
@@ -203,6 +221,11 @@ public class Game {
         xViewCoordinate = (int) (-1 * translateX);
     }
 
+    /**
+     * setAnimationIndex
+     * @param counter
+     * @return
+     */
     private int setAnimationIndex(int counter) {
         if (counter % 3 == 0) {
             animationIndex++;
@@ -213,6 +236,10 @@ public class Game {
         return animationIndex;
     }
 
+    /**
+     * rendererSprites used to draw the sprites
+     * @param sprites
+     */
     private void renderSprites(ArrayList<Sprite> sprites) {
         for (Sprite sprite : sprites) {
             renderer.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
