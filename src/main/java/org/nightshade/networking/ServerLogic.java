@@ -14,7 +14,8 @@ import java.util.ArrayList;
 public class ServerLogic {
 
     static ServerSocket serverSocket;
-    private Socket client;
+    private Socket socket;
+
     int numClients;
     ArrayList<String> playerNames = new ArrayList<>();
     ArrayList<PlayerMoveMsg> moveMsgs = new ArrayList<>();
@@ -95,9 +96,9 @@ public class ServerLogic {
     public void waitForPlayers() throws IOException {
         int clientNo = 1;
         while(clientNo < 10) {
-            client = serverSocket.accept();
+            socket = serverSocket.accept();
             System.out.println("Client arrived");
-            ClientThread task = new ClientThread(client, clientNo, this);
+            ClientThread task = new ClientThread(socket, clientNo, this);
             clientNo++;
             incNumClients();
             new Thread(task).start();
