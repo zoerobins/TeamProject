@@ -17,7 +17,7 @@ public class ServerLogic {
     static ServerSocket serverSocket;
     private static ArrayList<ClientThread> clientThreads = new ArrayList<>();
 
-    private Socket client;
+    private Socket socket;
     private ArrayList<Socket> clientSockets = new ArrayList<>();
 
     int numClients;
@@ -118,10 +118,10 @@ public class ServerLogic {
     public void waitForPlayers() throws IOException {
         int clientNo = 1;
         while(clientNo < 10) {
-            client = serverSocket.accept();
-            clientSockets.add(client);
+            socket = serverSocket.accept();
+            clientSockets.add(socket);
             System.out.println("Client arrived");
-            ClientThread task = new ClientThread(client, clientNo, this);
+            ClientThread task = new ClientThread(socket, clientNo, this);
             clientThreads.add(task);
             clientNo++;
             incNumClients();
