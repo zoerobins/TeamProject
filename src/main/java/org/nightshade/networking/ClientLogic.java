@@ -14,7 +14,7 @@ public class ClientLogic {
 
     private ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
-    private Socket server;
+    private Socket socket;
 
     private ArrayList<Player> playersList = new ArrayList<>();
     private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
@@ -28,9 +28,9 @@ public class ClientLogic {
      * @throws IOException
      */
     public ClientLogic(String serverIp, int portValue, Client client) throws IOException {
-        server = new Socket(serverIp, portValue);
-        objectOutput = new ObjectOutputStream(server.getOutputStream());
-        objectInput = new ObjectInputStream(server.getInputStream());
+        socket = new Socket(serverIp, portValue);
+        objectOutput = new ObjectOutputStream(socket.getOutputStream());
+        objectInput = new ObjectInputStream(socket.getInputStream());
     }
 
     /**
@@ -39,9 +39,9 @@ public class ClientLogic {
      * @throws IOException
      */
     public ClientLogic() throws IOException {
-        server = new Socket("127.0.0.1", 2222);
-        objectOutput = new ObjectOutputStream(server.getOutputStream());
-        objectInput = new ObjectInputStream(server.getInputStream());
+        socket = new Socket("127.0.0.1", 2222);
+        objectOutput = new ObjectOutputStream(socket.getOutputStream());
+        objectInput = new ObjectInputStream(socket.getInputStream());
         return;
 
     }
@@ -176,7 +176,7 @@ public class ClientLogic {
      * @throws IOException
      */
     public void closeSocket() throws IOException {
-        server.close();
+        socket.close();
     }
 
 }
