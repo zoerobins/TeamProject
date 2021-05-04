@@ -136,6 +136,10 @@ public class ClientThread implements Runnable {
         }
     }
 
+    /**
+     * Sends a StartGameMsg to the Client when all players are ready to start
+     * @throws IOException
+     */
     public void sendStartMsg() throws IOException {
         boolean allReady = false;
         while(!allReady) {

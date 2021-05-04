@@ -121,6 +121,12 @@ public class ClientLogic {
         return playersList;
     }
 
+    /**
+     * Reads in and returns the StartGameMsg receive from the Server
+     * @return StartGameMsg received from the Server
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public StartGameMsg receiveStartMsg() throws IOException, ClassNotFoundException {
         StartGameMsg startGame = (StartGameMsg) objectInput.readObject();
         return startGame;

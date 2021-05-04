@@ -57,6 +57,10 @@ public class ServerLogic {
         moveMsgs.set(index, moveMsg);
     }
 
+    /**
+     * Returns the number of clients connected
+     * @return Number of clients connected
+     */
     public int getNumClients() {
         return this.numClients;
     }
@@ -68,10 +72,18 @@ public class ServerLogic {
         this.numClients += 1;
     }
 
+    /**
+     * Returns the ArrayList of players' names
+     * @return ArrayList of players' names
+     */
     public ArrayList<String> getPlayerNames() {
         return playerNames;
     }
 
+    /**
+     * Adds the specified player's name to the ArrayList
+     * @param playerName Name of the player to add
+     */
     public void addPlayerName(String playerName) {
         playerNames.add(playerName);
     }
