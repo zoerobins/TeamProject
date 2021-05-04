@@ -28,6 +28,9 @@ public class Client {
     public Ability ability;
     public int powerUpTimer;
 
+    /**
+     * Client is the constructor of the whole client
+     */
     public Client() {
         this.isAlive = true;
         this.canJump = true;
@@ -47,43 +50,101 @@ public class Client {
         this.volume = SettingsController.mSliderVal / 100;
     }
 
+    /**
+     * setVelocity setter method for setting the velocity of the character
+     * @param velocity the velocity of the character/the speed of the character that is moving
+     */
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
+
+    /**
+     * isAlive a method returning whether the character is alive or not
+     * @return boolean if the character is alive or not
+     */
     public boolean isAlive() {
         return isAlive;
     }
+
+    /**
+     * setCanJump setter method setting the character to jump
+     * @param canJump boolean if the character can jump or not
+     */
     public void setCanJump(boolean canJump) {
         this.canJump = canJump;
     }
+
+    /**
+     * getVelocity getter method returning the velocity of the character
+     * @return velocity of the character
+     */
     public Point2D getVelocity() {
         return velocity;
     }
+
+    /**
+     * getSprite getter method returning the character
+     * @return the character
+     */
     public Sprite getSprite() {
         return sprite;
     }
+
+    /**
+     * getAnimatedSprite getter method returning the animated character
+     * @return the animated character
+     */
     public AnimatedSprite getAnimatedSprite() {
         return animatedSprite;
     }
+
+    /**
+     * displaySprite a method displaying the image of the character
+     * @param renderer
+     * @param image the image of the character
+     * @param sprite the character
+     */
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
 
-
+    /**
+     * displayAnimatedSprite a method displaying the image of the animated character
+     * @param renderer
+     * @param animatedImage the image of the animated character
+     * @param sprite the character
+     * @param t position of the character
+     */
     public void displayAnimatedSprite(Renderer renderer, AnimatedImage animatedImage, Sprite sprite, double t){
         renderer.drawImage(animatedImage.getFrame(t), sprite.getX(), sprite.getY());
 
     }
+
+    /**
+     * reducePowerUpTimer method reducing by one unit the time of the power up the character has
+     */
     public void reducePowerUpTimer(){
         this.powerUpTimer = powerUpTimer-1;
     }
+
+    /**
+     * setPowerUpTimer setter method for the power up the character can have
+     * setting it to 50 units
+     */
     private void setPowerUpTimer(){
         this.powerUpTimer = 50;
     }
+
+    /**
+     * removeAbility method removing the special power/power up the character gained
+     */
     public void removeAbility(){
         this.ability = null;
-
     }
+
+    /**
+     * jump method is the method that does the character jump
+     */
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
@@ -97,20 +158,30 @@ public class Client {
             canJump = false;
         }
     }
+
+    /**
+     * kill method setting the isAlive variable to false
+     * makes the character die
+     */
     public void kill() {
         File soundFile = new File("src/main/resources/audio/die.mp3");
         spotEffects.playSoundUntilEnd(soundFile, true, volume);
-        isAlive =false;
+        isAlive = false;
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
 
+    /**
+     * moveX method is the method moving the character in the x-axis
+     * @param value the value of how much the character will move
+     * @param level the level of the character is right now
+     */
     public void moveX(int value, Level level){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
             animatedSprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD);
         } else {
             animatedSprite.setAnimatedImage(AnimationType.RUNNING, Direction.BACKWARD);
-//            System.out.println(animatedSprite.getImage().getFrame(0).getUrl());
+            //System.out.println(animatedSprite.getImage().getFrame(0).getUrl());
         }
 
         int speed =1;
@@ -128,6 +199,7 @@ public class Client {
                     return;
                 }
             }
+
             for (Sprite ground : level.getGroundSprites()) {
                 if (ground.intersects(animatedSprite)){
                     File soundFile = new File("src/main/resources/audio/step.mp3");
@@ -140,6 +212,7 @@ public class Client {
                     return;
                 }
             }
+
             for (PowerUp box : level.getPowerUps()) {
                 if (box.intersects(animatedSprite)) {
                     box.collect();
@@ -182,9 +255,19 @@ public class Client {
         }
     }
 
+    /**
+     * moveY method is the method moving the character in the y-axis
+     * @param value he value of how much the character will move
+     * @param platformSprites position of the platforms around the track
+     * @param waterSprites positions of the water around the track
+     * @param enemies position of the enemies around the track
+     * @param groundSprites position of the ground around the track
+     * @param movingPlatforms positions of moving platforms around the track
+     * @param powerUps the power up the character has if it has one
+     */
     public void moveY(int value,ArrayList<Sprite> platformSprites,ArrayList<Sprite> waterSprites,ArrayList<Enemy> enemies,ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<PowerUp> powerUps){
         boolean movingDown = value > 0;
-//        animatedSprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD);
+        //animatedSprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD);
         // TODO: above line stops the animation from working, figure a way to integrate this properly
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {

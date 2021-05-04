@@ -12,6 +12,14 @@ public enum Node {
     POWERUP,
     END;
 
+    /**
+     * getRandomNode is tge method generating the track, obstacles, moving platforms,
+     * water, enemies, ground, power ups and lava in the level
+     * @param i
+     * @param j
+     * @param width
+     * @return air, platform, moving platform, ground, lava, enemy power or end
+     */
     public static Node getRandomNode(int i, int j, int width) {
         //random number between 1 and 100
         int randomNumber = ThreadLocalRandom.current().nextInt(0, 100 + 1);
@@ -36,6 +44,7 @@ public enum Node {
                 return Node.LAVA;
             }
         }
+
         if (i == 10) {
             if (randomNumber <= 4) {
                 return Node.PLATFORM;
@@ -47,6 +56,7 @@ public enum Node {
                 return Node.AIR;
             }
         }
+
         if (i > 7) {
             if (randomNumber < 10) {
                 return Node.PLATFORM;

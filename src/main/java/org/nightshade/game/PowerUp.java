@@ -31,9 +31,11 @@ public class PowerUp extends Sprite {
     public void setCollected(boolean collected){
         this.collected = collected;
     }
+
     public boolean getCollected(){
         return this.collected;
     }
+
     public void collect(){
         this.collected = true;
         this.width = 0;
@@ -50,9 +52,6 @@ public class PowerUp extends Sprite {
         }else {
             return Ability.SHIELD;
         }
-
     }
-
-
 
 }

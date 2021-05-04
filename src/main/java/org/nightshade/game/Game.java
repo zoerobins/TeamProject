@@ -20,6 +20,7 @@ import org.nightshade.renderer.Renderer;
 
 import java.io.File;
 import java.util.ArrayList;
+
 public class Game {
     private Scene scene;
     private final int LEVEL_WIDTH = 120;
@@ -43,6 +44,10 @@ public class Game {
     private final long startNanoTime = System.nanoTime();
 
 
+    /**
+     *
+     * @param stage
+     */
     public Game(Stage stage) {
         renderer = new Renderer();
         renderer.setHeight(720);
@@ -82,7 +87,10 @@ public class Game {
             }
         }.start();
     }
-    // listens for KeyEvents and keeps track of keys pressed
+
+    /**
+     * listen method listens for KeyEvents and keeps track of keys pressed
+     */
     private void listen() {
         scene.setOnKeyPressed(
                 keyEvent -> {
@@ -97,6 +105,11 @@ public class Game {
                     keyCodes.remove(keyCode);
                 });
     }
+
+    /**
+     * moveClient method moves everything in the client
+     * moves animated character, platforms, enemies, water and lava
+     */
     private void moveClient() {
         // TODO: these arrays can just be moved to client (just pass level)
         ArrayList<Sprite> platformSprites = level.getPlatformSprites();
@@ -121,13 +134,19 @@ public class Game {
             client.moveY((int) client.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms, powerUps);
         }
     }
+
+    /**
+     * addAiPlayer adds an ai player to the game
+     * @param ai ai player, opponent
+     */
     public void addAiPlayer(AI ai) {
         aiPlayers.add(ai);
     }
 
-
-
-
+    /**
+     * loop method is a method running over and over so the game flows
+     * @param currentNanoTime current time in nano seconds
+     */
     public void loop(long currentNanoTime) {
         double time = (currentNanoTime - startNanoTime) / 1000000000.0;
 
@@ -153,7 +172,7 @@ public class Game {
             moveClient();
             AnimatedSprite clientSprite = client.getAnimatedSprite();
             renderer.drawImage(clientSprite.getImage().getFrame(time), clientSprite.getX(), clientSprite.getY());
-//            System.out.println(clientSprite.getImage().getFrame(time).getUrl());
+            //System.out.println(clientSprite.getImage().getFrame(time).getUrl());
             boolean intersectsCloud = clientSprite.intersects(cloudSprite.getX() - 90, cloudSprite.getY(), (int) cloudSprite.getWidth(), (int) cloudSprite.getHeight());
             if (intersectsCloud) {
                 client.kill();
@@ -200,6 +219,12 @@ public class Game {
         }
         xViewCoordinate = (int) (-1 * translateX);
     }
+
+    /**
+     * setAnimationIndex
+     * @param counter
+     * @return
+     */
     private int setAnimationIndex(int counter) {
         if (counter % 3 == 0) {
             animationIndex++;
@@ -209,6 +234,10 @@ public class Game {
         }
         return animationIndex;
     }
+
+    /**
+     * @param sprites
+     */
     private void renderSprites(ArrayList<Sprite> sprites) {
         for (Sprite sprite : sprites) {
             renderer.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
