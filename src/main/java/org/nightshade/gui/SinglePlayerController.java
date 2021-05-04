@@ -46,11 +46,9 @@ public class SinglePlayerController implements Initializable {
     private ArrayList<RadioButton> ai1RadioButtons;
     private ArrayList<RadioButton> ai2RadioButtons;
     private ArrayList<RadioButton> ai3RadioButtons;
-<<<<<<< HEAD
 
     public static Game game;
 
-=======
     /**
      * called as this scene is displayed on the window,
      * sets all the toggle groups, puts all the easy/medium/hard
@@ -61,7 +59,6 @@ public class SinglePlayerController implements Initializable {
      * @param url
      * @param resourceBundle
      */
->>>>>>> game-logic-networking-integration
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ai1ToggleGroup = new ToggleGroup();
