@@ -9,14 +9,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.nightshade.Main;
-import org.nightshade.multiplayer.Client;
 import org.nightshade.multiplayer.Game;
-import org.nightshade.networking.ServerLogic;
+import org.nightshade.multiplayer.GameHandler;
+import org.nightshade.networking.Client;
+import org.nightshade.networking.ClientLogic;
+import org.nightshade.networking.StartGameMsg;
 
 public class MultiPlayerLobbyController implements Initializable {
 
@@ -24,44 +28,36 @@ public class MultiPlayerLobbyController implements Initializable {
     @FXML private TableColumn<Player,String>nameColumn;
     @FXML private TableColumn<Player,String>readyColumn;
     @FXML private Button readyButton;
+    ClientLogic clientLogic;
+    ArrayList<Player> playersList;
 
     public void backButton() {
         GuiHandler.stage.setScene(GuiHandler.menu);
     }
 
     public void readyButton() {
-        if (GuiHandler.player.getReady() == "NOT READY") {
+
+        if (GuiHandler.player.getReady().equals("NOT READY")) {
             GuiHandler.player.setReady("READY");
-            tableView.refresh();
             readyButton.setText("Not Ready");
-        }else{
+        } else{
             GuiHandler.player.setReady("NOT READY");
-            tableView.refresh();
             readyButton.setText("Ready");
         }
 
-        /*if(ServerLogic.getClientThreads() != null) {
-            int numClients = ServerLogic.getClientThreads().size();
-            System.out.println("number of clients: " + numClients);
-        } else {
-            System.out.println("no client threads");
-        }*/
+        tableView.getItems().clear();
+        tableView.getItems().addAll(getPlayers());
+        tableView.refresh();
 
-        boolean allReady = false;
-        for (Player ready : tableView.getItems()) {
-            if(readyColumn.getCellObservableValue(ready).getValue() == "NOT READY") {
-                allReady = false;
-                break;
-            } else {
-                allReady = true;
-            }
-        }
-        if(allReady) {
-            // start game
-            System.out.println("all players ready");
-            Game game = new Game(Main.stage, tableView.getItems().size()); // need to create game in server and add to that instead
-            //game.addClient(client);
-            
+        try {
+            GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getName(), "READY");
+            StartGameMsg start;
+            start = GuiHandler.player.getClient().getClientLogic().receiveStartMsg();
+            GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName(), GuiHandler.player.getClient(), start.getPlayers());
+
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
 
@@ -80,11 +76,14 @@ public class MultiPlayerLobbyController implements Initializable {
 
     public ObservableList<Player> getPlayers(){
         ObservableList<Player> players = FXCollections.observableArrayList();
-        players.add(GuiHandler.player);
-        //System.out.println(GuiHandler.player.getReady());
-        players.add(new Player("player 2", "READY"));
-        players.add(new Player("FifaPlayer52", "READY"));
-        players.add(new Player("brian1997", "READY"));
+        /*clientLogic = GuiHandler.player.getClient().getClientLogic();
+        playersList = clientLogic.getPlayersList();
+        for(Player player : playersList) {
+            players.add(player);
+        }*/
+        if(players.size() == 0) {
+            players.add(GuiHandler.player);
+        }
 
         return players;
     }

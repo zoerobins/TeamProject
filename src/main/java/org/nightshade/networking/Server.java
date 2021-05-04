@@ -1,63 +1,50 @@
 package org.nightshade.networking;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import org.nightshade.gui.GuiHandler;
-import org.nightshade.multiplayer.Game;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ServerSocket;
 
-public class Server extends Application {
+/**
+ * Server class
+ * Creates a Server which Clients can connect to
+ */
+public class Server {
 
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static int serverPort;
-    private static boolean created = false;
     private static ServerLogic serverLogic;
-    public static Stage serverStage;
 
-    private static int portValue;
-    //static GameLogic game = null;
-    static Game game;
-    static ServerSocket serverSocket;
-
+    /**
+     * Constructor for the Server class
+     * Reads in the port number and creates a new ServerLogic object
+     * @throws NumberFormatException
+     * @throws IOException
+     */
     public Server() throws NumberFormatException, IOException {
         System.out.println("Please enter the server port number: ");
         serverPort = Integer.parseInt(br.readLine());
+        br.close();
+        serverLogic = new ServerLogic(serverPort);
     }
 
-    @Override
-    public void start(Stage window) throws Exception {
-
-        serverStage = window;
-        GuiHandler gh = new GuiHandler();
-
-        serverStage.setScene(gh.loadGui(serverStage));
-        serverStage.show();
-
+    /**
+     * Constructor for the Server class
+     * Creates a new ServerLogic object
+     * @param serverPort Port number for the Server
+     * @throws IOException
+     */
+    public Server(int serverPort) throws IOException {
+        serverLogic = new ServerLogic(serverPort);
     }
 
-    public static void main(String[] args) {
-        //launch(args);
-        while(!created) {
-            try {
-                Server server = new Server();
-                serverLogic = new ServerLogic(serverPort);
-                serverLogic.waitForPlayers();
-            } catch (IOException e1) {
-                System.out.println("Could not create server - check firewall");
-            } catch (NumberFormatException e2) {
-                System.out.println("Entered server port number incorrectly");
-            } finally {
-                if(serverLogic != null) {
-                    serverLogic.kill();
-                }
-            }
-        }
+    /**
+     * Creates a new Server object with the port number 2222
+     * @param args
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
+        new Server(2222);
+        //serverLogic.kill();
     }
-
-
 
 }

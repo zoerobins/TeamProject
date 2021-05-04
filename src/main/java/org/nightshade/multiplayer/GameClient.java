@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Client {
+public class GameClient {
     private boolean isAlive;
     private boolean canJump;
     private Point2D velocity;
@@ -19,8 +19,11 @@ public class Client {
     private SpotEffects spotEffects;
     private Random random;
     public double volume;
+    public String name;
+    public int previousX;
+    public int previousY;
 
-    public Client() {
+    public GameClient(String name) {
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
@@ -28,7 +31,33 @@ public class Client {
         this.spotEffects = new SpotEffects();
         this.random = new Random();
         this.volume = SettingsController.mSliderVal / 100;
+        this.name = name;
+        this.previousX =previousX;
+        this.previousY =previousY;
+    }
 
+    public String getName(){
+        return name;
+    }
+    public void setX(Double x){
+        previousX = this.sprite.getX();
+        this.sprite.setX(x);
+    }
+    public void setY(Double y){
+        previousY = this.sprite.getY();
+        this.sprite.setY(y);
+    }
+    public int getPreviousX(){
+        return previousX;
+    }
+    public int getPreviousY(){
+        return previousY;
+    }
+    public int getX(){
+        return sprite.getX();
+    }
+    public int getY(){
+        return sprite.getY();
     }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
@@ -52,6 +81,7 @@ public class Client {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
             spotEffects.playSound(soundFile, true, volume);
+            //spotEffects.playSound(soundFile, true);
             velocity = velocity.add(0, -30);
             canJump = false;
         }
@@ -59,6 +89,7 @@ public class Client {
     public void kill() {
         File soundFile = new File("src/main/resources/audio/die.mp3");
         spotEffects.playSoundUntilEnd(soundFile, true, volume);
+        //spotEffects.playSoundUntilEnd(soundFile, true);
         isAlive =false;
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }

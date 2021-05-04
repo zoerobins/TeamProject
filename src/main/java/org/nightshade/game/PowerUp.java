@@ -24,12 +24,21 @@ public class PowerUp extends Sprite {
 
     private Ability assignRandomAbility() {
         double randomNum = Math.random();
+<<<<<<< HEAD
         if (randomNum < 0.33) {
+=======
+
+        if (randomNum<0.33){
+>>>>>>> game-logic-networking-integration
             return Ability.JUMPBOOST;
         } else if (randomNum < 0.67) {
             return Ability.SPEEDBOOST;
         } else {
             return Ability.SHIELD;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> game-logic-networking-integration
     }
 }

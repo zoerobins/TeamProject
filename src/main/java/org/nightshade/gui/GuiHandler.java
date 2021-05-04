@@ -8,6 +8,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+
+/**
+ * this class is used to create a Gui that
+ * will display on the users window and
+ * allow them to navigate the game
+ */
 public class GuiHandler {
     public static Stage stage;
     public static Scene settings;
@@ -18,6 +24,18 @@ public class GuiHandler {
     public static Scene gameOverScreen;
     public static Scene multiPlayerLobby;
     public static Player player = new Player("Enter Name");
+
+    /**
+     * this method loads up all the FXML files,
+     * creates all the scenes for the different
+     * "pages" of the menu, adds the CSS file
+     * to all of the scenes and returns the
+     * scene of the title page
+     *
+     * @param window
+     * @return
+     * @throws IOException
+     */
     public Scene loadGui(Stage window) throws IOException {
 
         stage = window;
