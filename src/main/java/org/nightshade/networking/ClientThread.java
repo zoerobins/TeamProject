@@ -48,14 +48,12 @@ public class ClientThread implements Runnable {
 
     }
 
-
     /**
      * Thread 'run' method
      * Uses loops to make repeated calls to methods which send and receive objects
      */
     @Override
     public void run() {
-
         try {
             while(!localPlayerReady) {
                 receivePlayers();
@@ -73,7 +71,6 @@ public class ClientThread implements Runnable {
                 e1.printStackTrace();
             }
         }
-
     }
 
     /**
@@ -89,19 +86,6 @@ public class ClientThread implements Runnable {
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * Sends Player objects from the ArrayList to the Client
-     * @throws IOException
-     */
-    public void sendPlayers() throws IOException {
-        players = serverLogic.getPlayers();
-        System.out.println(players.size());
-        for(int i=0; i<players.size(); i++) {
-            objectOutput1.writeObject(players.get(i));
         }
     }
 
@@ -161,7 +145,6 @@ public class ClientThread implements Runnable {
                 allReady = true;
             }
         }
-
     }
 
 }

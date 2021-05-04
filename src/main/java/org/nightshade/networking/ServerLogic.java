@@ -13,19 +13,11 @@ import java.util.ArrayList;
  */
 public class ServerLogic {
 
-    private int portValue;
     static ServerSocket serverSocket;
-    private static ArrayList<ClientThread> clientThreads = new ArrayList<>();
-
     private Socket client;
-    private ArrayList<Socket> clientSockets = new ArrayList<>();
-
     int numClients;
-
-    ArrayList<Player> players = new ArrayList<>();
     ArrayList<String> playerNames = new ArrayList<>();
     ArrayList<PlayerMoveMsg> moveMsgs = new ArrayList<>();
-
 
     /**
      * Constructor for the ServerLogic class
@@ -34,7 +26,6 @@ public class ServerLogic {
      * @throws IOException
      */
     public ServerLogic(int portValue) throws IOException {
-        this.portValue = portValue;
         serverSocket = new ServerSocket(portValue);
         this.numClients = 0;
         System.out.println("Started game server");
@@ -77,32 +68,6 @@ public class ServerLogic {
         this.numClients += 1;
     }
 
-    /**
-     * Returns an ArrayList of Player objects received from clients
-     * @return ArrayList of Player objects received
-     */
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    /**
-     * Adds a received Player to the ArrayList
-     * @param player Received Player object
-     */
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
-
-    /**
-     * Replaces a Player object at a specified index with another
-     * @param index Index position of the Player in the ArrayList
-     * @param player Received Player object
-     */
-    public void replacePlayer(int index, Player player) {
-        players.set(index, player);
-    }
-
-
     public ArrayList<String> getPlayerNames() {
         return playerNames;
     }
@@ -119,10 +84,8 @@ public class ServerLogic {
         int clientNo = 1;
         while(clientNo < 10) {
             client = serverSocket.accept();
-            clientSockets.add(client);
             System.out.println("Client arrived");
             ClientThread task = new ClientThread(client, clientNo, this);
-            clientThreads.add(task);
             clientNo++;
             incNumClients();
             new Thread(task).start();

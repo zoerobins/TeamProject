@@ -80,9 +80,7 @@ public class ClientLogic {
             } else {
                 break;
             }
-
         }
-
     }
 
     /**
@@ -92,12 +90,6 @@ public class ClientLogic {
     public ArrayList<PlayerMoveMsg> getMsgsList() {
         return msgsList;
     }
-
-
-    public void clearMsgsList() {
-        msgsList.clear();
-    }
-
 
     /**
      * Sends a new PlayerMoveMsg object containing the Player's updated position to the Server
@@ -119,43 +111,6 @@ public class ClientLogic {
      */
     public void sendPlayer(String name, String ready) throws IOException {
         objectOutput.writeObject(new Player(name, ready));
-    }
-
-    /**
-     * Reads in Player objects received from the Server and adds them to an ArrayList
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    public void receivePlayers() throws IOException, ClassNotFoundException {
-        Player newPlayer;
-        Object next;
-        next = objectInput.readObject();
-        while(next instanceof Player) {
-            newPlayer = (Player) next;
-            if(playersList.size() == 0) {
-                playersList.add(newPlayer);
-            }
-            boolean playerAdded = false;
-            for(int i=0; i<playersList.size(); i++) {
-                if(playersList.get(i).getName().equals(newPlayer.getName())) {
-                    playersList.set(i, newPlayer);
-                    playerAdded = true;
-                    break;
-                }
-            }
-            if(!playerAdded) {
-                playersList.add(newPlayer);
-            }
-
-            //System.out.println(newPlayer.getName());
-            //System.out.println(newPlayer.getReady());
-            if(objectInput.available() != 0) {
-                next = objectInput.readObject();
-            } else {
-                break;
-            }
-        }
-
     }
 
     /**
