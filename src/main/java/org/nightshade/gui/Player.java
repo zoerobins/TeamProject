@@ -12,6 +12,7 @@ public class Player implements Serializable {
     public String name;
     public String ready;
     public Client client;
+
     /** Basic constructor that sets name to the parameter given
      *  and sets the ready string to "NOT READY"
      *
@@ -21,6 +22,7 @@ public class Player implements Serializable {
         this.name = name;
         this.ready = "NOT READY";
     }
+
     /** Another basic constructor that instead take two parameters
      * sets name to the first one and ready to the second one
      *
@@ -31,12 +33,14 @@ public class Player implements Serializable {
         this.name = name;
         this.ready = ready;
     }
+
     /** Returns the players name
      *  @return
      */
     public String getName(){
         return this.name;
     }
+
     /** Returns the players ready status
      *  @return
      */
@@ -57,6 +61,7 @@ public class Player implements Serializable {
     public void setName(String newName){
         this.name = newName;
     }
+
     /** Sets the players ready status to the value of the parameter
      *  @param newReady
      */
@@ -70,4 +75,5 @@ public class Player implements Serializable {
     public void setClient(Client newClient) {
         this.client = newClient;
     }
+
 }

@@ -15,9 +15,9 @@ import java.net.SocketException;
 import java.util.ArrayList;
 
 public class Game {
+
     private final int levelWidth = 120;
     private final int blockWidth = 60;
-    private int verticalBlocksCount;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;
     private final ArrayList<Image> lavaImages;
@@ -77,7 +77,7 @@ public class Game {
     }
 
     private void moveClients() {
-        // TODO: these arrays can just be moved to client (just pass level)
+
         ArrayList<Sprite> platformSprites = level.getPlatformSprites();
         ArrayList<Sprite> lavaSprites = level.getLavaSprites();
         ArrayList<Sprite> groundSprites = level.getGroundSprites();
@@ -99,26 +99,20 @@ public class Game {
             localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms);
         }
 
-        // send new isAlive, x and y of local client to the other clients and update their isAlive, x and y values to the new ones that they send
         try {
             if ((loopRun%2 == 0) && !((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
                 client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getX(), localGameClient.getY(), localGameClient.isAlive());
                 System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
 
-
-                System.out.println("updated");
                 client.getClientLogic().receiveMoveMsgs();
                 if(loopRun>2) {
                     client.getClientLogic().receiveMoveMsgs();
                 }
                 msgsList = client.getClientLogic().getMsgsList();
-                //System.out.println("msgsList size: " + msgsList.size());
                 for(PlayerMoveMsg moveMsg : msgsList) {
                     System.out.println("received " + moveMsg.getName() + " x: "+moveMsg.getX()+" y: "+moveMsg.getY());
-                    // move clients that are not the local client:
                     if ((!(moveMsg.getName().equals(localGameClient.getName())))){
                         if(moveMsg.isAlive()) {
-                            // act on info for other client:
                             for (GameClient gameClient : gameClients) {
                                 if (moveMsg.getName().equals(gameClient.getName())) {
                                     gameClient.setX(moveMsg.getX());
@@ -128,29 +122,11 @@ public class Game {
                             }
                         } else {
                             System.out.println("player dead: " + moveMsg.getName());
-                            // remove other client as not alive:
-
                         }
                     }
                 }
 
-
-
-                /*msgsList = client.getClientLogic().getMsgsList();
-                for(PlayerMoveMsg msg: msgsList) {
-                    if(msg.getName().equals(localGameClient.getName()) && !(msg.getX() == localGameClient.getX()) && !(msg.getY() == localGameClient.getY())) {
-                        client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getX(), localGameClient.getY(), localGameClient.isAlive());
-                        System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
-                    }
-                }*/
-
-            }/*else{
-                System.out.println("---------------------------");
-            }*/
-
-
-
-
+            }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -159,11 +135,10 @@ public class Game {
 
     }
 
-
     public void loop() {
 
-        /*parallax.move();
-        parallax.render(renderer, xViewCoordinate);*/
+        parallax.move();
+        parallax.render(renderer, xViewCoordinate);
 
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
@@ -181,9 +156,7 @@ public class Game {
                 largestGameClientX = gc.getX();
             }
         }
-        // move cloud
 
-         // here local game client needs to be swapped out to whichever client is the furthest forward
         if (largestGameClientX - cloud.getX() > 2000) {
             cloud.setX(largestGameClientX - 2000);
         } else {
@@ -209,7 +182,7 @@ public class Game {
             movingPlatform.movePlatform();
             movingPlatform.displaySprite(renderer, movingPlatform.getSprite().getImage(), movingPlatform.getSprite());
         }
-        //Move camera
+
         double translateX = renderer.getCanvas().getTranslateX();
         if ((-1 *translateX) + 700 < localGameClient.getX() && (-1 * translateX) < (levelWidth * 60 - 1280)) {
             renderer.getCanvas().setTranslateX((int) (translateX + ((-1 * translateX) + 700 - localGameClient.getX())));
@@ -217,10 +190,13 @@ public class Game {
             renderer.getCanvas().setTranslateX((int) (translateX));
         }
         xViewCoordinate = (int) (-1 * translateX);
+
     }
+
     private void renderSprites(ArrayList<Sprite> sprites) {
         for (Sprite sprite : sprites) {
             renderer.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());
         }
     }
+
 }

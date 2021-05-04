@@ -25,7 +25,7 @@ public class MultiPlayerController implements Initializable {
     private TextField portNumBox;
     @FXML
     private TextField nameBox;
-    private Client defaultClient = new Client();
+    private final Client defaultClient = new Client();
 
     /**multiplayer controller constructor
      * @throws IOException
@@ -50,12 +50,12 @@ public class MultiPlayerController implements Initializable {
 
         Client client = new Client(name, serverIp, portValue);
         GuiHandler.player.setClient(client);
-        //defaultClient.getClientLogic().closeSocket();
         client.getClientLogic().sendPlayer(name, "NOT READY");
 
         changeScene();
 
     }
+
     /**
      *this method changes the current scene of the window
      *from the multiPlayer scene to the multiPlayerLobby scene
@@ -63,6 +63,7 @@ public class MultiPlayerController implements Initializable {
     public void changeScene(){
         GuiHandler.stage.setScene(GuiHandler.multiPlayerLobby);
     }
+
     /**
      *this method changes the current scene of the window
      *from the multiPlayer scene to the menu scene
@@ -70,6 +71,7 @@ public class MultiPlayerController implements Initializable {
     public void backButton() {
         GuiHandler.stage.setScene(GuiHandler.menu);
     }
+
     /**
      * called as this scene is displayed on the window
      * adds the current player name into the Enter name box
@@ -82,5 +84,5 @@ public class MultiPlayerController implements Initializable {
         nameBox.setText(GuiHandler.player.getName());
         GuiHandler.player.setClient(defaultClient);
     }
-}
 
+}

@@ -15,6 +15,7 @@ import java.util.Objects;
  * allow them to navigate the game
  */
 public class GuiHandler {
+
     public static Stage stage;
     public static Scene settings;
     public static Scene singlePlayer;
@@ -72,4 +73,5 @@ public class GuiHandler {
         imageView.setPreserveRatio(true);
         return (titleScreen);
     }
+
 }

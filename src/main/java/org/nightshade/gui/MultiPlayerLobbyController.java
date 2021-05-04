@@ -21,21 +21,15 @@ public class MultiPlayerLobbyController implements Initializable {
     }
 
     public void readyButton() {
-
         GuiHandler.player.setReady("READY");
-
         try {
             GuiHandler.player.getClient().getClientLogic().sendPlayer(GuiHandler.player.getName(), "READY");
             StartGameMsg start;
             start = GuiHandler.player.getClient().getClientLogic().receiveStartMsg();
             GameHandler gameHandler = new GameHandler(Main.stage, GuiHandler.player.getName(), GuiHandler.player.getClient(), start.getPlayers());
-
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
