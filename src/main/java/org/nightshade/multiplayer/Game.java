@@ -39,6 +39,12 @@ public class Game {
         this.localGameClient = localGameClient;
         this.gameClients = gameClients;
         this.client = client;
+        for (int i = 0; i < gameClients.size(); i++) {
+            if (localGameClient.getName().equals(gameClients.get(i).getName())){
+                localGameClient.setClientNumber(i);
+                localGameClient.setCharacterColour(i);
+            }
+        }
 
         cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
         parallax = new Parallax();

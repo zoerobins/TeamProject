@@ -23,6 +23,7 @@ public class GameClient {
     private AnimatedImage animatedImage;
     private SpotEffects spotEffects;
     private Random random;
+    private int clientNumber;
     public double volume;
     public String name;
     public int previousX;
@@ -61,6 +62,7 @@ public class GameClient {
         previousY = this.sprite.getY();
         this.sprite.setY(y);
     }
+    public void setClientNumber(int clientNumber) { this.clientNumber = clientNumber; }
     public int getPreviousX(){
         return previousX;
     }
@@ -92,6 +94,20 @@ public class GameClient {
         renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
 
+    public void setCharacterColour(int clientNumber) {
+        if (clientNumber == 0){
+            characterColour = CharacterColour.GREEN;
+        }
+        else if (clientNumber == 1){
+            characterColour = CharacterColour.RED;
+        }
+        else if (clientNumber == 2){
+            characterColour = CharacterColour.BLUE;
+        }
+        else {
+            characterColour = CharacterColour.PURPLE;
+        }
+    }
     /**
      * jump method is the method that makes the character jump
      */
