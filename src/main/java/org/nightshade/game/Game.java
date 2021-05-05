@@ -34,7 +34,7 @@ public class Game {
     private final Parallax parallax;
     private final Level level;
     private final Image powerupTextBackground;
-
+    public static BackgroundMusic backgroundMusic;
     private final long startNanoTime = System.nanoTime();
 
 
@@ -56,7 +56,7 @@ public class Game {
         stage.show();
 
         double volume = SettingsController.bgSliderVal / 100;
-        BackgroundMusic backgroundMusic = new BackgroundMusic();
+        backgroundMusic = new BackgroundMusic();
         backgroundMusic.startBackgroundMusic(new File("src/main/resources/audio/background_music.mp3"), volume);
 
         Image cloudImage = new Image("img/game/cloud.png");

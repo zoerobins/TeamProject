@@ -97,14 +97,14 @@ public class SinglePlayerController implements Initializable {
         GuiHandler.stage.setScene(GuiHandler.menu);
     }
 
-    @FXML
+    /*@FXML
     public void startGame(ActionEvent event) {
         game = new Game(Main.stage);
-    }
+    }*/
 
     @FXML
     public void startButtonHandler(ActionEvent event) {
-        Game game = new Game(Main.stage);
+        game = new Game(Main.stage);
         addAiPlayers(game,ai1CheckBox,ai1ToggleGroup);
         addAiPlayers(game,ai2CheckBox,ai2ToggleGroup);
         addAiPlayers(game,ai3CheckBox,ai3ToggleGroup);

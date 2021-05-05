@@ -6,6 +6,7 @@ import org.nightshade.animation.AnimationType;
 import org.nightshade.audio.SpotEffects;
 import org.nightshade.gui.GuiHandler;
 import org.nightshade.gui.SettingsController;
+import org.nightshade.gui.SinglePlayerController;
 import org.nightshade.renderer.Renderer;
 import java.io.File;
 import java.util.Random;
@@ -152,6 +153,8 @@ public class Client {
             spotEffects.playSoundUntilEnd(soundFile, true, volume);
         }
         isAlive =false;
+        SinglePlayerController.game.backgroundMusic.stopBackgroundMusic();
+        SinglePlayerController.game = null;
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
 

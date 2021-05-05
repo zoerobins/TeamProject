@@ -22,6 +22,10 @@ public class BackgroundMusic {
         this.mediaPlayer = new MediaPlayer(media);
     }
 
+    public void stopBackgroundMusic(){
+        mediaPlayer.stop();
+    }
+
     /**
      * This method takes a music file and an initial volume and begins to play it with the given settings.
      * @param file   The music file to be played
