@@ -13,12 +13,16 @@ import org.nightshade.gui.Player;
 public class ClientThread implements Runnable {
 
     private final ServerLogic serverLogic;
-    private final int clientNo;
-    private final Socket socket;
+    private int clientNo;
+    private Socket socket;
     private ArrayList<PlayerMoveMsg> moveMsgs;
-    private ObjectOutputStream objectOutputStream;
-    private ObjectInputStream objectInputStream;
-    private boolean isLocalPlayerReady;
+    private ArrayList<Player> players;
+    private ArrayList<String> playerNames = new ArrayList<>();
+
+    private ObjectOutputStream objectOutput1;
+    private ObjectInputStream objectInput1;
+
+    private boolean localPlayerReady;
 
     /**
      * Constructor for the ClientThread class
@@ -32,11 +36,11 @@ public class ClientThread implements Runnable {
         this.socket = client;
         this.serverLogic = serverLogic;
         this.moveMsgs = serverLogic.getMoveMsgs();
-        isLocalPlayerReady = false;
+        localPlayerReady = false;
 
         try {
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutput1 = new ObjectOutputStream(socket.getOutputStream());
+            objectInput1 = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             System.err.println("Streams not set up for client");
         }
@@ -50,7 +54,7 @@ public class ClientThread implements Runnable {
     @Override
     public void run() {
         try {
-            while(!isLocalPlayerReady) {
+            while(!localPlayerReady) {
                 receivePlayers();
             }
             sendStartMsg();
@@ -74,10 +78,10 @@ public class ClientThread implements Runnable {
     public void receivePlayers() {
         Player player;
         try {
-            player = (Player) objectInputStream.readObject();
+            player = (Player) objectInput1.readObject();
             if(player.getReady().equals("READY")) {
                 serverLogic.addPlayerName(player.getName());
-                isLocalPlayerReady = true;
+                localPlayerReady = true;
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -92,9 +96,9 @@ public class ClientThread implements Runnable {
     public void receiveMoveMsg() throws IOException, ClassNotFoundException {
 
         try {
-            Object next = objectInputStream.readObject();
+            Object next = objectInput1.readObject();
             while(next instanceof Player) {
-                next = objectInputStream.readObject();
+                next = objectInput1.readObject();
             }
             PlayerMoveMsg moveMsg = (PlayerMoveMsg) next;
 
@@ -127,7 +131,7 @@ public class ClientThread implements Runnable {
     public void sendMoveMsgs() throws IOException {
         moveMsgs = serverLogic.getMoveMsgs();
         for (PlayerMoveMsg moveMsg : moveMsgs) {
-            objectOutputStream.writeObject(moveMsg);
+            objectOutput1.writeObject(moveMsg);
         }
     }
 
@@ -138,9 +142,9 @@ public class ClientThread implements Runnable {
     public void sendStartMsg() throws IOException {
         boolean allReady = false;
         while(!allReady) {
-            ArrayList<String> playerNames = serverLogic.getPlayerNames();
+            playerNames = serverLogic.getPlayerNames();
             if(playerNames.size() == serverLogic.getNumClients()/2) {
-                objectOutputStream.writeObject(new StartGameMsg(playerNames.size(), playerNames));
+                objectOutput1.writeObject(new StartGameMsg(playerNames.size(), playerNames));
                 allReady = true;
             }
         }

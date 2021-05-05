@@ -12,11 +12,13 @@ import java.util.ArrayList;
  */
 public class ClientLogic {
 
-    private final ObjectOutputStream objectOutput;
-    private final ObjectInputStream objectInput;
-    private final Socket socket;
-    private final ArrayList<Player> playersList = new ArrayList<>();
-    private final ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
+    private ObjectOutputStream objectOutput;
+    private ObjectInputStream objectInput;
+    private Socket socket;
+
+    private ArrayList<Player> playersList = new ArrayList<>();
+    private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
+
 
     /**
      * Constructor for the ClientLogic class
