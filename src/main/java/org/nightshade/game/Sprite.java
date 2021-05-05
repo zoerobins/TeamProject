@@ -4,6 +4,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import org.nightshade.animation.AnimatedImage;
 import org.nightshade.animation.AnimationType;
+import org.nightshade.animation.CharacterColour;
 
 public class Sprite {
 
@@ -152,33 +153,45 @@ public class Sprite {
         this.x -= 1;
     }
 
-    public void setAnimatedImage(AnimationType animationType, Direction direction) {
+    public void setAnimatedImage(AnimationType animationType, Direction direction, CharacterColour characterColour) {
+        String colour = "blue_character";
+        if (characterColour.equals(CharacterColour.GREEN)) {
+            colour = "green_character";
+        }
+        else if (characterColour.equals(CharacterColour.RED)) {
+            colour = "red_character";
+        }
+        else if (characterColour.equals(CharacterColour.YELLOW)) {
+            colour = "yellow_character";
+        }
+        else if (characterColour.equals(CharacterColour.PURPLE)) {
+            colour = "purple_character";
+        }
+        else {
+            colour = "blue_character";
+        }
         if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.FORWARD)) {
             Image[] imageArray = new Image[5];
             for (int i = 0; i < 5; i++) {
-                imageArray[i] = new Image("img/game/player_run_right/player_run_right_" + i + ".png");
+                imageArray[i] = new Image("img/game/" + colour + "/run_right_" + i + ".png");
             }
             animatedImage.setFrames(imageArray);
             animatedImage.setDuration(0.150);
         }
-
         else if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.BACKWARD)) {
             Image[] imageArray = new Image[5];
-
             for (int i = 0; i < 5; i++) {
-                imageArray[i] = new Image("img/game/player_run_left/player_run_left_" + i + ".png");
+                imageArray[i] = new Image("img/game/" + colour + "/run_left_" + i + ".png");
             }
 
             animatedImage.setFrames(imageArray);
             animatedImage.setDuration(0.150);
-//            System.out.println(image.getFrames()[0].getUrl());
         }
 
         if (animationType.equals(AnimationType.IDLE)) {
             Image[] imageArray = new Image[2];
-            for (int i = 0; i < 2; i++) {
-                imageArray[i] = new Image("img/game/player_idle_" + i + ".png");
-            }
+            imageArray[0] = new Image("img/game/" + colour + "/run_right_0.png");
+            imageArray[1] = new Image("img/game/" + colour + "/run_right_2.png");
             animatedImage.setFrames(imageArray);
             animatedImage.setDuration(0.200);
         }

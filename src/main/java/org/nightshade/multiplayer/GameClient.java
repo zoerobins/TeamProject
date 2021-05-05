@@ -2,7 +2,11 @@ package org.nightshade.multiplayer;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import org.nightshade.animation.AnimatedImage;
+import org.nightshade.animation.AnimationType;
+import org.nightshade.animation.CharacterColour;
 import org.nightshade.audio.SpotEffects;
+import org.nightshade.game.Direction;
 import org.nightshade.gui.GuiHandler;
 import org.nightshade.gui.SettingsController;
 import org.nightshade.renderer.Renderer;
@@ -16,18 +20,28 @@ public class GameClient {
     private boolean canJump;
     private Point2D velocity;
     private final Sprite sprite;
+    private AnimatedImage animatedImage;
     private SpotEffects spotEffects;
     private Random random;
     public double volume;
     public String name;
     public int previousX;
     public int previousY;
+    public CharacterColour characterColour;
 
     public GameClient(String name) {
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
-        this.sprite = new Sprite(new Image("img/game/player.png"),300,50);
+        this.characterColour = CharacterColour.GREEN;
+        this.animatedImage = new AnimatedImage();
+        Image[] imageArray = new Image[2];
+        imageArray[0] = new Image("img/game/green_character/run_right_0.png");
+        imageArray[1] = new Image("img/game/green_character/run_right_2.png");
+        animatedImage.setFrames(imageArray);
+        animatedImage.setDuration(0.150);
+        this.sprite = new Sprite(animatedImage,300,50);
+        this.sprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, characterColour);
         this.spotEffects = new SpotEffects();
         this.random = new Random();
         this.volume = SettingsController.mSliderVal / 100;
@@ -94,11 +108,16 @@ public class GameClient {
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
     public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
-        boolean movingRight = value > 0;
+        boolean isMovingRight = value > 0;
+        if (isMovingRight) {
+            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD, characterColour);
+        } else {
+            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.BACKWARD, characterColour);
+        }
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
                 if (platform.intersects(sprite)){
-                    if(movingRight){
+                    if(isMovingRight){
                         getSprite().setX(getSprite().getX() - 1);
                     } else {
                         getSprite().setX(getSprite().getX() + 1);
@@ -108,7 +127,9 @@ public class GameClient {
             }
             for (Sprite ground : groundSprites) {
                 if (ground.intersects(sprite)){
-                    if(movingRight){
+                    File soundFile = new File("src/main/resources/audio/step.mp3");
+                    spotEffects.playSoundUntilEnd(soundFile, true, volume);
+                    if(isMovingRight){
                         getSprite().setX(getSprite().getX() - 1);
                     } else {
                         getSprite().setX(getSprite().getX() + 1);
@@ -118,7 +139,7 @@ public class GameClient {
             }
             for (MovingPlatform movingPlatform : movingPlatforms){
                 if (movingPlatform.getSprite().intersects(sprite)){
-                    if(movingRight){
+                    if(isMovingRight){
                         getSprite().setX(getSprite().getX() - 1);
                     } else {
                         getSprite().setX(getSprite().getX() + 1);
@@ -132,7 +153,7 @@ public class GameClient {
                     return;
                 }
             }
-            getSprite().setX(getSprite().getX() + (movingRight ? 1 : -1));
+            getSprite().setX(getSprite().getX() + (isMovingRight ? 1 : -1));
         }
     }
     public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> waterSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){

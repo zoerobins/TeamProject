@@ -3,6 +3,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import org.nightshade.animation.AnimatedImage;
 import org.nightshade.animation.AnimationType;
+import org.nightshade.animation.CharacterColour;
 import org.nightshade.audio.SpotEffects;
 import org.nightshade.gui.GuiHandler;
 import org.nightshade.gui.SettingsController;
@@ -19,6 +20,7 @@ public class Client {
     private boolean deathSoundPlayed;
 
     public double volume;
+    public CharacterColour characterColour;
 
     private AnimatedImage animatedImage;
 
@@ -34,13 +36,15 @@ public class Client {
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
+        this.characterColour = CharacterColour.GREEN;
         this.animatedImage = new AnimatedImage();
         Image[] imageArray = new Image[2];
-        imageArray[0] = new Image("img/game/player_idle_0.png");
-        imageArray[1] = new Image("img/game/player_idle_1.png");
+        imageArray[0] = new Image("img/game/green_character/run_right_0.png");
+        imageArray[1] = new Image("img/game/green_character/run_right_2.png");
         animatedImage.setFrames(imageArray);
         animatedImage.setDuration(0.150);
         this.sprite = new Sprite(animatedImage,300,50);
+        this.sprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, characterColour);
         this.spotEffects = new SpotEffects();
         this.random = new Random();
         this.ability = null;
@@ -163,9 +167,9 @@ public class Client {
     public void moveX(int value, Level level){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
-            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD);
+            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD, characterColour);
         } else {
-            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.BACKWARD);
+            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.BACKWARD, characterColour);
 //            System.out.println(sprite.getImage().getFrame(0).getUrl());
         }
 

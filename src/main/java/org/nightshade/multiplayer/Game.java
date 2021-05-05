@@ -31,6 +31,7 @@ public class Game {
     private Client client;
     private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
     private int loopRun = 0;
+    private final long startNanoTime = System.nanoTime();
 
     public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level, Client client) {
 
@@ -56,7 +57,7 @@ public class Game {
         checkForInput(scene);
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                loop();
+                loop(currentNanoTime);
             }
         }.start();
     }
@@ -135,7 +136,8 @@ public class Game {
 
     }
 
-    public void loop() {
+    public void loop(long currentNanoTime) {
+        double time = (currentNanoTime - startNanoTime) / 1000000000.0;
 
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
@@ -150,7 +152,7 @@ public class Game {
         for (GameClient gc : gameClients) {
             if(!(gc.getName().equals(client.getName()))) {
                 Sprite gcSprite = gc.getSprite();
-                renderer.drawImage(gcSprite.getImage(), gcSprite.getX(), gcSprite.getY());
+                renderer.drawImage(gcSprite.getAnimatedImage().getFrame(time), gcSprite.getX(), gcSprite.getY());
             }
             if (gc.getX() > largestGameClientX){
                 largestGameClientX = gc.getX();
@@ -167,7 +169,7 @@ public class Game {
         if (localGameClient.isAlive()) {
             moveClients();
             Sprite clientSprite = localGameClient.getSprite();
-            renderer.drawImage(clientSprite.getImage(), clientSprite.getX(), clientSprite.getY());
+            renderer.drawImage(clientSprite.getAnimatedImage().getFrame(time), clientSprite.getX(), clientSprite.getY());
             boolean intersectsCloud = clientSprite.intersects(cloud.getX() - 90, cloud.getY(), (int) cloud.getWidth(), (int) cloud.getHeight());
             if (intersectsCloud) {
                 localGameClient.kill();
