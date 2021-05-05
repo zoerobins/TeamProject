@@ -91,6 +91,10 @@ public class GameClient {
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
+
+    /**
+     * jump method is the method that makes the character jump
+     */
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
@@ -100,6 +104,10 @@ public class GameClient {
             canJump = false;
         }
     }
+
+    /**
+     * kill method ends the game after the player has touched a fatal object
+     */
     public void kill() {
         File soundFile = new File("src/main/resources/audio/die.mp3");
         spotEffects.playSoundUntilEnd(soundFile, true, volume);
@@ -107,6 +115,15 @@ public class GameClient {
         isAlive =false;
         GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
+
+    /**
+     * Moves the character on the x-axis
+     * @param value the value of how much the character will move
+     * @param platformSprites list of all the platforms
+     * @param enemies list of all the enemies
+     * @param groundSprites list of all the ground
+     * @param movingPlatforms list of all the moving platforms
+     */
     public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
@@ -156,6 +173,16 @@ public class GameClient {
             getSprite().setX(getSprite().getX() + (isMovingRight ? 1 : -1));
         }
     }
+
+    /**
+     * Moves the character on the y-axis
+     * @param value the value of how much the character will move
+     * @param platformSprites list of all the platforms
+     * @param waterSprites list of all the water
+     * @param enemies list of all the enemies
+     * @param groundSprites list of all the ground
+     * @param movingPlatforms list of all the moving platforms
+     */
     public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> waterSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {

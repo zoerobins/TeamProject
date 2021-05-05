@@ -25,7 +25,6 @@ public class Client {
     private AnimatedImage animatedImage;
 
     private Random random;
-    //public float volume1;
     public Ability ability;
     public int powerUpTimer;
 
@@ -123,14 +122,14 @@ public class Client {
     }
 
     /**
-     * removeAbility method removing the special power/power up the character gained
+     * removeAbility method removes the power up the character gained
      */
     public void removeAbility(){
         this.ability = null;
     }
 
     /**
-     * jump method is the method that does the character jump
+     * jump method is the method that makes the character jump
      */
     public void jump() {
         if (canJump) {
@@ -147,8 +146,7 @@ public class Client {
     }
 
     /**
-     * kill method setting the isAlive variable to false
-     * makes the character die
+     * kill method ends the game after the player has touched a fatal object
      */
     public void kill() {
         if (!deathSoundPlayed) {
@@ -246,7 +244,7 @@ public class Client {
 
     /**
      * moveY method is the method moving the character in the y-axis
-     * @param value he value of how much the character will move
+     * @param value the value of how much the character will move
      * @param level used to retrieve sprites
      */
     public void moveY(int value, Level level) {

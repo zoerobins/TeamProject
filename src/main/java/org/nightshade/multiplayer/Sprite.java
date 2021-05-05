@@ -16,6 +16,12 @@ public class Sprite {
     private final double width;
     private final double height;
 
+    /**
+     * Sprite method constructor method for sprite
+     * @param image image of the sprite
+     * @param x x-coordinate of the sprite
+     * @param y y-coordinate of the sprite
+     */
     public Sprite(Image image, int x, int y) {
         this.image = image;
         this.width = image.getWidth();
@@ -24,6 +30,12 @@ public class Sprite {
         this.y = y;
     }
 
+    /**
+     * Constructor for AnimatedImage version of Sprite
+     * @param animatedImage
+     * @param x x-coordinate of the sprite
+     * @param y y-coordinate of the sprite
+     */
     public Sprite(AnimatedImage animatedImage, int x, int y) {
         this.animatedImage = animatedImage;
         this.width = animatedImage.getWidth();
@@ -67,14 +79,32 @@ public class Sprite {
         return (int) x;
     }
 
+    /**
+     * getBoundary method creating a 2D rectangle with boundaries the height and the width of the character
+     * and the coordinates of the character
+     * @return a 2D rectangle size of the character
+     */
     public Rectangle2D getBoundary() {
         return new Rectangle2D(x, y, width, height);
     }
 
+    /**
+     * intersects function returning if the sprite is out of bounce
+     * @param spr character
+     * @return a boolean whether the character intersects the boundaries
+     */
     public boolean intersects(Sprite spr) {
         return spr.getBoundary().intersects(this.getBoundary());
     }
 
+    /**
+     * intersects function returning if the animated sprite is out of bounce
+     * @param x x-coordinate of the character
+     * @param y y-coordinate of the character
+     * @param w width of the character
+     * @param h height of the character
+     * @return boolean whether the character intersects the boundaries
+     */
     public boolean intersects(int x, int y, int w, int h) {
         return this.getBoundary().intersects(x,y,w,h);
     }
@@ -87,6 +117,12 @@ public class Sprite {
         this.x -= 1;
     }
 
+    /**
+     * Changes the AnimatedImage of the sprite so that it can display the correct animation
+     * @param animationType Enum for what type of animation is needed
+     * @param direction The direction the character is facing
+     * @param characterColour The colour of the character
+     */
     public void setAnimatedImage(AnimationType animationType, Direction direction, CharacterColour characterColour) {
         String colour = "blue_character";
         if (characterColour.equals(CharacterColour.GREEN)) {

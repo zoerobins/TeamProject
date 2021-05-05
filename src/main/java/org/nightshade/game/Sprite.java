@@ -30,8 +30,10 @@ public class Sprite {
     }
 
     /**
-     * getImage getter method returning the image
-     * @return the image of the sprite
+     * Constructor for AnimatedImage version of Sprite
+     * @param animatedImage
+     * @param x x-coordinate of the sprite
+     * @param y y-coordinate of the sprite
      */
     public Sprite(AnimatedImage animatedImage, int x, int y) {
         this.animatedImage = animatedImage;
@@ -49,18 +51,10 @@ public class Sprite {
         return this.animatedImage;
     }
 
-    /**
-     * getHeight getter method returning height of the sprite
-     * @return height of sprite
-     */
     public double getHeight() {
         return height;
     }
 
-    /**
-     * getWidth getter method returning width of the sprite
-     * @return width of the sprite
-     */
     public double getWidth() {
         return width;
     }
@@ -75,34 +69,18 @@ public class Sprite {
         this.y = y;
     }
 
-    /**
-     * setX setter method setting the x-coordinate of the sprite
-     * @param x x-coordinate of sprite
-     */
     public void setX(double x) {
         this.x = x;
     }
 
-    /**
-     * setY setter method setting the y-coordinate of the sprite
-     * @param y y-coordinate of sprite
-     */
     public void setY(double y) {
         this.y = y;
     }
 
-    /**
-     * getX getter method returning the y-coordinate of sprite
-     * @return y-coordinate of sprite
-     */
     public int getY() {
         return (int) y;
     }
 
-    /**
-     * getX getter method returning the x-coordinate of sprite
-     * @return x-coordinate of sprite
-     */
     public int getX() {
         return (int) x;
     }
@@ -153,6 +131,12 @@ public class Sprite {
         this.x -= 1;
     }
 
+    /**
+     * Changes the AnimatedImage of the sprite so that it can display the correct animation
+     * @param animationType Enum for what type of animation is needed
+     * @param direction The direction the character is facing
+     * @param characterColour The colour of the character
+     */
     public void setAnimatedImage(AnimationType animationType, Direction direction, CharacterColour characterColour) {
         String colour = "blue_character";
         if (characterColour.equals(CharacterColour.GREEN)) {
