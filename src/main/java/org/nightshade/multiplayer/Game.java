@@ -44,6 +44,10 @@ public class Game {
                 localGameClient.setClientNumber(i);
                 localGameClient.setCharacterColour(i);
             }
+            else {
+                gameClients.get(i).setClientNumber(i);
+                gameClients.get(i).setCharacterColour(i);
+            }
         }
 
         cloud = new Sprite(new Image("img/game/cloud.png"), -2300, 50);
