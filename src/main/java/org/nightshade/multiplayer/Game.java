@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.nightshade.animation.AnimationType;
+import org.nightshade.game.Direction;
 import org.nightshade.gui.Player;
 import org.nightshade.networking.Client;
 import org.nightshade.networking.PlayerMoveMsg;
@@ -43,10 +45,12 @@ public class Game {
             if (localGameClient.getName().equals(gameClients.get(i).getName())){
                 localGameClient.setClientNumber(i);
                 localGameClient.setCharacterColour(i);
+                localGameClient.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, localGameClient.characterColour);
             }
             else {
                 gameClients.get(i).setClientNumber(i);
                 gameClients.get(i).setCharacterColour(i);
+                localGameClient.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, localGameClient.characterColour);
             }
         }
 

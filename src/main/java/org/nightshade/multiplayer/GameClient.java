@@ -62,6 +62,7 @@ public class GameClient {
         previousY = this.sprite.getY();
         this.sprite.setY(y);
     }
+    public void setAnimatedImage(AnimationType animationType, Direction direction, CharacterColour characterColour) { this.sprite.setAnimatedImage(animationType, direction, characterColour);}
     public void setClientNumber(int clientNumber) { this.clientNumber = clientNumber; }
     public int getPreviousX(){
         return previousX;
