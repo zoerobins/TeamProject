@@ -1,7 +1,5 @@
 package org.nightshade.networking;
 
-import org.nightshade.gui.Player;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,11 +11,10 @@ import java.util.ArrayList;
  */
 public class ServerLogic {
 
-    static ServerSocket serverSocket;
-
-    int numClients;
-    ArrayList<String> playerNames = new ArrayList<>();
-    ArrayList<PlayerMoveMsg> moveMsgs = new ArrayList<>();
+    private final ServerSocket serverSocket;
+    private int numClients;
+    private final ArrayList<String> playerNames;
+    private final ArrayList<PlayerMoveMsg> playerMoveMsgs;
 
     /**
      * Constructor for the ServerLogic class
@@ -26,8 +23,10 @@ public class ServerLogic {
      * @throws IOException
      */
     public ServerLogic(int portValue) throws IOException {
-        serverSocket = new ServerSocket(portValue);
+        this.serverSocket = new ServerSocket(portValue);
         this.numClients = 0;
+        this.playerNames = new ArrayList<>();
+        this.playerMoveMsgs = new ArrayList<>();
         System.out.println("Started game server");
         waitForPlayers();
     }
@@ -37,7 +36,7 @@ public class ServerLogic {
      * @return ArrayList of received PlayerMoveMsgs
      */
     public ArrayList<PlayerMoveMsg> getMoveMsgs() {
-        return moveMsgs;
+        return playerMoveMsgs;
     }
 
     /**
@@ -45,7 +44,7 @@ public class ServerLogic {
      * @param moveMsg Received PlayerMoveMsg object
      */
     public void addMsg(PlayerMoveMsg moveMsg) {
-        moveMsgs.add(moveMsg);
+        playerMoveMsgs.add(moveMsg);
     }
 
     /**
@@ -54,7 +53,7 @@ public class ServerLogic {
      * @param moveMsg Received PlayerMoveMsg object
      */
     public void replaceMsg(int index, PlayerMoveMsg moveMsg) {
-        moveMsgs.set(index, moveMsg);
+        playerMoveMsgs.set(index, moveMsg);
     }
 
     /**
@@ -69,7 +68,7 @@ public class ServerLogic {
      * Increments the number of clients connected
      */
     public void incNumClients() {
-        this.numClients += 1;
+        this.numClients ++;
     }
 
     /**
