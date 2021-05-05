@@ -50,7 +50,7 @@ public class Game {
             else {
                 gameClients.get(i).setClientNumber(i);
                 gameClients.get(i).setCharacterColour(i);
-                localGameClient.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, localGameClient.characterColour);
+                gameClients.get(i).setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, localGameClient.characterColour);
             }
         }
 
