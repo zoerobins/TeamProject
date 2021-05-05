@@ -42,7 +42,7 @@ public class Game {
         this.gameClients = gameClients;
         this.client = client;
         for (int i = 0; i < gameClients.size(); i++) {
-            if (localGameClient.getName().equals(gameClients.get(i).getName())){
+            if (localGameClient.getName().equals(gameClients.get(i).getName())) {
                 localGameClient.setClientNumber(i);
                 localGameClient.setCharacterColour(i);
                 localGameClient.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, localGameClient.characterColour);
@@ -50,7 +50,7 @@ public class Game {
             else {
                 gameClients.get(i).setClientNumber(i);
                 gameClients.get(i).setCharacterColour(i);
-                gameClients.get(i).setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, localGameClient.characterColour);
+                gameClients.get(i).setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, gameClients.get(i).characterColour);
             }
         }
 
