@@ -1,5 +1,4 @@
 package org.nightshade.game;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum Node {
@@ -12,10 +11,17 @@ public enum Node {
     POWERUP,
     END;
 
+    /**
+     * getRandomNode is tge method generating the track, obstacles, moving platforms,
+     * water, enemies, ground, power ups and lava in the level
+     * @param i
+     * @param j
+     * @param width
+     * @return air, platform, moving platform, ground, lava, enemy power or end
+     */
     public static Node getRandomNode(int i, int j, int width) {
-        //random number between 1 and 100
+        //random number between 1 and 100, used for randomly choosing nodes.
         int randomNumber = ThreadLocalRandom.current().nextInt(0, 100 + 1);
-
         //This is the starting platform, so the characters land on it when spawning in
         if (i == 6 && j == 5 || i == 6 && j == 6 || i == 6 && j == 7) {
             return Node.PLATFORM;
@@ -29,7 +35,7 @@ public enum Node {
             return Node.AIR;
         }
         if (i == 11) {
-            //will spawn ground 90% of the time, and water the other 10%
+            //will spawn ground 90% of the time, and lava the other 10%
             if (randomNumber < 90) {
                 return Node.GROUND;
             } else {
@@ -37,32 +43,49 @@ public enum Node {
             }
         }
         if (i == 10) {
-            if (randomNumber <= 4) {
-                return Node.PLATFORM;
-            } else if (randomNumber < 5) {
+            if (randomNumber == 1) {
                 return Node.ENEMY;
-            } else if(randomNumber < 10){
+            } else if(randomNumber == 2){
                 return Node.POWERUP;
-            }else {
+            } else {
                 return Node.AIR;
             }
         }
-        if (i > 7) {
-            if (randomNumber < 10) {
+        if (i == 9){
+            if (randomNumber < 12) {
                 return Node.PLATFORM;
-            } else if (randomNumber < 13) {
+            } else if (randomNumber < 16){
                 return Node.MOVING_PLATFORM;
-            } else if (randomNumber < 14 && j > 20) {
-                return Node.ENEMY;
+            } else if (randomNumber < 17){
+                return Node.POWERUP;
             } else {
                 return Node.AIR;
             }
+        }
+        if (i == 8) {
+            if (randomNumber < 4) {
+                return Node.PLATFORM;
+            } else if (randomNumber < 5){
+                return Node.POWERUP;
+            } else {
+                return Node.AIR;
+            }
+        }
+        if (i == 7) {
+            if (randomNumber < 12 && j > 20) {
+                return Node.PLATFORM;
+            } else if (randomNumber < 16){
+                return Node.MOVING_PLATFORM;
+            } else if (randomNumber < 17){
+                return Node.POWERUP;
+            } else {
+                return Node.AIR;
+            }
+        }
+        if (randomNumber == 1 && j > 20) {
+            return Node.ENEMY;
         } else {
-            if (randomNumber == 1 && j > 20) {
-                return Node.ENEMY;
-            } else {
-                return Node.AIR;
-            }
+            return Node.AIR;
         }
     }
 }

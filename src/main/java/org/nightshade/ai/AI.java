@@ -2,6 +2,10 @@ package org.nightshade.ai;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import org.nightshade.animation.AnimatedImage;
+import org.nightshade.animation.AnimationType;
+import org.nightshade.animation.CharacterColour;
+import org.nightshade.game.Direction;
 import org.nightshade.game.Sprite;
 import org.nightshade.renderer.Renderer;
 
@@ -15,15 +19,25 @@ public class AI {
     private boolean canJump;
     private Point2D velocity;
     private Sprite sprite;
+    private AnimatedImage animatedImage;
     private int speed;
+    public boolean finished;
 
     public AI(Difficulty difficulty) {
+        this.finished = false;
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0, 0);
         int randomXStart = ThreadLocalRandom.current().nextInt(270, 330 + 1);
         int randomYStart = ThreadLocalRandom.current().nextInt(20, 60 + 1);
-        this.sprite = new Sprite(new Image("img/game/ai.png"), randomXStart, randomYStart);
+        this.animatedImage = new AnimatedImage();
+        Image[] imageArray = new Image[2];
+        imageArray[0] = new Image("img/game/green_character/run_right_0.png");
+        imageArray[1] = new Image("img/game/green_character/run_right_2.png");
+        animatedImage.setFrames(imageArray);
+        animatedImage.setDuration(0.150);
+        this.sprite = new Sprite(animatedImage, randomXStart, randomYStart);
+        this.sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD, CharacterColour.YELLOW);
         this.difficulty = difficulty;
 
         switch (difficulty) {
@@ -47,6 +61,14 @@ public class AI {
         renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
 
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public boolean getFinished() {
+        return finished;
+    }
+
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
@@ -65,6 +87,10 @@ public class AI {
 
     public Sprite getSprite() {
         return this.sprite;
+    }
+
+    public AnimatedImage getAnimatedImage() {
+        return this.animatedImage;
     }
 
     public void jump() {

@@ -1,38 +1,63 @@
 package org.nightshade.networking;
 
-import java.io.DataInputStream;
-import java.net.DatagramSocket;
+import java.io.Serializable;
 
-public class PlayerMoveMsg implements Msg {
+/**
+ * PlayerMoveMsg class
+ * Message holding a Player's name and coordinates which can be sent between Client and Server
+ */
+public class PlayerMoveMsg implements Serializable {
 
-    private int msgType = Msg.PLAYER_MOVE_MSG;
     private String name;
-    private int x;
-    private int y;
-    private String movement;
-    private Client c; // should this be a Client from multiplayer or networking ??
+    private double x;
+    private double y;
+    private boolean alive;
 
-    public PlayerMoveMsg(String name, int x, int y, String movement) {
+    /**
+     * Constructor for the PlayerMoveMsg class
+     * Sets the variable values using the arguments provided
+     * @param name Name of the Player
+     * @param x x-coordinate of the Player
+     * @param y y-coordinate of the Player
+     * @param alive Whether the Player is alive
+     */
+    public PlayerMoveMsg(String name, int x, int y, boolean alive) {
         this.name = name;
         this.x = x;
         this.y = y;
-        this.movement = movement;
+        this.alive = alive;
     }
 
-    public PlayerMoveMsg(Client c) {
-        this.c = c;
+    /**
+     * Returns the name of the Player
+     * @return Name of the Player
+     */
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public void send(DatagramSocket ds, String IP, int UDP_Port) {
-        // add code here
-
+    /**
+     * Returns the x-coordinate of the Player
+     * @return x-coordinate of the Player
+     */
+    public double getX() {
+        return x;
     }
 
-    @Override
-    public void parse(DataInputStream dis) {
-        // add code here
+    /**
+     * Returns the y-coordinate of the Player
+     * @return y-coordinate of the Player
+     */
+    public double getY() {
+        return y;
+    }
 
+    /**
+     * Returns whether the Player is alive
+     * @return Whether the Player is alive
+     */
+    public boolean isAlive() {
+        return alive;
     }
 
 }

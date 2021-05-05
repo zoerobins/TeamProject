@@ -13,6 +13,7 @@ public class Level {
     private final ArrayList<Enemy> enemies;
     private final ArrayList<MovingPlatform> movingPlatforms;
     private final ArrayList<PowerUp> powerUps;
+    public int width;
 
     Image grass = new Image("img/game/dark-grass.png");
     Image lava = new Image("img/game/lava/lava-1.png");
@@ -20,7 +21,12 @@ public class Level {
     Image end = new Image("img/game/end.png");
     Image powerUp = new Image("img/game/powerup.png");
 
+    /**
+     * Level method is a method creating the level the player chose to play
+     * @param width of the track
+     */
     public Level(int width) {
+        this.width = width;
         int blockHeight = 12;
 
         ArrayList<ArrayList<Node>> nodeArrayLists = new ArrayList<>();
@@ -40,6 +46,11 @@ public class Level {
                         count += 2;
                         break;
                     case LAVA:
+                        if(nodes.size()>3) {
+                            if (nodes.get(nodes.size()-3) == Node.LAVA) {
+                                nodes.add(Node.GROUND);
+                            }
+                        }
                         int length = ThreadLocalRandom.current().nextInt(0, 2 + 1);
                         for (int j = 0; j < length; j ++) {
                             nodes.add(Node.LAVA);
@@ -89,11 +100,13 @@ public class Level {
                     case MOVING_PLATFORM: {
                         int speed = ThreadLocalRandom.current().nextInt(0, 5 + 1);
                         Direction direction = Direction.getRandomDirection();
-                        Node prevNode = nodes.get(j - 1);
-                        if (prevNode == Node.MOVING_PLATFORM) {
-                            speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
-                            MovingPlatform lastMovingPlatform = movingPlatforms.get(movingPlatforms.size() - 1);
-                            direction = lastMovingPlatform.getDirection();
+                        if (j>1){
+                            Node previousNode = nodes.get(j - 1);
+                            if (previousNode == Node.MOVING_PLATFORM) {
+                                speed = movingPlatforms.get(movingPlatforms.size() - 1).getSpeed();
+                                MovingPlatform lastMovingPlatform = movingPlatforms.get(movingPlatforms.size() - 1);
+                                direction = lastMovingPlatform.getDirection();
+                            }
                         }
                         MovingPlatform newMovingPlatform = new MovingPlatform(x, y, speed, direction);
                         movingPlatforms.add(newMovingPlatform);
@@ -124,31 +137,66 @@ public class Level {
         }
     }
 
+    /**
+     * getLavaSprites getter method returning lava sprites
+     * @return array list of lava sprites
+     */
     public ArrayList<Sprite> getLavaSprites() {
         return this.lavaSprites;
     }
 
+    /**
+     * getEndSprites getter method returning end sprites
+     * @return array list of end sprites
+     */
     public ArrayList<Sprite> getEndSprites() {
         return this.endSprites;
     }
 
+    /**
+     * getPlatformSprites getter method returning platform sprites
+     * @return array list of platform sprites
+     */
     public ArrayList<Sprite> getPlatformSprites() {
         return this.platformSprites;
     }
 
+    /**
+     * getEnemies getter method returning enemies
+     * @return array list of enemies
+     */
     public ArrayList<Enemy> getEnemies() {
         return this.enemies;
     }
 
+    /**
+     * getMovingPlatforms getter method returning moving platforms
+     * @return array list of moving platforms
+     */
     public ArrayList<MovingPlatform> getMovingPlatforms() {
         return this.movingPlatforms;
     }
 
+    /**
+     * getPowerUps getter method returning random power ups the character can obtain in the track
+     * @return array list of power ups
+     */
     public ArrayList<PowerUp> getPowerUps() {
         return this.powerUps;
     }
 
+    /**
+     * getGroundSprites getter method returning ground spites
+     * @return array list of ground sprites
+     */
     public ArrayList<Sprite> getGroundSprites() {
         return this.groundSprites;
+    }
+    /**
+     * getWidth getter method returning the level width
+     * @return int holding value of the level width
+     */
+    public int getWidth() {
+        return this.width;
     }
 }

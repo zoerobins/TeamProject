@@ -46,6 +46,9 @@ public class SinglePlayerController implements Initializable {
     private ArrayList<RadioButton> ai1RadioButtons;
     private ArrayList<RadioButton> ai2RadioButtons;
     private ArrayList<RadioButton> ai3RadioButtons;
+
+    public static Game game;
+
     /**
      * called as this scene is displayed on the window,
      * sets all the toggle groups, puts all the easy/medium/hard
@@ -118,7 +121,7 @@ public class SinglePlayerController implements Initializable {
         return radioButtons;
     }
 
-     /**
+    /**
      *this method changes the current scene of the window
      *from the singlePlayer scene to the menu scene
      * @param event
@@ -135,7 +138,7 @@ public class SinglePlayerController implements Initializable {
      */
     @FXML
     public void startGame(ActionEvent event) {
-        Game game = new Game(Main.stage);
+        game = new Game(Main.stage);
     }
 
     /**starts the game and changes the current scene of

@@ -5,10 +5,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public enum Node {
     AIR,
     PLATFORM,
-    MOVING_PLATFORM,
+    RIGHT_MOVING_PLATFORM,
+    LEFT_MOVING_PLATFORM,
     GROUND,
     LAVA,
-    ENEMY,
+    LEFT_ENEMY,
+    RIGHT_ENEMY,
+    POWERUP,
     END;
 
     public static Node getRandomNode(int i, int j, int width) {
@@ -30,35 +33,41 @@ public enum Node {
         if (i == 11) {
             //will spawn ground 90% of the time, and water the other 10%
             if (randomNumber < 90) {
-                return Node.GROUND;
+                return GROUND;
             } else {
-                return Node.LAVA;
+                return LAVA;
             }
         }
         if (i == 10) {
             if (randomNumber <= 4) {
-                return Node.PLATFORM;
-            } else if (randomNumber <= 7) {
-                return Node.ENEMY;
-            } else {
-                return Node.AIR;
+                return PLATFORM;
+            } else if (randomNumber <= 5) {
+                return RIGHT_ENEMY;
+            } else if (randomNumber <= 5) {
+                return LEFT_ENEMY;
+            } else if(randomNumber <= 6){
+                return POWERUP;
+            }else {
+                return AIR;
             }
         }
         if (i > 7) {
             if (randomNumber < 10) {
-                return Node.PLATFORM;
-            } else if (randomNumber < 13) {
-                return Node.MOVING_PLATFORM;
-            } else if (randomNumber < 14 && j > 20) {
-                return Node.ENEMY;
+                return PLATFORM;
+            } else if (randomNumber < 12) {
+                return LEFT_MOVING_PLATFORM;
+            }  else if (randomNumber <= 13) {
+                return RIGHT_MOVING_PLATFORM;
+            }else if (randomNumber < 14 && j > 20) {
+                return RIGHT_ENEMY;
             } else {
-                return Node.AIR;
+                return AIR;
             }
         } else {
             if (randomNumber == 1 && j > 20) {
-                return Node.ENEMY;
+                return LEFT_ENEMY;
             } else {
-                return Node.AIR;
+                return AIR;
             }
         }
     }

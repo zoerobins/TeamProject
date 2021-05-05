@@ -24,6 +24,9 @@ public class Parallax {
     private final ArrayList<Integer> image6XPositions;
     private final ArrayList<Integer> image7XPositions;
 
+    /**
+     * Parallax method is a method for creating the environment into the game
+     */
     public Parallax() {
         image1 = new Image("img/game/parallax/parallax-1.png");
         image2 = new Image("img/game/parallax/parallax-2.png");
@@ -54,6 +57,9 @@ public class Parallax {
         image7XPositions.addAll(initialXPositions);
     }
 
+    /**
+     * move method is a method moving the camera around the environment of the game
+     */
     public void move() {
         for (int i = 0; i < 2; i++) {
             moveHelper(image2XPositions, i, -1);
