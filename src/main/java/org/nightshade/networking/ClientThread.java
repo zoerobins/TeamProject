@@ -131,8 +131,8 @@ public class ClientThread implements Runnable {
      */
     public void sendMoveMsgs() throws IOException {
         moveMsgs = serverLogic.getMoveMsgs();
-        for(int i=0; i<moveMsgs.size(); i++) {
-            objectOutput1.writeObject(moveMsgs.get(i));
+        for (PlayerMoveMsg moveMsg : moveMsgs) {
+            objectOutput1.writeObject(moveMsg);
         }
     }
 
