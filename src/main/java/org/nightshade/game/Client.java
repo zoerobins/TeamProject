@@ -63,7 +63,20 @@ public class Client {
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
-
+    /**
+     * setFinished setter method for setting the finished state of the character
+     * @param finished boolean holding whether the game client has finished the level or not
+     */
+    public void setFinished(boolean finished){
+        this.finished = finished;
+    }
+    /**
+     * getFinished getter method returning the finished state of the character
+     * @return finished state of the character
+     */
+    public boolean getFinished() {
+        return finished;
+    }
     /**
      * isAlive a method returning whether the character is alive or not
      * @return boolean if the character is alive or not
@@ -229,6 +242,13 @@ public class Client {
                     if (this.ability == Ability.SHIELD){
                         return;
                     }else {
+                        int position = aiPlayers.size()+1;
+                        for (AI ai : aiPlayers){
+                            if (!ai.getAlive()){
+                                position-=1;
+                            }
+                        }
+                        System.out.println("you made it to position: " + position + "but you died :(");
                         kill();
                     }
                     return;
@@ -246,6 +266,10 @@ public class Client {
         }
         if (isMovingRight && !finished){
             if ((this.getSprite().getX() + this.getSprite().getWidth()) >= (level.getWidth()*60) ){
+                if (aiPlayers.size() == 0){
+                    System.out.println("congratulations you survived");
+                    //level complete screen (no position)
+                }
                 int position = aiPlayers.size()+1;
                 for (AI ai : aiPlayers){
                     if (!ai.getFinished()){
@@ -254,6 +278,7 @@ public class Client {
                 }
                 this.finished = true;
                 System.out.println("congratulations you survived and finished in position: " + position);
+                //level complete screen (with position)
                 GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
 
             }

@@ -19,8 +19,10 @@ public class Level implements Serializable {
     Image lava = new Image("img/game/lava/lava-1.png");
     Image ground = new Image("img/game/dirt.png");
     Image end = new Image("img/game/end.png");
+    public int width;
 
     public Level(int width, ArrayList<ArrayList<Node>> nodeArrayLists) {
+        this.width = width;
         int blockHeight = 12;
 
         this.platformSprites = new ArrayList<>();
@@ -169,6 +171,10 @@ public class Level implements Serializable {
 
     public ArrayList<Sprite> getGroundSprites() {
         return this.groundSprites;
+    }
+
+    public int getWidth() {
+        return this.width;
     }
 
     public static ArrayList<ArrayList<Node>> getLevel1 (){

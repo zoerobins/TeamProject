@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private final int levelWidth = 120;
+    private final int levelWidth = 20;
     private final int blockWidth = 60;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;
@@ -36,7 +36,7 @@ public class Game {
     private final long startNanoTime = System.nanoTime();
 
     public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level, Client client) {
-
+        localGameClient.setFinished(false);
         this.level = level;
         this.localGameClient = localGameClient;
         this.gameClients = gameClients;
@@ -103,10 +103,10 @@ public class Game {
                 localGameClient.jump();
             }
             if (input.contains("LEFT") && localGameClient.getSprite().getX() >= 5) {
-                localGameClient.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms);
+                localGameClient.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms,level,gameClients);
             }
             if (input.contains("RIGHT") && localGameClient.getSprite().getX() <= (levelWidth * blockWidth) - 5) {
-                localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms);
+                localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms,level,gameClients);
             }
             if (localGameClient.getVelocity().getY() < 10) {
                 localGameClient.setVelocity(localGameClient.getVelocity().add(0, 1));
@@ -132,6 +132,9 @@ public class Game {
                                 if (moveMsg.getName().equals(gameClient.getName())) {
                                     gameClient.setX(moveMsg.getX());
                                     gameClient.setY(moveMsg.getY());
+                                    if ((gameClient.getX() + gameClient.getSprite().getWidth())>= levelWidth*60){
+                                        gameClient.setFinished(true);
+                                    }
                                     break;
                                 }
                             }
@@ -152,10 +155,10 @@ public class Game {
 
     public void loop(long currentNanoTime) {
         double time = (currentNanoTime - startNanoTime) / 1000000000.0;
-
+/*
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
-
+*/
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());
@@ -178,8 +181,10 @@ public class Game {
         } else {
             cloud.setX(cloud.getX() + 2);
         }
-
+/*
         renderer.drawImage(cloud.getImage(), cloud.getX(), 50);
+
+ */
         if (localGameClient.isAlive()) {
             moveClients();
             Sprite clientSprite = localGameClient.getSprite();

@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class AI {
 
     private Difficulty difficulty;
-    private boolean isAlive;
+    public boolean isAlive;
     private boolean canJump;
     private Point2D velocity;
     private Sprite sprite;
@@ -52,7 +52,9 @@ public class AI {
                 break;
         }
     }
-
+    public boolean getAlive(){
+        return isAlive;
+    }
     public int getSpeed() {
         return speed;
     }

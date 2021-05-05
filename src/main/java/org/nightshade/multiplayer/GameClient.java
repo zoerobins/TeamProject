@@ -2,6 +2,7 @@ package org.nightshade.multiplayer;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import org.nightshade.ai.AI;
 import org.nightshade.animation.AnimatedImage;
 import org.nightshade.animation.AnimationType;
 import org.nightshade.animation.CharacterColour;
@@ -29,6 +30,7 @@ public class GameClient {
     public int previousX;
     public int previousY;
     public CharacterColour characterColour;
+    public boolean finished;
 
     public GameClient(String name) {
         this.isAlive = true;
@@ -78,6 +80,12 @@ public class GameClient {
     }
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
+    }
+    public boolean getFinished() {
+        return finished;
+    }
+    public void setFinished(boolean finished){
+     this.finished = finished;
     }
     public boolean isAlive() {
         return isAlive;
@@ -141,7 +149,7 @@ public class GameClient {
      * @param groundSprites list of all the ground
      * @param movingPlatforms list of all the moving platforms
      */
-    public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level, ArrayList<GameClient> gameClients){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
             sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD, characterColour);
@@ -187,9 +195,28 @@ public class GameClient {
                     return;
                 }
             }
-            getSprite().setX(getSprite().getX() + (isMovingRight ? 1 : -1));
+            if (isMovingRight && !finished) {
+                if ((this.getSprite().getX() + this.getSprite().getWidth()) >= (level.getWidth() * 60)) {
+                    if (gameClients.size() == 0) {
+                        //level complete screen (no position)
+                    }
+                    int position = gameClients.size() + 1;
+                    for (GameClient gc : gameClients) {
+                        if (!gc.getFinished()) {
+                            position -= 1;
+                        }
+                    }
+                    this.finished = true;
+                    System.out.println("congratulations you survived and finished in position: " + position);
+                    //level complete screen (with position)
+                    GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
+
+                }
+            }
         }
+        getSprite().setX(getSprite().getX() + (isMovingRight ? 1 : -1));
     }
+
 
     /**
      * Moves the character on the y-axis
