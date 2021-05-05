@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class ServerLogic {
 
     static ServerSocket serverSocket;
-    private Socket socket;
 
     int numClients;
     ArrayList<String> playerNames = new ArrayList<>();
@@ -96,10 +95,10 @@ public class ServerLogic {
     public void waitForPlayers() throws IOException {
         int clientNo = 1;
         while(clientNo < 10) {
-            socket = serverSocket.accept();
+            Socket socket = serverSocket.accept();
             System.out.println("Client arrived");
             ClientThread task = new ClientThread(socket, clientNo, this);
-            clientNo++;
+            clientNo ++;
             incNumClients();
             new Thread(task).start();
         }
@@ -114,7 +113,5 @@ public class ServerLogic {
         } catch (IOException e) {
             System.out.println("Could not close serverSocket");
         }
-
     }
-
 }
