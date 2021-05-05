@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
- *this class acts as a controller for the menu.fxml file
+ *this class acts as a controller for the multi_player.fxml file
  */
 public class MultiPlayerController implements Initializable {
 

@@ -13,16 +13,12 @@ import org.nightshade.gui.Player;
 public class ClientThread implements Runnable {
 
     private final ServerLogic serverLogic;
-    private int clientNo;
-    private Socket socket;
+    private final int clientNo;
+    private final Socket socket;
     private ArrayList<PlayerMoveMsg> moveMsgs;
-    private ArrayList<Player> players;
-    private ArrayList<String> playerNames = new ArrayList<>();
-
-    private ObjectOutputStream objectOutput1;
-    private ObjectInputStream objectInput1;
-
-    private boolean localPlayerReady;
+    private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream;
+    private boolean isLocalPlayerReady;
 
     /**
      * Constructor for the ClientThread class
@@ -32,16 +28,15 @@ public class ClientThread implements Runnable {
      * @param serverLogic ServerLogic object that which creates this ClientThread object
      */
     public ClientThread(Socket client, int clientNo, ServerLogic serverLogic) {
-
         this.clientNo = clientNo;
         this.socket = client;
         this.serverLogic = serverLogic;
         this.moveMsgs = serverLogic.getMoveMsgs();
-        localPlayerReady = false;
+        isLocalPlayerReady = false;
 
         try {
-            objectOutput1 = new ObjectOutputStream(socket.getOutputStream());
-            objectInput1 = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             System.err.println("Streams not set up for client");
         }
@@ -55,11 +50,11 @@ public class ClientThread implements Runnable {
     @Override
     public void run() {
         try {
-            while(!localPlayerReady) {
+            while(!isLocalPlayerReady) {
                 receivePlayers();
             }
             sendStartMsg();
-            while(true) {
+            while (true) {
                 receiveMoveMsg();
                 sendMoveMsgs();
             }
@@ -79,10 +74,10 @@ public class ClientThread implements Runnable {
     public void receivePlayers() {
         Player player;
         try {
-            player = (Player) objectInput1.readObject();
+            player = (Player) objectInputStream.readObject();
             if(player.getReady().equals("READY")) {
                 serverLogic.addPlayerName(player.getName());
-                localPlayerReady = true;
+                isLocalPlayerReady = true;
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -97,9 +92,9 @@ public class ClientThread implements Runnable {
     public void receiveMoveMsg() throws IOException, ClassNotFoundException {
 
         try {
-            Object next = objectInput1.readObject();
+            Object next = objectInputStream.readObject();
             while(next instanceof Player) {
-                next = objectInput1.readObject();
+                next = objectInputStream.readObject();
             }
             PlayerMoveMsg moveMsg = (PlayerMoveMsg) next;
 
@@ -131,8 +126,8 @@ public class ClientThread implements Runnable {
      */
     public void sendMoveMsgs() throws IOException {
         moveMsgs = serverLogic.getMoveMsgs();
-        for(int i=0; i<moveMsgs.size(); i++) {
-            objectOutput1.writeObject(moveMsgs.get(i));
+        for (PlayerMoveMsg moveMsg : moveMsgs) {
+            objectOutputStream.writeObject(moveMsg);
         }
     }
 
@@ -143,12 +138,11 @@ public class ClientThread implements Runnable {
     public void sendStartMsg() throws IOException {
         boolean allReady = false;
         while(!allReady) {
-            playerNames = serverLogic.getPlayerNames();
+            ArrayList<String> playerNames = serverLogic.getPlayerNames();
             if(playerNames.size() == serverLogic.getNumClients()/2) {
-                objectOutput1.writeObject(new StartGameMsg(playerNames.size(), playerNames));
+                objectOutputStream.writeObject(new StartGameMsg(playerNames.size(), playerNames));
                 allReady = true;
             }
         }
     }
-
 }

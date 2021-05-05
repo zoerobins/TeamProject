@@ -12,12 +12,11 @@ import java.util.ArrayList;
  */
 public class ClientLogic {
 
-    private ObjectOutputStream objectOutput;
-    private ObjectInputStream objectInput;
-    private Socket socket;
-
-    private ArrayList<Player> playersList = new ArrayList<>();
-    private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
+    private final ObjectOutputStream objectOutput;
+    private final ObjectInputStream objectInput;
+    private final Socket socket;
+    private final ArrayList<Player> playersList = new ArrayList<>();
+    private final ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
 
     /**
      * Constructor for the ClientLogic class
@@ -42,8 +41,6 @@ public class ClientLogic {
         socket = new Socket("127.0.0.1", 2222);
         objectOutput = new ObjectOutputStream(socket.getOutputStream());
         objectInput = new ObjectInputStream(socket.getInputStream());
-        return;
-
     }
 
     /**
@@ -55,27 +52,32 @@ public class ClientLogic {
         PlayerMoveMsg newMoveMsg;
         Object next;
         next = objectInput.readObject();
-        while(next instanceof Player) {
+
+        while (next instanceof Player) {
             next = objectInput.readObject();
         }
+
         while(next instanceof PlayerMoveMsg) {
             newMoveMsg = (PlayerMoveMsg) next;
-            if(msgsList.size() == 0) {
+
+            if (msgsList.size() == 0) {
                 msgsList.add(newMoveMsg);
             } else {
                 boolean msgAdded = false;
-                for(int i=0; i<msgsList.size(); i++) {
+
+                for (int i=0; i<msgsList.size(); i++) {
                     if(newMoveMsg.getName().equals(msgsList.get(i).getName())) {
                         msgsList.set(i, newMoveMsg);
                         msgAdded = true;
                         break;
                     }
                 }
-                if(!msgAdded) {
+                if (!msgAdded) {
                     msgsList.add(newMoveMsg);
                 }
             }
-            if(objectInput.available() != 0) {
+
+            if (objectInput.available() != 0) {
                 next = objectInput.readObject();
             } else {
                 break;
@@ -139,5 +141,4 @@ public class ClientLogic {
     public void closeSocket() throws IOException {
         socket.close();
     }
-
 }
