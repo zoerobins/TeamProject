@@ -1,6 +1,6 @@
 package org.nightshade.gui;
 /**
- *this class acts as a controller for the settings.fxml file
+ *this class acts as a controller for the game_over.fxml file
  */
 public class GameOverController {
     /**
