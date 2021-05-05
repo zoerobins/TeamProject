@@ -18,7 +18,7 @@ public class ClientThread implements Runnable {
     private ArrayList<PlayerMoveMsg> moveMsgs;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
-    private boolean localPlayerReady;
+    private boolean isLocalPlayerReady;
 
     /**
      * Constructor for the ClientThread class
@@ -32,7 +32,7 @@ public class ClientThread implements Runnable {
         this.socket = client;
         this.serverLogic = serverLogic;
         this.moveMsgs = serverLogic.getMoveMsgs();
-        localPlayerReady = false;
+        isLocalPlayerReady = false;
 
         try {
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -50,7 +50,7 @@ public class ClientThread implements Runnable {
     @Override
     public void run() {
         try {
-            while(!localPlayerReady) {
+            while(!isLocalPlayerReady) {
                 receivePlayers();
             }
             sendStartMsg();
@@ -77,7 +77,7 @@ public class ClientThread implements Runnable {
             player = (Player) objectInputStream.readObject();
             if(player.getReady().equals("READY")) {
                 serverLogic.addPlayerName(player.getName());
-                localPlayerReady = true;
+                isLocalPlayerReady = true;
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
