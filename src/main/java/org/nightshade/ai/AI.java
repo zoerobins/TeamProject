@@ -122,16 +122,16 @@ public class AI {
         for (int i = 0; i < absoluteSpeed; i++) {
             for (Sprite platform : sprites) {
                 if (platform.intersects(sprite) && speedY > 0) {
-                    sprite.setY(sprite.getY() - 1);
+                    sprite.moveUp();
                     setCanJump(true);
                     return;
                 }
             }
 
             if (speedY > 0) {
-                sprite.setY(sprite.getY() + 1);
+                sprite.moveDown();
             } else {
-                sprite.setY(sprite.getY() - 1);
+                sprite.moveUp();
             }
         }
     }
