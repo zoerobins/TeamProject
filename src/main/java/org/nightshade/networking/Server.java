@@ -10,6 +10,11 @@ import java.io.InputStreamReader;
  */
 public class Server {
 
+    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static int serverPort;
+    private static ServerLogic serverLogic;
+
+
     /**
      * Constructor for the Server class
      * Reads in the port number and creates a new ServerLogic object
@@ -18,10 +23,9 @@ public class Server {
      */
     public Server() throws NumberFormatException, IOException {
         System.out.println("Please enter the server port number: ");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        int serverPort = Integer.parseInt(bufferedReader.readLine());
-        bufferedReader.close();
-        new ServerLogic(serverPort);
+        serverPort = Integer.parseInt(br.readLine());
+        br.close();
+        serverLogic = new ServerLogic(serverPort);
     }
 
     /**
@@ -31,7 +35,7 @@ public class Server {
      * @throws IOException
      */
     public Server(int serverPort) throws IOException {
-        new ServerLogic(serverPort);
+        serverLogic = new ServerLogic(serverPort);
     }
 
     /**

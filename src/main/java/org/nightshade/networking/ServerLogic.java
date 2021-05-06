@@ -11,10 +11,13 @@ import java.util.ArrayList;
  */
 public class ServerLogic {
 
-    private final ServerSocket serverSocket;
-    private int numClients;
-    private final ArrayList<String> playerNames;
-    private final ArrayList<PlayerMoveMsg> playerMoveMsgs;
+    static ServerSocket serverSocket;
+    private Socket socket;
+
+    int numClients;
+    ArrayList<String> playerNames = new ArrayList<>();
+    ArrayList<PlayerMoveMsg> moveMsgs = new ArrayList<>();
+
 
     /**
      * Constructor for the ServerLogic class
@@ -23,10 +26,7 @@ public class ServerLogic {
      * @throws IOException
      */
     public ServerLogic(int portValue) throws IOException {
-        this.serverSocket = new ServerSocket(portValue);
-        this.numClients = 0;
-        this.playerNames = new ArrayList<>();
-        this.playerMoveMsgs = new ArrayList<>();
+        serverSocket = new ServerSocket(portValue);
         System.out.println("Started game server");
         waitForPlayers();
     }
@@ -36,7 +36,7 @@ public class ServerLogic {
      * @return ArrayList of received PlayerMoveMsgs
      */
     public ArrayList<PlayerMoveMsg> getMoveMsgs() {
-        return playerMoveMsgs;
+        return moveMsgs;
     }
 
     /**
@@ -44,7 +44,7 @@ public class ServerLogic {
      * @param moveMsg Received PlayerMoveMsg object
      */
     public void addMsg(PlayerMoveMsg moveMsg) {
-        playerMoveMsgs.add(moveMsg);
+        moveMsgs.add(moveMsg);
     }
 
     /**
@@ -53,7 +53,7 @@ public class ServerLogic {
      * @param moveMsg Received PlayerMoveMsg object
      */
     public void replaceMsg(int index, PlayerMoveMsg moveMsg) {
-        playerMoveMsgs.set(index, moveMsg);
+        moveMsgs.set(index, moveMsg);
     }
 
     /**
@@ -94,7 +94,7 @@ public class ServerLogic {
     public void waitForPlayers() throws IOException {
         int clientNo = 1;
         while(clientNo < 10) {
-            Socket socket = serverSocket.accept();
+            socket = serverSocket.accept();
             System.out.println("Client arrived");
             ClientThread task = new ClientThread(socket, clientNo, this);
             clientNo ++;

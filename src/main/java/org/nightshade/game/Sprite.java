@@ -132,6 +132,22 @@ public class Sprite {
     }
 
     /**
+     * moves the sprite up by 1 unit
+     * changes the y-coordinate by one up
+     */
+    public void moveUp() {
+        this.y --;
+    }
+
+    /**
+     * moves the sprite down by 1 unit
+     * changes the y-coordinate by one down
+     */
+    public void moveDown() {
+        this.y ++;
+    }
+
+    /**
      * Changes the AnimatedImage of the sprite so that it can display the correct animation
      * @param animationType Enum for what type of animation is needed
      * @param direction The direction the character is facing
