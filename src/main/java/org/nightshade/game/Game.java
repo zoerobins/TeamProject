@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
 import org.nightshade.audio.BackgroundMusic;
+import org.nightshade.gui.GuiHandler;
 import org.nightshade.gui.SettingsController;
 import org.nightshade.renderer.Renderer;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class Game {
     private final Scene scene;
-    private final int LEVEL_WIDTH = 120;
+    private final int LEVEL_WIDTH = 20;
     private final int BLOCK_WIDTH = 60;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;
@@ -120,7 +121,7 @@ public class Game {
             if (client.getVelocity().getY() < 10) {
                 client.setVelocity(client.getVelocity().add(0, 1));
             }
-            client.moveY((int) client.getVelocity().getY(), level);
+            client.moveY((int) client.getVelocity().getY(), level,aiPlayers);
         }
     }
 
@@ -137,6 +138,7 @@ public class Game {
      * @param currentNanoTime current time in nano seconds
      */
     public void loop(long currentNanoTime) {
+
         double time = (currentNanoTime - startNanoTime) / 1000000000.0;
 /*
         parallax.move();
@@ -168,7 +170,7 @@ public class Game {
             renderer.drawImage(clientSprite.getAnimatedImage().getFrame(time), clientSprite.getX(), clientSprite.getY());
             boolean intersectsCloud = clientSprite.intersects(cloudSprite.getX() - 90, cloudSprite.getY(), (int) cloudSprite.getWidth(), (int) cloudSprite.getHeight());
             if (intersectsCloud) {
-                client.kill();
+                client.kill(aiPlayers);
             }
         }
 

@@ -111,7 +111,7 @@ public class Game {
             if (localGameClient.getVelocity().getY() < 10) {
                 localGameClient.setVelocity(localGameClient.getVelocity().add(0, 1));
             }
-            localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms);
+            localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms,gameClients);
         }
 
         try {
@@ -191,7 +191,7 @@ public class Game {
             renderer.drawImage(clientSprite.getAnimatedImage().getFrame(time), clientSprite.getX(), clientSprite.getY());
             boolean intersectsCloud = clientSprite.intersects(cloud.getX() - 90, cloud.getY(), (int) cloud.getWidth(), (int) cloud.getHeight());
             if (intersectsCloud) {
-                localGameClient.kill();
+                localGameClient.kill(gameClients);
             }
         }
         for (Enemy enemy : level.getEnemies()) {

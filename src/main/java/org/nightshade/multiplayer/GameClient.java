@@ -133,12 +133,42 @@ public class GameClient {
     /**
      * kill method ends the game after the player has touched a fatal object
      */
-    public void kill() {
-        File soundFile = new File("src/main/resources/audio/die.mp3");
-        spotEffects.playSoundUntilEnd(soundFile, true, volume);
-        //spotEffects.playSoundUntilEnd(soundFile, true);
-        isAlive =false;
-        GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
+    public void kill(ArrayList<GameClient> gameClients) {
+        isAlive = false;
+        changeToGameOver(gameClients);
+    }
+
+    public void changeToGameOver(ArrayList<GameClient> gameClients){
+        if ((gameClients.size() == 0)&&(isAlive == false)){
+            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen);
+        }
+        if (gameClients.size() == 0){
+            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreenW);
+            //level complete screen (no position)
+        }
+        int position = gameClients.size()+1;
+        for (GameClient gc : gameClients){
+            if (!gc.getFinished()){
+                position-=1;
+            }
+        }
+        this.finished = true;
+        if (position == 1){
+            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen1);
+        }else if(position == 2){
+            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen2);
+        }else if(position == 3){
+            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen3);
+        }else if(position == 4){
+            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen4);
+        }else {
+            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreenW);
+        }
+
+        //SinglePlayerController.game.backgroundMusic.stopBackgroundMusic();
+        //SinglePlayerController.game = null;
+
+
     }
 
     /**
@@ -191,7 +221,7 @@ public class GameClient {
             }
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)){
-                    kill();
+                    kill(gameClients);
                     return;
                 }
             }
@@ -227,7 +257,7 @@ public class GameClient {
      * @param groundSprites list of all the ground
      * @param movingPlatforms list of all the moving platforms
      */
-    public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> waterSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> waterSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<GameClient> gameClients){
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
@@ -259,7 +289,7 @@ public class GameClient {
             }
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)) {
-                    kill();
+                    kill(gameClients);
                     return;
                 }
             }

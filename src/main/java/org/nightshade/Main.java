@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Main extends Application {
 
     public static Stage stage;
+    public static GuiHandler gh;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,7 +21,7 @@ public class Main extends Application {
     public void start(Stage window) throws Exception {
 
         stage = window;
-        GuiHandler gh = new GuiHandler();
+        gh = new GuiHandler();
 
         stage.setScene(gh.loadGui(stage));
         stage.show();

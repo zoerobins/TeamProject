@@ -1,14 +1,19 @@
 package org.nightshade.game;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import org.nightshade.Main;
 import org.nightshade.ai.AI;
 import org.nightshade.animation.AnimatedImage;
 import org.nightshade.animation.AnimationType;
 import org.nightshade.animation.CharacterColour;
 import org.nightshade.audio.SpotEffects;
+import org.nightshade.gui.GameOverController;
 import org.nightshade.gui.GuiHandler;
 import org.nightshade.gui.SettingsController;
 import org.nightshade.renderer.Renderer;
+
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,6 +36,8 @@ public class Client {
     public int powerUpTimer;
 
     public boolean finished;
+
+    public int position;
 
     /**
      * Client is the constructor of the whole client
@@ -56,6 +63,43 @@ public class Client {
         this.deathSoundPlayed = false;
     }
 
+    /**Changes the scene to the appropriate game over screen and ends game
+     * @param aiPlayers
+     */
+    public void changeToGameOver(ArrayList<AI> aiPlayers){
+        if ((aiPlayers.size() == 0)&&(isAlive == false)){
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
+        }
+
+        if (aiPlayers.size() == 0){
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreenW);
+            //level complete screen (no position)
+        }
+        int position = aiPlayers.size()+1;
+        for (AI ai : aiPlayers){
+            if (!ai.getFinished()){
+                position-=1;
+            }
+        }
+        this.finished = true;
+        if (position == 1){
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen1);
+        }else if(position == 2){
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen2);
+        }else if(position == 3){
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen3);
+        }else if(position == 4){
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen4);
+        }else {
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreenW);
+        }
+
+        //SinglePlayerController.game.backgroundMusic.stopBackgroundMusic();
+        //SinglePlayerController.game = null;
+
+
+    }
+
     /**
      * setVelocity setter method for setting the velocity of the character
      * @param velocity the velocity of the character/the speed of the character that is moving
@@ -63,6 +107,7 @@ public class Client {
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
+
     /**
      * setFinished setter method for setting the finished state of the character
      * @param finished boolean holding whether the game client has finished the level or not
@@ -70,6 +115,7 @@ public class Client {
     public void setFinished(boolean finished){
         this.finished = finished;
     }
+
     /**
      * getFinished getter method returning the finished state of the character
      * @return finished state of the character
@@ -77,6 +123,7 @@ public class Client {
     public boolean getFinished() {
         return finished;
     }
+
     /**
      * isAlive a method returning whether the character is alive or not
      * @return boolean if the character is alive or not
@@ -161,17 +208,18 @@ public class Client {
             canJump = false;
         }
     }
-
     /**
      * kill method ends the game after the player has touched a fatal object
      */
-    public void kill() {
+    public void kill(ArrayList<AI> aiPlayers) {
         if (!deathSoundPlayed) {
             File soundFile = new File("src/main/resources/audio/die.mp3");
             //spotEffects.playSoundUntilEnd(soundFile, true, volume);
         }
+
+
         isAlive = false;
-        GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
+        changeToGameOver(aiPlayers);
     }
 
     /**
@@ -242,14 +290,7 @@ public class Client {
                     if (this.ability == Ability.SHIELD){
                         return;
                     }else {
-                        int position = aiPlayers.size()+1;
-                        for (AI ai : aiPlayers){
-                            if (!ai.getAlive()){
-                                position-=1;
-                            }
-                        }
-                        System.out.println("you made it to position: " + position + "but you died :(");
-                        kill();
+                        kill(aiPlayers);
                     }
                     return;
                 }
@@ -264,26 +305,10 @@ public class Client {
 
             sprite.setX(newX);
         }
-        if (isMovingRight && !finished){
-            if ((this.getSprite().getX() + this.getSprite().getWidth()) >= (level.getWidth()*60) ){
-                if (aiPlayers.size() == 0){
-                    System.out.println("congratulations you survived");
-                    //level complete screen (no position)
-                }
-                int position = aiPlayers.size()+1;
-                for (AI ai : aiPlayers){
-                    if (!ai.getFinished()){
-                        position-=1;
-                    }
-                }
-                this.finished = true;
-                System.out.println("congratulations you survived and finished in position: " + position);
-                //level complete screen (with position)
-                GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
 
+            if ((this.getSprite().getX() + this.getSprite().getWidth()) >= ((level.getWidth()-1)*60) ){
+                changeToGameOver(aiPlayers);
             }
-
-        }
     }
 
     /**
@@ -291,7 +316,7 @@ public class Client {
      * @param value the value of how much the character will move
      * @param level used to retrieve sprites
      */
-    public void moveY(int value, Level level) {
+    public void moveY(int value, Level level, ArrayList<AI> aiPlayers) {
         boolean movingDown = value > 0;
 //        sprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD);
         // TODO: above line stops the animation from working, figure a way to integrate this properly
@@ -314,7 +339,7 @@ public class Client {
                 if (lava.intersects(sprite)){
                     sprite.setY(sprite.getY() + 1);
                     if(lava.intersects(sprite.getX(), sprite.getY()-60, (int) Math. round(sprite.getWidth()), (int) Math. round(sprite.getHeight()))){
-                        kill();
+                        kill(aiPlayers);
                         deathSoundPlayed = true;
                     }
                     return;
@@ -344,7 +369,7 @@ public class Client {
             for (Enemy enemy : level.getEnemies()) {
                 if (enemy.getSprite().intersects(sprite)) {
                     if (this.ability != Ability.SHIELD){
-                        kill();
+                        kill(aiPlayers);
                         return;
                     }else if (movingDown) {
                         getSprite().setY(getSprite().getY() - 1);
