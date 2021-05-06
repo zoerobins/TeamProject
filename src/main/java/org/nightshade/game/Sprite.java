@@ -4,6 +4,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import org.nightshade.animation.AnimatedImage;
 import org.nightshade.animation.AnimationType;
+import org.nightshade.animation.CharacterColour;
 
 public class Sprite {
 
@@ -29,8 +30,10 @@ public class Sprite {
     }
 
     /**
-     * getImage getter method returning the image
-     * @return the image of the sprite
+     * Constructor for AnimatedImage version of Sprite
+     * @param animatedImage
+     * @param x x-coordinate of the sprite
+     * @param y y-coordinate of the sprite
      */
     public Sprite(AnimatedImage animatedImage, int x, int y) {
         this.animatedImage = animatedImage;
@@ -48,18 +51,10 @@ public class Sprite {
         return this.animatedImage;
     }
 
-    /**
-     * getHeight getter method returning height of the sprite
-     * @return height of sprite
-     */
     public double getHeight() {
         return height;
     }
 
-    /**
-     * getWidth getter method returning width of the sprite
-     * @return width of the sprite
-     */
     public double getWidth() {
         return width;
     }
@@ -74,34 +69,18 @@ public class Sprite {
         this.y = y;
     }
 
-    /**
-     * setX setter method setting the x-coordinate of the sprite
-     * @param x x-coordinate of sprite
-     */
     public void setX(double x) {
         this.x = x;
     }
 
-    /**
-     * setY setter method setting the y-coordinate of the sprite
-     * @param y y-coordinate of sprite
-     */
     public void setY(double y) {
         this.y = y;
     }
 
-    /**
-     * getX getter method returning the y-coordinate of sprite
-     * @return y-coordinate of sprite
-     */
     public int getY() {
         return (int) y;
     }
 
-    /**
-     * getX getter method returning the x-coordinate of sprite
-     * @return x-coordinate of sprite
-     */
     public int getX() {
         return (int) x;
     }
@@ -152,33 +131,51 @@ public class Sprite {
         this.x -= 1;
     }
 
-    public void setAnimatedImage(AnimationType animationType, Direction direction) {
+    /**
+     * Changes the AnimatedImage of the sprite so that it can display the correct animation
+     * @param animationType Enum for what type of animation is needed
+     * @param direction The direction the character is facing
+     * @param characterColour The colour of the character
+     */
+    public void setAnimatedImage(AnimationType animationType, Direction direction, CharacterColour characterColour) {
+        String colour = "blue_character";
+        if (characterColour.equals(CharacterColour.GREEN)) {
+            colour = "green_character";
+        }
+        else if (characterColour.equals(CharacterColour.RED)) {
+            colour = "red_character";
+        }
+        else if (characterColour.equals(CharacterColour.YELLOW)) {
+            colour = "yellow_character";
+        }
+        else if (characterColour.equals(CharacterColour.PURPLE)) {
+            colour = "purple_character";
+        }
+        else {
+            colour = "blue_character";
+        }
         if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.FORWARD)) {
             Image[] imageArray = new Image[5];
             for (int i = 0; i < 5; i++) {
-                imageArray[i] = new Image("img/game/player_run_right/player_run_right_" + i + ".png");
+                imageArray[i] = new Image("img/game/" + colour + "/run_right_" + i + ".png");
             }
             animatedImage.setFrames(imageArray);
             animatedImage.setDuration(0.150);
         }
-
         else if (animationType.equals(AnimationType.RUNNING) && direction.equals(Direction.BACKWARD)) {
             Image[] imageArray = new Image[5];
-
             for (int i = 0; i < 5; i++) {
-                imageArray[i] = new Image("img/game/player_run_left/player_run_left_" + i + ".png");
+                imageArray[i] = new Image("img/game/" + colour + "/run_left_" + i + ".png");
             }
 
             animatedImage.setFrames(imageArray);
             animatedImage.setDuration(0.150);
-//            System.out.println(image.getFrames()[0].getUrl());
         }
 
         if (animationType.equals(AnimationType.IDLE)) {
             Image[] imageArray = new Image[2];
-            for (int i = 0; i < 2; i++) {
-                imageArray[i] = new Image("img/game/player_idle_" + i + ".png");
-            }
+            imageArray[0] = new Image("img/game/" + colour + "/run_right_0.png");
+            imageArray[1] = new Image("img/game/" + colour + "/run_right_2.png");
             animatedImage.setFrames(imageArray);
             animatedImage.setDuration(0.200);
         }

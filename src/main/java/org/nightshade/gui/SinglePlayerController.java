@@ -14,7 +14,9 @@ import org.nightshade.game.Game;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
+/**
+ *this class acts as a controller for the single_player.fxml file
+ */
 public class SinglePlayerController implements Initializable {
 
     @FXML private CheckBox ai1CheckBox;
@@ -47,6 +49,16 @@ public class SinglePlayerController implements Initializable {
 
     public static Game game;
 
+    /**
+     * called as this scene is displayed on the window,
+     * sets all the toggle groups, puts all the easy/medium/hard
+     * buttons into one array for each AI and another
+     * for each difficulty. Also sets all buttons to
+     * be disabled by default
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ai1ToggleGroup = new ToggleGroup();
@@ -76,12 +88,29 @@ public class SinglePlayerController implements Initializable {
         }
     }
 
+    /**takes the first 3 parameters and adds them
+     * into the toggle group that is the 4th parameter
+     *
+     * @param b1
+     * @param b2
+     * @param b3
+     * @param tg
+     */
     @FXML
     private void setToggleGroup(RadioButton b1, RadioButton b2, RadioButton b3, ToggleGroup tg){
         b1.setToggleGroup(tg);
         b2.setToggleGroup(tg);
         b3.setToggleGroup(tg);
     }
+
+    /**makes a new array, adds all 3 parameters
+     * into the array returns the array
+     *
+     * @param b1
+     * @param b2
+     * @param b3
+     * @return
+     */
     @FXML
     private ArrayList<RadioButton> radioButtonArrayMaker(RadioButton b1, RadioButton b2, RadioButton b3){
         ArrayList<RadioButton> radioButtons = new ArrayList<>();
@@ -92,16 +121,31 @@ public class SinglePlayerController implements Initializable {
         return radioButtons;
     }
 
+    /**
+     *this method changes the current scene of the window
+     *from the singlePlayer scene to the menu scene
+     * @param event
+     */
     @FXML
     public void backToMain(ActionEvent event) {
         GuiHandler.stage.setScene(GuiHandler.menu);
     }
 
-    /*@FXML
+    /**
+     *this method changes the current scene of the window
+     *from the singlePlayer scene into to the game
+     * @param event
+     */
+    @FXML
     public void startGame(ActionEvent event) {
         game = new Game(Main.stage);
-    }*/
+    }
 
+    /**starts the game and changes the current scene of
+     *the window from the singlePlayer scene to the game
+     *and feeds all values of the ai checkboxes to addAiPlayers
+     * @param event
+     */
     @FXML
     public void startButtonHandler(ActionEvent event) {
         game = new Game(Main.stage);
@@ -110,6 +154,13 @@ public class SinglePlayerController implements Initializable {
         addAiPlayers(game,ai3CheckBox,ai3ToggleGroup);
     }
 
+    /**checks the various Ai toggles and adds the correct
+     *number of ai players into the game accordingly
+     *
+     * @param game
+     * @param checkBox
+     * @param toggleGroup
+     */
     private void addAiPlayers(Game game, CheckBox checkBox, ToggleGroup toggleGroup) {
         if (checkBox.isSelected()) {
             if (easyRadioButtons.contains(toggleGroup.getSelectedToggle())) {
@@ -122,6 +173,12 @@ public class SinglePlayerController implements Initializable {
         }
     }
 
+    /**handles all events for the checkboxes attached to all the Ais
+     *calls checkBoxHandlerHelper to help with the all of the logic
+     *that the buttons obey
+     *
+     * @param event
+     */
     @FXML
     public void checkBoxHandler(ActionEvent event) {
         checkBoxHandlerHelper(ai1CheckBox,ai1EasyRadioButton,ai1ToggleGroup,ai1RadioButtons);
@@ -129,6 +186,16 @@ public class SinglePlayerController implements Initializable {
         checkBoxHandlerHelper(ai3CheckBox,ai3EasyRadioButton,ai3ToggleGroup,ai3RadioButtons);
     }
 
+    /**handles all logic relating to the 12 checkboxes on the Ais
+     *e.g. makes sure only one of the boxes in the groups of 3 is
+     *ever selected, disengages the relevant difficulty boxes
+     * if the main box for that ai gets unchecked and so on
+     *
+     * @param checkBox
+     * @param easyRadioButton
+     * @param toggleGroup
+     * @param radioButtons
+     */
     private void checkBoxHandlerHelper(CheckBox checkBox, RadioButton easyRadioButton, ToggleGroup toggleGroup, ArrayList<RadioButton> radioButtons) {
         String onText = "ON";
         String offText = "OFF";

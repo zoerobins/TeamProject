@@ -3,6 +3,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import org.nightshade.animation.AnimatedImage;
 import org.nightshade.animation.AnimationType;
+import org.nightshade.animation.CharacterColour;
 import org.nightshade.audio.SpotEffects;
 import org.nightshade.gui.GuiHandler;
 import org.nightshade.gui.SettingsController;
@@ -20,11 +21,11 @@ public class Client {
     private boolean deathSoundPlayed;
 
     public double volume;
+    public CharacterColour characterColour;
 
     private AnimatedImage animatedImage;
 
     private Random random;
-    //public float volume1;
     public Ability ability;
     public int powerUpTimer;
 
@@ -35,13 +36,15 @@ public class Client {
         this.isAlive = true;
         this.canJump = true;
         this.velocity = new Point2D(0,0);
+        this.characterColour = CharacterColour.GREEN;
         this.animatedImage = new AnimatedImage();
         Image[] imageArray = new Image[2];
-        imageArray[0] = new Image("img/game/player_idle_0.png");
-        imageArray[1] = new Image("img/game/player_idle_1.png");
+        imageArray[0] = new Image("img/game/green_character/run_right_0.png");
+        imageArray[1] = new Image("img/game/green_character/run_right_2.png");
         animatedImage.setFrames(imageArray);
         animatedImage.setDuration(0.150);
         this.sprite = new Sprite(animatedImage,300,50);
+        this.sprite.setAnimatedImage(AnimationType.IDLE, Direction.FORWARD, characterColour);
         this.spotEffects = new SpotEffects();
         this.random = new Random();
         this.ability = null;
@@ -120,14 +123,14 @@ public class Client {
     }
 
     /**
-     * removeAbility method removing the special power/power up the character gained
+     * removeAbility method removes the power up the character gained
      */
     public void removeAbility(){
         this.ability = null;
     }
 
     /**
-     * jump method is the method that does the character jump
+     * jump method is the method that makes the character jump
      */
     public void jump() {
         if (canJump) {
@@ -144,8 +147,7 @@ public class Client {
     }
 
     /**
-     * kill method setting the isAlive variable to false
-     * makes the character die
+     * kill method ends the game after the player has touched a fatal object
      */
     public void kill() {
         if (!deathSoundPlayed) {
@@ -166,9 +168,9 @@ public class Client {
     public void moveX(int value, Level level){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
-            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD);
+            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD, characterColour);
         } else {
-            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.BACKWARD);
+            sprite.setAnimatedImage(AnimationType.RUNNING, Direction.BACKWARD, characterColour);
 //            System.out.println(sprite.getImage().getFrame(0).getUrl());
         }
 
@@ -245,7 +247,7 @@ public class Client {
 
     /**
      * moveY method is the method moving the character in the y-axis
-     * @param value he value of how much the character will move
+     * @param value the value of how much the character will move
      * @param level used to retrieve sprites
      */
     public void moveY(int value, Level level) {

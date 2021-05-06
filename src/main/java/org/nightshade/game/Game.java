@@ -177,7 +177,7 @@ public class Game {
             sprites.addAll(level.getLavaSprites());
             aiLogic.moveSprite(ai, sprites);
             Sprite aiSprite = ai.getSprite();
-            renderer.drawImage(aiSprite.getImage(), aiSprite.getX(), aiSprite.getY());
+            renderer.drawImage(aiSprite.getAnimatedImage().getFrame(time), aiSprite.getX(), aiSprite.getY());
         }
 
         for (Enemy enemy : level.getEnemies()) {
