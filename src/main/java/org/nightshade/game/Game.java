@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class Game {
     private final Scene scene;
-    private final int LEVEL_WIDTH = 20;
+    private final int LEVEL_WIDTH = 120;
     private final int BLOCK_WIDTH = 60;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;

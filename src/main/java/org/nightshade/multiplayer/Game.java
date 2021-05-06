@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private final int levelWidth = 20;
+    private final int levelWidth = 120;
     private final int blockWidth = 60;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;
