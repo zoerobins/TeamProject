@@ -234,6 +234,12 @@ public class Client {
                 }
             }
 
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.getSprite().intersects(endSprite)) {
+                    System.out.println("finish");
+                }
+            }
+
             double newX;
             if (isMovingRight) {
                 newX = sprite.getX() + speed;
@@ -312,6 +318,12 @@ public class Client {
                 }
             }
 
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.getSprite().intersects(endSprite)) {
+                    System.out.println("finish");
+                }
+            }
+
             double newY;
             if (movingDown) {
                 newY = sprite.getY() + 1;
@@ -323,3 +335,5 @@ public class Client {
         }
     }
 }
+
+
