@@ -137,8 +137,8 @@ public class GameClient {
      * kill method ends the game after the player has touched a fatal object
      */
     public void kill(ArrayList<GameClient> gameClients) {
-        isAlive = false;
         changeToGameOver(gameClients);
+        isAlive = false;
     }
 
     public void changeToGameOver(ArrayList<GameClient> gameClients){
@@ -149,7 +149,7 @@ public class GameClient {
             GuiHandler.stage.setScene(GuiHandler.multiGameOverScreenW);
             //level complete screen (no position)
         }
-        int position = gameClients.size() + 1;
+        int position = gameClients.size();
 
         if(isAlive) {
             for (GameClient gc : gameClients) {
@@ -158,9 +158,9 @@ public class GameClient {
                 }
             }
         }else{
-            position =1;
+            position =0;
             for (GameClient gc: gameClients) {
-                if (gc.isAlive) {
+                if (gc.isAlive ) {
                     position += 1;
                 }
             }

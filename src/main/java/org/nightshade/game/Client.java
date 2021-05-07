@@ -86,7 +86,7 @@ public class Client {
                 }
             }
         }else{
-            position =1;
+            position = 1;
             for (AI ai : aiPlayers) {
                 if (ai.isAlive) {
                     position += 1;
