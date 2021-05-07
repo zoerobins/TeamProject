@@ -40,7 +40,7 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
-                <Slider id="sSlider" fx:id="bgSlider" layoutX="582.0" layoutY="272.0" onMouseReleased="#onBGSliderChanged" prefHeight="47.0" prefWidth="152.0" />
+                <Slider id="sSlider" fx:id="bgSlider" layoutX="582.0" layoutY="272.0" onMouseReleased="#onBGSliderChanged" prefHeight="47.0" prefWidth="152.0" value="50.0" />
             <Button layoutX="609.0" layoutY="337.0" mnemonicParsing="false" onAction="#SaveButton" prefHeight="47.0" prefWidth="82.0" text="SAVE" />
             <ImageView fitHeight="150.0" fitWidth="253.0" layoutX="243.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
                <image>
