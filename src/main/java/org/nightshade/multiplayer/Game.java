@@ -105,15 +105,15 @@ public class Game {
                 localGameClient.jump();
             }
             if (input.contains("LEFT") && localGameClient.getSprite().getX() >= 5) {
-                localGameClient.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms);
+                localGameClient.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms, level);
             }
             if (input.contains("RIGHT") && localGameClient.getSprite().getX() <= (levelWidth * blockWidth) - 5) {
-                localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms);
+                localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms, level);
             }
             if (localGameClient.getVelocity().getY() < 10) {
                 localGameClient.setVelocity(localGameClient.getVelocity().add(0, 1));
             }
-            localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms);
+            localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms, level);
         }
 
         try {

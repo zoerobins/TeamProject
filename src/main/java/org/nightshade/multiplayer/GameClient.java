@@ -148,7 +148,7 @@ public class GameClient {
      * @param groundSprites list of all the ground
      * @param movingPlatforms list of all the moving platforms
      */
-    public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
             sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD, characterColour);
@@ -195,7 +195,7 @@ public class GameClient {
                 }
             }
             for (Sprite endSprite : level.getEndSprites()) {
-                if (endSprite.intersects(endSprite)) {
+                if (endSprite.intersects(sprite)) {
                     System.out.println("finish");
                 }
             }
@@ -212,7 +212,7 @@ public class GameClient {
      * @param groundSprites list of all the ground
      * @param movingPlatforms list of all the moving platforms
      */
-    public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> lavaSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> lavaSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level){
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
@@ -253,7 +253,7 @@ public class GameClient {
                 }
             }
             for (Sprite endSprite : level.getEndSprites()) {
-                if (endSprite.intersects(endSprite)) {
+                if (endSprite.intersects(sprite)) {
                     System.out.println("finish");
                 }
             }
