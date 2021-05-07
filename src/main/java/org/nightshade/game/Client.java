@@ -310,6 +310,10 @@ public class Client {
                 }
             }
 
+            if ((this.getSprite().getX() + this.getSprite().getWidth()) >= ((level.getWidth()-1)*60) ){
+                changeToGameOver(aiPlayers);
+            }
+
             double newX;
             if (isMovingRight) {
                 newX = sprite.getX() + speed;
@@ -320,9 +324,6 @@ public class Client {
             sprite.setX(newX);
         }
 
-            if ((this.getSprite().getX() + this.getSprite().getWidth()) >= ((level.getWidth()-1)*60) ){
-                changeToGameOver(aiPlayers);
-            }
     }
 
     /**
