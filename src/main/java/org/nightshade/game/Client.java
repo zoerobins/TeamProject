@@ -235,7 +235,7 @@ public class Client {
             }
 
             for (Sprite endSprite : level.getEndSprites()) {
-                if (endSprite.getSprite().intersects(endSprite)) {
+                if (endSprite.intersects(endSprite)) {
                     System.out.println("finish");
                 }
             }
@@ -319,7 +319,7 @@ public class Client {
             }
 
             for (Sprite endSprite : level.getEndSprites()) {
-                if (endSprite.getSprite().intersects(endSprite)) {
+                if (endSprite.intersects(endSprite)) {
                     System.out.println("finish");
                 }
             }

@@ -194,6 +194,11 @@ public class GameClient {
                     return;
                 }
             }
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.intersects(endSprite)) {
+                    System.out.println("finish");
+                }
+            }
             getSprite().setX(getSprite().getX() + (isMovingRight ? 1 : -1));
         }
     }
@@ -245,6 +250,11 @@ public class GameClient {
                 if (enemy.getSprite().intersects(sprite)) {
                     kill();
                     return;
+                }
+            }
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.intersects(endSprite)) {
+                    System.out.println("finish");
                 }
             }
             getSprite().setY(getSprite().getY() + (movingDown ? 1 : -1));
