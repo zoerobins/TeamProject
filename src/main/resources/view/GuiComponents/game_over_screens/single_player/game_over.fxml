@@ -12,7 +12,7 @@
          <children>
             <Label fx:id="label" alignment="CENTER" layoutX="320.0" prefHeight="111.0" prefWidth="640.0" text="GAME OVER" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="32.0" />
+                  <Font size="28.0" />
                </font>
             </Label>
          </children>

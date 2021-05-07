@@ -8,8 +8,11 @@ import org.nightshade.animation.AnimationType;
 import org.nightshade.animation.CharacterColour;
 import org.nightshade.audio.SpotEffects;
 import org.nightshade.game.Direction;
+import org.nightshade.game.Game;
 import org.nightshade.gui.GuiHandler;
+import org.nightshade.gui.MultiPlayerController;
 import org.nightshade.gui.SettingsController;
+import org.nightshade.gui.SinglePlayerController;
 import org.nightshade.renderer.Renderer;
 
 import java.io.File;
@@ -146,28 +149,38 @@ public class GameClient {
             GuiHandler.stage.setScene(GuiHandler.multiGameOverScreenW);
             //level complete screen (no position)
         }
-        int position = gameClients.size()+1;
-        for (GameClient gc : gameClients){
-            if (!gc.getFinished()){
-                position-=1;
+        int position = gameClients.size() + 1;
+
+        if(isAlive) {
+            for (GameClient gc : gameClients) {
+                if (!gc.getFinished()) {
+                    position -= 1;
+                }
+            }
+        }else{
+            position =1;
+            for (GameClient gc: gameClients) {
+                if (gc.isAlive) {
+                    position += 1;
+                }
             }
         }
+
         this.finished = true;
-        if (position == 1){
-            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen1);
-        }else if(position == 2){
-            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen2);
-        }else if(position == 3){
-            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen3);
-        }else if(position == 4){
-            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen4);
-        }else {
-            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreenW);
+        if (position == 1) {
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen1);
+        } else if (position == 2) {
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen2);
+        } else if (position == 3) {
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen3);
+        } else if (position == 4) {
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen4);
+        } else {
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreenW);
         }
 
         //SinglePlayerController.game.backgroundMusic.stopBackgroundMusic();
-        //SinglePlayerController.game = null;
-
+        //MultiPlayerController.game = null;
 
     }
 
@@ -225,23 +238,8 @@ public class GameClient {
                     return;
                 }
             }
-            if (isMovingRight && !finished) {
-                if ((this.getSprite().getX() + this.getSprite().getWidth()) >= (level.getWidth() * 60)) {
-                    if (gameClients.size() == 0) {
-                        //level complete screen (no position)
-                    }
-                    int position = gameClients.size() + 1;
-                    for (GameClient gc : gameClients) {
-                        if (!gc.getFinished()) {
-                            position -= 1;
-                        }
-                    }
-                    this.finished = true;
-                    System.out.println("congratulations you survived and finished in position: " + position);
-                    //level complete screen (with position)
-                    GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
-
-                }
+            if ((this.getSprite().getX() + this.getSprite().getWidth()) >= ((level.getWidth()-1)*60) ){
+                changeToGameOver(gameClients);
             }
         }
         getSprite().setX(getSprite().getX() + (isMovingRight ? 1 : -1));
