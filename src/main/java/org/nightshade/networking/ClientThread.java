@@ -63,11 +63,11 @@ public class ClientThread implements Runnable {
                 sendMoveMsgs();
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Client " + clientNo + " left");
+            //System.out.println("Client " + clientNo + " left");
             try {
                 socket.close();
             } catch (IOException e1) {
-                e1.printStackTrace();
+                //e1.printStackTrace();
             }
         }
     }
@@ -84,7 +84,7 @@ public class ClientThread implements Runnable {
                 localPlayerReady = true;
             }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -119,7 +119,7 @@ public class ClientThread implements Runnable {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
     }

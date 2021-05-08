@@ -174,7 +174,7 @@ public class GameClient {
 
         if(isAlive) {
             for (GameClient gc : gameClients) {
-                if(gc.getName() == this.name){
+                if(gc.getName().equals(this.name)){
                     //
                 }else if (!gc.getFinished()) {
                     position -= 1;
@@ -185,7 +185,7 @@ public class GameClient {
             for (GameClient gc : gameClients) {
                 if(gc.getName().equals(this.getName())){
                     //
-                }else if (gc.isAlive) {
+                }else if (gc.isAlive && (gc.getX() > this.getX())) {
                     position += 1;
                 }
             }

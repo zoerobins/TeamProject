@@ -95,7 +95,7 @@ public class ServerLogic {
         int clientNo = 1;
         while(clientNo < 10) {
             socket = serverSocket.accept();
-            System.out.println("Client arrived");
+            //System.out.println("Client arrived");
             ClientThread task = new ClientThread(socket, clientNo, this);
             clientNo ++;
             incNumClients();
