@@ -89,6 +89,9 @@ public class GameClient {
     public void setCanJump(boolean canJump) {
         this.canJump = canJump;
     }
+    public void setAlive(boolean alive) {
+        this.isAlive = alive;
+    }
     public Point2D getVelocity() {
         return velocity;
     }

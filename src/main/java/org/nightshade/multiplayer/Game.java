@@ -127,13 +127,14 @@ public class Game {
                 }
                 msgsList = client.getClientLogic().getMsgsList();
                 for(PlayerMoveMsg moveMsg : msgsList) {
-                    System.out.println("received " + moveMsg.getName() + " x: "+moveMsg.getX()+" y: "+moveMsg.getY());
+                    System.out.println("received " + moveMsg.getName() + " x: "+moveMsg.getX()+" y: "+moveMsg.getY() + " alive: "+moveMsg.isAlive());
                     if ((!(moveMsg.getName().equals(localGameClient.getName())))){
                         if(moveMsg.isAlive()) {
                             for (GameClient gameClient : gameClients) {
                                 if (moveMsg.getName().equals(gameClient.getName())) {
                                     gameClient.setX(moveMsg.getX());
                                     gameClient.setY(moveMsg.getY());
+                                    gameClient.setAlive(moveMsg.isAlive());
                                     break;
                                 }
                             }
