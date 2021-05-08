@@ -2,17 +2,13 @@ package org.nightshade.multiplayer;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import org.nightshade.ai.AI;
 import org.nightshade.animation.AnimatedImage;
 import org.nightshade.animation.AnimationType;
 import org.nightshade.animation.CharacterColour;
 import org.nightshade.audio.SpotEffects;
 import org.nightshade.game.Direction;
-import org.nightshade.game.Game;
 import org.nightshade.gui.GuiHandler;
-import org.nightshade.gui.MultiPlayerController;
 import org.nightshade.gui.SettingsController;
-import org.nightshade.gui.SinglePlayerController;
 import org.nightshade.renderer.Renderer;
 
 import java.io.File;
@@ -20,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameClient {
+    private boolean deathSoundPlayed;
     private boolean isAlive;
     private boolean canJump;
     private Point2D velocity;
@@ -54,6 +51,8 @@ public class GameClient {
         this.name = name;
         this.previousX =previousX;
         this.previousY =previousY;
+        this.deathSoundPlayed = false;
+
     }
 
     public String getName(){
@@ -84,12 +83,6 @@ public class GameClient {
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
-    public boolean getFinished() {
-        return finished;
-    }
-    public void setFinished(boolean finished){
-     this.finished = finished;
-    }
     public boolean isAlive() {
         return isAlive;
     }
@@ -104,6 +97,22 @@ public class GameClient {
     }
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
+    }
+
+    /**
+     * setFinished setter method for setting the finished state of the character
+     * @param finished boolean holding whether the game client has finished the level or not
+     */
+    public void setFinished(boolean finished){
+        this.finished = finished;
+    }
+
+    /**
+     * getFinished getter method returning the finished state of the character
+     * @return finished state of the character
+     */
+    public boolean getFinished() {
+        return finished;
     }
 
     public void setCharacterColour(int clientNumber) {
@@ -126,7 +135,7 @@ public class GameClient {
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
-            spotEffects.playSound(soundFile, true, volume);
+            //spotEffects.playSound(soundFile, true, volume);
             //spotEffects.playSound(soundFile, true);
             velocity = velocity.add(0, -30);
             canJump = false;
@@ -136,37 +145,48 @@ public class GameClient {
     /**
      * kill method ends the game after the player has touched a fatal object
      */
-    public void kill(ArrayList<GameClient> gameClients) {
-        changeToGameOver(gameClients);
-        isAlive = false;
+    public void kill() {
+        if (!deathSoundPlayed) {
+            File soundFile = new File("src/main/resources/audio/die.mp3");
+            //spotEffects.playSoundUntilEnd(soundFile, true, volume);
+        }
+        File soundFile = new File("src/main/resources/audio/die.mp3");
+        //spotEffects.playSoundUntilEnd(soundFile, true, volume);
+        //spotEffects.playSoundUntilEnd(soundFile, true);
+        isAlive =false;
+        //GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
 
     public void changeToGameOver(ArrayList<GameClient> gameClients){
-        if ((gameClients.size() == 0)&&(isAlive == false)){
-            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreen);
+        if ((gameClients.size() == 1)&&(isAlive == false)){
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
         }
-        if (gameClients.size() == 0){
-            GuiHandler.stage.setScene(GuiHandler.multiGameOverScreenW);
+
+        if (gameClients.size() == 1){
+            GuiHandler.stage.setScene(GuiHandler.gameOverScreenW);
             //level complete screen (no position)
         }
+
         int position = gameClients.size();
 
         if(isAlive) {
             for (GameClient gc : gameClients) {
-                if (!gc.getFinished()) {
+                if(gc.getName() == this.name){
+                    //
+                }else if (!gc.getFinished()) {
                     position -= 1;
                 }
             }
         }else{
-            position =0;
-            for (GameClient gc: gameClients) {
-                if (gc.isAlive ) {
+            position = 1;
+            for (GameClient gc : gameClients) {
+                if(gc.getName().equals(this.getName())){
+                    //
+                }else if (gc.isAlive) {
                     position += 1;
                 }
             }
         }
-
-        this.finished = true;
         if (position == 1) {
             GuiHandler.stage.setScene(GuiHandler.gameOverScreen1);
         } else if (position == 2) {
@@ -180,9 +200,9 @@ public class GameClient {
         }
 
         //SinglePlayerController.game.backgroundMusic.stopBackgroundMusic();
-        //MultiPlayerController.game = null;
-
+        //SinglePlayerController.game = null;
     }
+
 
     /**
      * Moves the character on the x-axis
@@ -213,7 +233,7 @@ public class GameClient {
             for (Sprite ground : groundSprites) {
                 if (ground.intersects(sprite)){
                     File soundFile = new File("src/main/resources/audio/step.mp3");
-                    spotEffects.playSoundUntilEnd(soundFile, true, volume);
+                    //spotEffects.playSoundUntilEnd(soundFile, true, volume);
                     if(isMovingRight){
                         getSprite().setX(getSprite().getX() - 1);
                     } else {
@@ -234,28 +254,42 @@ public class GameClient {
             }
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)){
-                    kill(gameClients);
+                    kill();
+                    gameClients = findIfFinished(gameClients, level.getEndSprites());
+                    changeToGameOver(gameClients);
                     return;
                 }
             }
-            if ((this.getSprite().getX() + this.getSprite().getWidth()) >= ((level.getWidth()-1)*60) ){
-                changeToGameOver(gameClients);
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.intersects(sprite)) {
+                    System.out.println("finish");
+                }
             }
+            getSprite().setX(getSprite().getX() + (isMovingRight ? 1 : -1));
         }
-        getSprite().setX(getSprite().getX() + (isMovingRight ? 1 : -1));
     }
 
+    public ArrayList<GameClient> findIfFinished(ArrayList<GameClient> gameClients,ArrayList<Sprite> endSprites){
+        for (GameClient gc : gameClients){
+            for (Sprite es:endSprites) {
+                if (gc.getSprite().intersects(es)) {
+                    gc.setFinished(true);
+                }
+            }
+        }
+        return gameClients;
+    }
 
     /**
      * Moves the character on the y-axis
      * @param value the value of how much the character will move
      * @param platformSprites list of all the platforms
-     * @param waterSprites list of all the water
+     * @param lavaSprites list of all the water
      * @param enemies list of all the enemies
      * @param groundSprites list of all the ground
      * @param movingPlatforms list of all the moving platforms
      */
-    public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> waterSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, ArrayList<GameClient> gameClients){
+    public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> lavaSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level,ArrayList<GameClient> gameClients){
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
@@ -272,9 +306,15 @@ public class GameClient {
                     return;
                 }
             }
-            for (Sprite water : waterSprites) {
-                if (water.intersects(sprite)){
+            for (Sprite lava : lavaSprites) {
+                if (lava.intersects(sprite)){
                     getSprite().setY(getSprite().getY() + 1);
+                    if(lava.intersects(sprite.getX(), sprite.getY()-60, (int) Math. round(sprite.getWidth()), (int) Math. round(sprite.getHeight()))){
+                        kill();
+                        gameClients = findIfFinished(gameClients, level.getEndSprites());
+                        changeToGameOver(gameClients);
+                        deathSoundPlayed = true;
+                    }
                     return;
                 }
             }
@@ -287,8 +327,15 @@ public class GameClient {
             }
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)) {
-                    kill(gameClients);
+                    kill();
+                    gameClients = findIfFinished(gameClients, level.getEndSprites());
+                    changeToGameOver(gameClients);
                     return;
+                }
+            }
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.intersects(sprite)) {
+                    System.out.println("finish");
                 }
             }
             getSprite().setY(getSprite().getY() + (movingDown ? 1 : -1));

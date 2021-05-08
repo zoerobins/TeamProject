@@ -28,15 +28,17 @@ public class Game {
     private final Sprite cloud;
     private final Parallax parallax;
     private Level level;
-    private GameClient localGameClient;
+    private int gameTickCounter = 0;    private GameClient localGameClient;
     private ArrayList<GameClient> gameClients;
     private Client client;
     private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
     private int loopRun = 0;
     private final long startNanoTime = System.nanoTime();
 
+
+
     public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level, Client client) {
-        localGameClient.setFinished(false);
+
         this.level = level;
         this.localGameClient = localGameClient;
         this.gameClients = gameClients;
@@ -103,15 +105,15 @@ public class Game {
                 localGameClient.jump();
             }
             if (input.contains("LEFT") && localGameClient.getSprite().getX() >= 5) {
-                localGameClient.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms,level,gameClients);
+                localGameClient.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms, level,gameClients);
             }
             if (input.contains("RIGHT") && localGameClient.getSprite().getX() <= (levelWidth * blockWidth) - 5) {
-                localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms,level,gameClients);
+                localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms, level,gameClients);
             }
             if (localGameClient.getVelocity().getY() < 10) {
                 localGameClient.setVelocity(localGameClient.getVelocity().add(0, 1));
             }
-            localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms,gameClients);
+            localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms, level,gameClients);
         }
 
         try {
@@ -132,9 +134,6 @@ public class Game {
                                 if (moveMsg.getName().equals(gameClient.getName())) {
                                     gameClient.setX(moveMsg.getX());
                                     gameClient.setY(moveMsg.getY());
-                                    if ((gameClient.getX() + gameClient.getSprite().getWidth())>= levelWidth*60){
-                                        gameClient.setFinished(true);
-                                    }
                                     break;
                                 }
                             }
@@ -158,10 +157,15 @@ public class Game {
 /*
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
-*/
+
+ */
+
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());
+        gameTickCounter++;
+        animationIndex = setAnimationIndex(gameTickCounter);
+
         int largestGameClientX =localGameClient.getX();
         for (Sprite lavaSprite : level.getLavaSprites()) {
             renderer.drawImage(lavaImages.get(animationIndex), lavaSprite.getX(), lavaSprite.getY());
@@ -175,23 +179,23 @@ public class Game {
                 largestGameClientX = gc.getX();
             }
         }
-
+/*
         if (largestGameClientX - cloud.getX() > 2000) {
             cloud.setX(largestGameClientX - 2000);
         } else {
             cloud.setX(cloud.getX() + 2);
         }
-/*
-        renderer.drawImage(cloud.getImage(), cloud.getX(), 50);
 
  */
+
+        renderer.drawImage(cloud.getImage(), cloud.getX(), 50);
+        moveClients();
         if (localGameClient.isAlive()) {
-            moveClients();
             Sprite clientSprite = localGameClient.getSprite();
             renderer.drawImage(clientSprite.getAnimatedImage().getFrame(time), clientSprite.getX(), clientSprite.getY());
             boolean intersectsCloud = clientSprite.intersects(cloud.getX() - 90, cloud.getY(), (int) cloud.getWidth(), (int) cloud.getHeight());
             if (intersectsCloud) {
-                localGameClient.kill(gameClients);
+                localGameClient.kill();
             }
         }
         for (Enemy enemy : level.getEnemies()) {
@@ -212,6 +216,21 @@ public class Game {
         }
         xViewCoordinate = (int) (-1 * translateX);
 
+    }
+
+    /**
+     * setAnimationIndex
+     * @param counter
+     * @return
+     */
+    private int setAnimationIndex(int counter) {
+        if (counter % 3 == 0) {
+            animationIndex++;
+            if (animationIndex == 17) {
+                animationIndex = 0;
+            }
+        }
+        return animationIndex;
     }
 
     private void renderSprites(ArrayList<Sprite> sprites) {
