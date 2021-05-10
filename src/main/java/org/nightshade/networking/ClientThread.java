@@ -32,7 +32,6 @@ public class ClientThread implements Runnable {
      * @param serverLogic ServerLogic object that which creates this ClientThread object
      */
     public ClientThread(Socket client, int clientNo, ServerLogic serverLogic) {
-
         this.clientNo = clientNo;
         this.socket = client;
         this.serverLogic = serverLogic;
@@ -48,20 +47,18 @@ public class ClientThread implements Runnable {
 
     }
 
-
     /**
      * Thread 'run' method
      * Uses loops to make repeated calls to methods which send and receive objects
      */
     @Override
     public void run() {
-
         try {
             while(!localPlayerReady) {
                 receivePlayers();
             }
             sendStartMsg();
-            while(true) {
+            while (true) {
                 receiveMoveMsg();
                 sendMoveMsgs();
             }
@@ -73,7 +70,6 @@ public class ClientThread implements Runnable {
                 e1.printStackTrace();
             }
         }
-
     }
 
     /**
@@ -89,19 +85,6 @@ public class ClientThread implements Runnable {
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * Sends Player objects from the ArrayList to the Client
-     * @throws IOException
-     */
-    public void sendPlayers() throws IOException {
-        players = serverLogic.getPlayers();
-        System.out.println(players.size());
-        for(int i=0; i<players.size(); i++) {
-            objectOutput1.writeObject(players.get(i));
         }
     }
 
@@ -147,11 +130,15 @@ public class ClientThread implements Runnable {
      */
     public void sendMoveMsgs() throws IOException {
         moveMsgs = serverLogic.getMoveMsgs();
-        for(int i=0; i<moveMsgs.size(); i++) {
-            objectOutput1.writeObject(moveMsgs.get(i));
+        for (PlayerMoveMsg moveMsg : moveMsgs) {
+            objectOutput1.writeObject(moveMsg);
         }
     }
 
+    /**
+     * Sends a StartGameMsg to the Client when all players are ready to start
+     * @throws IOException
+     */
     public void sendStartMsg() throws IOException {
         boolean allReady = false;
         while(!allReady) {
@@ -161,7 +148,5 @@ public class ClientThread implements Runnable {
                 allReady = true;
             }
         }
-
     }
-
 }

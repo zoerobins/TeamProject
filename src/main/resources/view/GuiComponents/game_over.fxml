@@ -10,7 +10,7 @@
     <children>
         <VBox layoutX="394.0" layoutY="85.0" prefHeight="111.0" prefWidth="450.0">
          <children>
-            <Label prefHeight="111.0" prefWidth="448.0" text=" GAME OVER">
+            <Label prefHeight="111.0" prefWidth="448.0" text=" GAME OVER" textFill="WHITE">
                <font>
                   <Font size="76.0" />
                </font>

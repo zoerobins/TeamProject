@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nightshade.gui.SettingsController">
     <columnConstraints>
@@ -22,22 +23,50 @@
     <children>
         <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" GridPane.columnIndex="1">
             <children>
-                <Button id="back-button" layoutY="14.0" mnemonicParsing="false" onAction="#MainMenuButton" prefHeight="38.0" prefWidth="82.0" text="" />
-                <Label alignment="CENTER" layoutX="182.0" layoutY="14.0" prefHeight="38.0" prefWidth="109.0" text="Settings" textAlignment="CENTER" />
-                <Slider layoutX="70.0" layoutY="134.0" prefHeight="47.0" prefWidth="140.0" />
-                <Label alignment="TOP_CENTER" layoutX="58.0" layoutY="106.0" prefHeight="38.0" prefWidth="152.0" text="Master Volume" />
-                <Label alignment="TOP_CENTER" layoutX="70.0" layoutY="210.0" prefHeight="38.0" prefWidth="152.0" text="Sound Effects Volume" />
-                <Slider layoutX="70.0" layoutY="238.0" prefHeight="47.0" prefWidth="140.0" />
-                <Label alignment="TOP_CENTER" layoutX="70.0" layoutY="315.0" prefHeight="38.0" prefWidth="152.0" text="Music Volume" />
-                <Slider layoutX="76.0" layoutY="364.0" />
-                <Label alignment="TOP_CENTER" layoutX="273.0" layoutY="106.0" prefHeight="28.0" prefWidth="152.0" text="Brightness " />
-                <Slider layoutX="279.0" layoutY="134.0" prefHeight="47.0" prefWidth="140.0" />
-                <Label alignment="TOP_CENTER" layoutX="273.0" layoutY="210.0" prefHeight="38.0" prefWidth="152.0" text="Background Colour" />
-                <ComboBox layoutX="291.0" layoutY="249.0" prefHeight="25.0" prefWidth="125.0" promptText="Black">
-                    <effect>
-                        <Blend />
-                    </effect>
-                </ComboBox>
+                <Button id="back-button" layoutX="45.0" layoutY="28.0" mnemonicParsing="false" onAction="#MainMenuButton" prefHeight="72.0" prefWidth="130.0" text="BACK">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+                <Label alignment="CENTER" layoutX="398.0" layoutY="35.0" prefHeight="58.0" prefWidth="484.0" text="SETTINGS AND CONTROLS" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font></Label>
+                <Slider fx:id="mSlider" layoutX="574.0" layoutY="159.0" onMouseReleased="#OnmSliderChanged" prefHeight="47.0" prefWidth="152.0" showTickLabels="true" showTickMarks="true" value="20.0" />
+                <Label alignment="TOP_CENTER" layoutX="573.0" layoutY="121.0" prefHeight="38.0" prefWidth="152.0" text="SOUND EFFECTS VOLUME" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+                <Label alignment="TOP_CENTER" layoutX="555.0" layoutY="236.0" prefHeight="28.0" prefWidth="205.0" text="BACKGROUND MUSIC VOLUME" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+                <Slider id="sSlider" fx:id="bgSlider" layoutX="582.0" layoutY="272.0" onMouseReleased="#onBGSliderChanged" prefHeight="47.0" prefWidth="152.0" />
+            <Button layoutX="609.0" layoutY="337.0" mnemonicParsing="false" onAction="#SaveButton" prefHeight="47.0" prefWidth="82.0" text="SAVE" />
+            <ImageView fitHeight="150.0" fitWidth="253.0" layoutX="243.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/gui/arrowkeys.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="573.0" layoutY="463.0" prefHeight="28.0" prefWidth="261.0" text="RIGHT ARROW KEY - MOVE RIGHT" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="573.0" layoutY="497.0" prefHeight="28.0" prefWidth="261.0" text="LEFT ARROW KEY - MOVE LEFT" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="573.0" layoutY="532.0" prefHeight="28.0" prefWidth="261.0" text="TOP ARROW KEY - JUMP" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="165.0" fitWidth="261.0" layoutX="251.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/gui/arrowkeys.png" />
+               </image>
+            </ImageView>
             </children>
         </Pane>
     </children>

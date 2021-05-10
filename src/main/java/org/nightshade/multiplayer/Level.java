@@ -197,7 +197,6 @@ public class Level implements Serializable {
         nodeArrayLists.add(row10);
         nodeArrayLists.add(row11);
         nodeArrayLists.add(row12);
-        System.out.println("yeet");
         return nodeArrayLists;
     }
 

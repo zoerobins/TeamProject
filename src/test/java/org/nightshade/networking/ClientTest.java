@@ -21,28 +21,27 @@ import java.util.ArrayList;
 
 @ExtendWith(ApplicationExtension.class)
 public class ClientTest {
+
     Client client1;
     Client client2;
     //Server server;
+
     @Start
     public void start(Stage stage)  throws IOException {
         //server = new Server(2222);
         client1 = new Client();
         client2 = new Client("client2", "127.0.0.1", 2222);
     }
+
     @Test
     public void testGetname(){
         Assertions.assertEquals("client2", client2.getName());
     }
+
     @Test
     public void testGetlogic(){
         Assertions.assertNotEquals(null, client1.getClientLogic());
         Assertions.assertNotEquals(null, client1.getClientLogic());
-    }
-    @Test
-    public void testIshost(){
-        Assertions.assertEquals(false, client1.isHost());
-        Assertions.assertEquals(false, client2.isHost());
     }
 
 }

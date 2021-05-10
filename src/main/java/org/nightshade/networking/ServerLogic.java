@@ -1,7 +1,5 @@
 package org.nightshade.networking;
 
-import org.nightshade.gui.Player;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,16 +11,10 @@ import java.util.ArrayList;
  */
 public class ServerLogic {
 
-    private int portValue;
     static ServerSocket serverSocket;
-    private static ArrayList<ClientThread> clientThreads = new ArrayList<>();
-
-    private Socket client;
-    private ArrayList<Socket> clientSockets = new ArrayList<>();
+    private Socket socket;
 
     int numClients;
-
-    ArrayList<Player> players = new ArrayList<>();
     ArrayList<String> playerNames = new ArrayList<>();
     ArrayList<PlayerMoveMsg> moveMsgs = new ArrayList<>();
 
@@ -34,9 +26,7 @@ public class ServerLogic {
      * @throws IOException
      */
     public ServerLogic(int portValue) throws IOException {
-        this.portValue = portValue;
         serverSocket = new ServerSocket(portValue);
-        this.numClients = 0;
         System.out.println("Started game server");
         waitForPlayers();
     }
@@ -66,6 +56,10 @@ public class ServerLogic {
         moveMsgs.set(index, moveMsg);
     }
 
+    /**
+     * Returns the number of clients connected
+     * @return Number of clients connected
+     */
     public int getNumClients() {
         return this.numClients;
     }
@@ -74,39 +68,21 @@ public class ServerLogic {
      * Increments the number of clients connected
      */
     public void incNumClients() {
-        this.numClients += 1;
+        this.numClients ++;
     }
 
     /**
-     * Returns an ArrayList of Player objects received from clients
-     * @return ArrayList of Player objects received
+     * Returns the ArrayList of players' names
+     * @return ArrayList of players' names
      */
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    /**
-     * Adds a received Player to the ArrayList
-     * @param player Received Player object
-     */
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
-
-    /**
-     * Replaces a Player object at a specified index with another
-     * @param index Index position of the Player in the ArrayList
-     * @param player Received Player object
-     */
-    public void replacePlayer(int index, Player player) {
-        players.set(index, player);
-    }
-
-
     public ArrayList<String> getPlayerNames() {
         return playerNames;
     }
 
+    /**
+     * Adds the specified player's name to the ArrayList
+     * @param playerName Name of the player to add
+     */
     public void addPlayerName(String playerName) {
         playerNames.add(playerName);
     }
@@ -118,12 +94,10 @@ public class ServerLogic {
     public void waitForPlayers() throws IOException {
         int clientNo = 1;
         while(clientNo < 10) {
-            client = serverSocket.accept();
-            clientSockets.add(client);
+            socket = serverSocket.accept();
             System.out.println("Client arrived");
-            ClientThread task = new ClientThread(client, clientNo, this);
-            clientThreads.add(task);
-            clientNo++;
+            ClientThread task = new ClientThread(socket, clientNo, this);
+            clientNo ++;
             incNumClients();
             new Thread(task).start();
         }
@@ -138,7 +112,5 @@ public class ServerLogic {
         } catch (IOException e) {
             System.out.println("Could not close serverSocket");
         }
-
     }
-
 }

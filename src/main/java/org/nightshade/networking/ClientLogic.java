@@ -14,10 +14,11 @@ public class ClientLogic {
 
     private ObjectOutputStream objectOutput;
     private ObjectInputStream objectInput;
-    private Socket server;
+    private Socket socket;
 
     private ArrayList<Player> playersList = new ArrayList<>();
     private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
+
 
     /**
      * Constructor for the ClientLogic class
@@ -28,9 +29,9 @@ public class ClientLogic {
      * @throws IOException
      */
     public ClientLogic(String serverIp, int portValue, Client client) throws IOException {
-        server = new Socket(serverIp, portValue);
-        objectOutput = new ObjectOutputStream(server.getOutputStream());
-        objectInput = new ObjectInputStream(server.getInputStream());
+        socket = new Socket(serverIp, portValue);
+        objectOutput = new ObjectOutputStream(socket.getOutputStream());
+        objectInput = new ObjectInputStream(socket.getInputStream());
     }
 
     /**
@@ -39,11 +40,9 @@ public class ClientLogic {
      * @throws IOException
      */
     public ClientLogic() throws IOException {
-        server = new Socket("127.0.0.1", 2222);
-        objectOutput = new ObjectOutputStream(server.getOutputStream());
-        objectInput = new ObjectInputStream(server.getInputStream());
-        return;
-
+        socket = new Socket("127.0.0.1", 2222);
+        objectOutput = new ObjectOutputStream(socket.getOutputStream());
+        objectInput = new ObjectInputStream(socket.getInputStream());
     }
 
     /**
@@ -55,34 +54,37 @@ public class ClientLogic {
         PlayerMoveMsg newMoveMsg;
         Object next;
         next = objectInput.readObject();
-        while(next instanceof Player) {
+
+        while (next instanceof Player) {
             next = objectInput.readObject();
         }
+
         while(next instanceof PlayerMoveMsg) {
             newMoveMsg = (PlayerMoveMsg) next;
-            if(msgsList.size() == 0) {
+
+            if (msgsList.size() == 0) {
                 msgsList.add(newMoveMsg);
             } else {
                 boolean msgAdded = false;
-                for(int i=0; i<msgsList.size(); i++) {
+
+                for (int i=0; i<msgsList.size(); i++) {
                     if(newMoveMsg.getName().equals(msgsList.get(i).getName())) {
                         msgsList.set(i, newMoveMsg);
                         msgAdded = true;
                         break;
                     }
                 }
-                if(!msgAdded) {
+                if (!msgAdded) {
                     msgsList.add(newMoveMsg);
                 }
             }
-            if(objectInput.available() != 0) {
+
+            if (objectInput.available() != 0) {
                 next = objectInput.readObject();
             } else {
                 break;
             }
-
         }
-
     }
 
     /**
@@ -92,12 +94,6 @@ public class ClientLogic {
     public ArrayList<PlayerMoveMsg> getMsgsList() {
         return msgsList;
     }
-
-
-    public void clearMsgsList() {
-        msgsList.clear();
-    }
-
 
     /**
      * Sends a new PlayerMoveMsg object containing the Player's updated position to the Server
@@ -122,43 +118,6 @@ public class ClientLogic {
     }
 
     /**
-     * Reads in Player objects received from the Server and adds them to an ArrayList
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    public void receivePlayers() throws IOException, ClassNotFoundException {
-        Player newPlayer;
-        Object next;
-        next = objectInput.readObject();
-        while(next instanceof Player) {
-            newPlayer = (Player) next;
-            if(playersList.size() == 0) {
-                playersList.add(newPlayer);
-            }
-            boolean playerAdded = false;
-            for(int i=0; i<playersList.size(); i++) {
-                if(playersList.get(i).getName().equals(newPlayer.getName())) {
-                    playersList.set(i, newPlayer);
-                    playerAdded = true;
-                    break;
-                }
-            }
-            if(!playerAdded) {
-                playersList.add(newPlayer);
-            }
-
-            //System.out.println(newPlayer.getName());
-            //System.out.println(newPlayer.getReady());
-            if(objectInput.available() != 0) {
-                next = objectInput.readObject();
-            } else {
-                break;
-            }
-        }
-
-    }
-
-    /**
      * Returns an ArrayList of the received Player objects
      * @return ArrayList of received Players
      */
@@ -166,6 +125,12 @@ public class ClientLogic {
         return playersList;
     }
 
+    /**
+     * Reads in and returns the StartGameMsg receive from the Server
+     * @return StartGameMsg received from the Server
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public StartGameMsg receiveStartMsg() throws IOException, ClassNotFoundException {
         StartGameMsg startGame = (StartGameMsg) objectInput.readObject();
         return startGame;
@@ -176,7 +141,6 @@ public class ClientLogic {
      * @throws IOException
      */
     public void closeSocket() throws IOException {
-        server.close();
+        socket.close();
     }
-
 }

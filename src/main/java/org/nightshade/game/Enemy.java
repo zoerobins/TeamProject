@@ -2,6 +2,9 @@ package org.nightshade.game;
 import javafx.scene.image.Image;
 import org.nightshade.renderer.Renderer;
 
+/**
+ * class containing everything about the enemies inside the track
+ */
 public class Enemy {
 
     private final Sprite sprite;
@@ -9,6 +12,12 @@ public class Enemy {
     private Direction direction;
     private int offset;
 
+    /**
+     * constructor of the enemy unit
+     * @param speed speed of the enemy
+     * @param x x-coordinate of the enemy
+     * @param y y-coordinate of the enemy
+     */
     public Enemy(int speed, int x, int y) {
         Image spriteImage = new Image("img/game/enemy.png");
         this.sprite = new Sprite(spriteImage, x, y);
@@ -17,10 +26,17 @@ public class Enemy {
         this.direction = Direction.getRandomDirection();
     }
 
+    /**
+     * getSprite method for returning the enemy in the track
+     * @return the enemy
+     */
     public Sprite getSprite() {
         return sprite;
     }
 
+    /**
+     * moveEnemy method is the method for moving the enemy around the track
+     */
     public void moveEnemy() {
         if (this.direction.equals(Direction.FORWARD)) {
             if (offset > 180) {

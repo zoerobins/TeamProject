@@ -14,6 +14,7 @@ public class Server {
     private static int serverPort;
     private static ServerLogic serverLogic;
 
+
     /**
      * Constructor for the Server class
      * Reads in the port number and creates a new ServerLogic object
