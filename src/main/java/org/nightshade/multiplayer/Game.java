@@ -28,12 +28,14 @@ public class Game {
     private final Sprite cloud;
     private final Parallax parallax;
     private Level level;
-    private GameClient localGameClient;
+    private int gameTickCounter = 0;    private GameClient localGameClient;
     private ArrayList<GameClient> gameClients;
     private Client client;
     private ArrayList<PlayerMoveMsg> msgsList = new ArrayList<>();
     private int loopRun = 0;
     private final long startNanoTime = System.nanoTime();
+
+
 
     public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level, Client client) {
 
@@ -103,15 +105,15 @@ public class Game {
                 localGameClient.jump();
             }
             if (input.contains("LEFT") && localGameClient.getSprite().getX() >= 5) {
-                localGameClient.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms);
+                localGameClient.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms, level);
             }
             if (input.contains("RIGHT") && localGameClient.getSprite().getX() <= (levelWidth * blockWidth) - 5) {
-                localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms);
+                localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms, level);
             }
             if (localGameClient.getVelocity().getY() < 10) {
                 localGameClient.setVelocity(localGameClient.getVelocity().add(0, 1));
             }
-            localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms);
+            localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms, level);
         }
 
         try {
@@ -159,6 +161,9 @@ public class Game {
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());
+        gameTickCounter++;
+        animationIndex = setAnimationIndex(gameTickCounter);
+
         int largestGameClientX =localGameClient.getX();
         for (Sprite lavaSprite : level.getLavaSprites()) {
             renderer.drawImage(lavaImages.get(animationIndex), lavaSprite.getX(), lavaSprite.getY());
@@ -207,6 +212,21 @@ public class Game {
         }
         xViewCoordinate = (int) (-1 * translateX);
 
+    }
+
+    /**
+     * setAnimationIndex
+     * @param counter
+     * @return
+     */
+    private int setAnimationIndex(int counter) {
+        if (counter % 3 == 0) {
+            animationIndex++;
+            if (animationIndex == 17) {
+                animationIndex = 0;
+            }
+        }
+        return animationIndex;
     }
 
     private void renderSprites(ArrayList<Sprite> sprites) {

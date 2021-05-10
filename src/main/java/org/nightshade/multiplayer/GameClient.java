@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameClient {
+    private boolean deathSoundPlayed;
     private boolean isAlive;
     private boolean canJump;
     private Point2D velocity;
@@ -49,6 +50,8 @@ public class GameClient {
         this.name = name;
         this.previousX =previousX;
         this.previousY =previousY;
+        this.deathSoundPlayed = false;
+
     }
 
     public String getName(){
@@ -126,6 +129,10 @@ public class GameClient {
      * kill method ends the game after the player has touched a fatal object
      */
     public void kill() {
+        if (!deathSoundPlayed) {
+            File soundFile = new File("src/main/resources/audio/die.mp3");
+            spotEffects.playSoundUntilEnd(soundFile, true, volume);
+        }
         File soundFile = new File("src/main/resources/audio/die.mp3");
         spotEffects.playSoundUntilEnd(soundFile, true, volume);
         //spotEffects.playSoundUntilEnd(soundFile, true);
@@ -141,7 +148,7 @@ public class GameClient {
      * @param groundSprites list of all the ground
      * @param movingPlatforms list of all the moving platforms
      */
-    public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
             sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD, characterColour);
@@ -187,6 +194,11 @@ public class GameClient {
                     return;
                 }
             }
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.intersects(sprite)) {
+                    System.out.println("finish");
+                }
+            }
             getSprite().setX(getSprite().getX() + (isMovingRight ? 1 : -1));
         }
     }
@@ -195,12 +207,12 @@ public class GameClient {
      * Moves the character on the y-axis
      * @param value the value of how much the character will move
      * @param platformSprites list of all the platforms
-     * @param waterSprites list of all the water
+     * @param lavaSprites list of all the water
      * @param enemies list of all the enemies
      * @param groundSprites list of all the ground
      * @param movingPlatforms list of all the moving platforms
      */
-    public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> waterSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms){
+    public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> lavaSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level){
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {
@@ -217,9 +229,13 @@ public class GameClient {
                     return;
                 }
             }
-            for (Sprite water : waterSprites) {
-                if (water.intersects(sprite)){
+            for (Sprite lava : lavaSprites) {
+                if (lava.intersects(sprite)){
                     getSprite().setY(getSprite().getY() + 1);
+                    if(lava.intersects(sprite.getX(), sprite.getY()-60, (int) Math. round(sprite.getWidth()), (int) Math. round(sprite.getHeight()))){
+                        kill();
+                        deathSoundPlayed = true;
+                    }
                     return;
                 }
             }
@@ -234,6 +250,11 @@ public class GameClient {
                 if (enemy.getSprite().intersects(sprite)) {
                     kill();
                     return;
+                }
+            }
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.intersects(sprite)) {
+                    System.out.println("finish");
                 }
             }
             getSprite().setY(getSprite().getY() + (movingDown ? 1 : -1));
