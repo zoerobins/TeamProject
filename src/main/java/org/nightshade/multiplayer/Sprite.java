@@ -44,37 +44,69 @@ public class Sprite {
         this.y = y;
     }
 
+    /**getter method for image
+     * @return
+     */
     public Image getImage() {
         return this.image;
     }
 
+
+    /**getter method for animated image
+     * @return
+     */
     public AnimatedImage getAnimatedImage() {
         return this.animatedImage;
     }
 
+    /**getter method for height
+     * @return
+     */
     public double getHeight() {
         return height;
     }
 
+
+    /**getter method for width
+     * @return
+     */
     public double getWidth() {
         return width;
     }
-
+    /**
+     * setPosition setter method setting the coordinates of the sprite
+     * @param x x-coordinate of the sprite
+     * @param y y-coordinate of the sprite
+     */
     public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
     }
+
+    /**setter method for x
+     * @param x
+     */
     public void setX(double x) {
         this.x = x;
     }
+
+    /**setter method for y
+     * @param y
+     */
     public void setY(double y) {
         this.y = y;
     }
 
+    /**getter method for y
+     * @return
+     */
     public int getY() {
         return (int) y;
     }
 
+    /**getter method for x
+     * @return
+     */
     public int getX() {
         return (int) x;
     }
@@ -109,12 +141,36 @@ public class Sprite {
         return this.getBoundary().intersects(x,y,w,h);
     }
 
+    /**
+     * moveLeft method moving the character to the left by 1 unit
+     * changing the x-coordinate by one to the left
+     */
     public void moveLeft() {
         this.x += 1;
     }
 
+    /**
+     * moveRight method moving the character to the right by 1 unit
+     * changing the x-coordinate by one to the right
+     */
     public void moveRight() {
         this.x -= 1;
+    }
+
+    /**
+     * moves the sprite up by 1 unit
+     * changes the y-coordinate by one up
+     */
+    public void moveUp() {
+        this.y --;
+    }
+
+    /**
+     * moves the sprite down by 1 unit
+     * changes the y-coordinate by one down
+     */
+    public void moveDown() {
+        this.y ++;
     }
 
     /**

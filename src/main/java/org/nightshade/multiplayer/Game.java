@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+/**
+ * Class for our game
+ */
 public class Game {
 
     private final int levelWidth = 120;
@@ -36,7 +39,13 @@ public class Game {
     private final long startNanoTime = System.nanoTime();
 
 
-
+    /** constructor for the game
+     * @param stage to display the game
+     * @param localGameClient so the game knows which player to take inputs for
+     * @param gameClients full list of players
+     * @param level level that that player is playing on
+     * @param client used to send data to server
+     */
     public Game(Stage stage, GameClient localGameClient , ArrayList<GameClient> gameClients, Level level, Client client) {
 
         this.level = level;
@@ -78,6 +87,9 @@ public class Game {
         }.start();
     }
 
+    /** checks for key input
+     * @param scene to detect if a key has been pressed
+     */
     private void checkForInput(Scene scene) {
         scene.setOnKeyPressed(
                 keyEvent -> {
@@ -93,6 +105,12 @@ public class Game {
                 });
     }
 
+    /**
+     * moves the local client according the the pressed keys,
+     * sends out new position of the local client and receives
+     * the positions of all the other players and moves them
+     * accordingly
+     */
     private void moveClients() {
 
         ArrayList<Sprite> platformSprites = level.getPlatformSprites();
@@ -105,16 +123,16 @@ public class Game {
                 localGameClient.jump();
             }
             if (input.contains("LEFT") && localGameClient.getSprite().getX() >= 5) {
-                localGameClient.moveX(-5, platformSprites, enemies, groundSprites, movingPlatforms, level,gameClients);
+                localGameClient.moveX(-5, level,gameClients);
             }
             if (input.contains("RIGHT") && localGameClient.getSprite().getX() <= (levelWidth * blockWidth) - 5) {
-                localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms, level,gameClients);
+                localGameClient.moveX(5, level,gameClients);
 
             }
             if (localGameClient.getVelocity().getY() < 10) {
                 localGameClient.setVelocity(localGameClient.getVelocity().add(0, 1));
             }
-            localGameClient.moveY((int) localGameClient.getVelocity().getY(), platformSprites, lavaSprites, enemies, groundSprites, movingPlatforms, level,gameClients);
+            localGameClient.moveY((int) localGameClient.getVelocity().getY(), level,gameClients);
         }
 
         try {
@@ -154,6 +172,10 @@ public class Game {
 
     }
 
+    /**
+     * loop method is a method running over and over so the game flows
+     * @param currentNanoTime current time in nano seconds
+     */
     public void loop(long currentNanoTime) {
         double time = (currentNanoTime - startNanoTime) / 1000000000.0;
 /*
@@ -234,7 +256,10 @@ public class Game {
         }
         return animationIndex;
     }
-
+    /**
+     * rendererSprites used to draw the sprites
+     * @param sprites list of sprites to render
+     */
     private void renderSprites(ArrayList<Sprite> sprites) {
         for (Sprite sprite : sprites) {
             renderer.drawImage(sprite.getImage(), sprite.getX(), sprite.getY());

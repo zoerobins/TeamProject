@@ -1,6 +1,9 @@
 package org.nightshade.game;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * defines the set of nodes available for our game to display
+ */
 public enum Node {
     AIR,
     PLATFORM,

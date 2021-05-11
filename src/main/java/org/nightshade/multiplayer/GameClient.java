@@ -32,6 +32,10 @@ public class GameClient {
     public CharacterColour characterColour;
     public boolean finished;
 
+    /**
+     * GameClient is the constructor of the whole gameClient
+     * @param name defines the name of the game client
+     */
     public GameClient(String name) {
         this.isAlive = true;
         this.canJump = true;
@@ -55,49 +59,105 @@ public class GameClient {
 
     }
 
+    /**getter method for name
+     * @return name
+     */
     public String getName(){
         return name;
     }
+
+    /**setter method for x
+     * @param x
+     */
     public void setX(Double x){
         previousX = this.sprite.getX();
         this.sprite.setX(x);
     }
+
+    /**setter method for y
+     * @param y
+     */
     public void setY(Double y){
         previousY = this.sprite.getY();
         this.sprite.setY(y);
     }
+
+    /** setter method for animated image
+     * @param animationType
+     * @param direction
+     * @param characterColour
+     */
     public void setAnimatedImage(AnimationType animationType, Direction direction, CharacterColour characterColour) { this.sprite.setAnimatedImage(animationType, direction, characterColour);}
+    /**setter method for client number
+     * @param clientNumber
+     */
     public void setClientNumber(int clientNumber) { this.clientNumber = clientNumber; }
+    /**getter method for previous x
+     * @return previousX
+     */
     public int getPreviousX(){
         return previousX;
     }
+    /**getter method for previous x
+     * @return previousY
+     */
     public int getPreviousY(){
         return previousY;
     }
+    /**getter method for x
+     * @return x
+     */
     public int getX(){
         return sprite.getX();
     }
+    /**getter method for y
+     * @return Y
+     */
     public int getY(){
         return sprite.getY();
     }
+    /**setter method for velocity
+     * @param velocity
+     */
     public void setVelocity(Point2D velocity) {
         this.velocity = velocity;
     }
+    /**getter method for isAlive
+     * @return isAlive
+     */
     public boolean isAlive() {
         return isAlive;
     }
+    /**setter method for canJump
+     * @param canJump
+     */
     public void setCanJump(boolean canJump) {
         this.canJump = canJump;
     }
+    /**setter method for alive
+     * @param alive
+     */
     public void setAlive(boolean alive) {
         this.isAlive = alive;
     }
+    /**getter method for velocity
+     * @return velocity
+     */
     public Point2D getVelocity() {
         return velocity;
     }
+    /**getter method for sprite
+     * @return sprite
+     */
     public Sprite getSprite() {
         return sprite;
     }
+
+    /** method to render sprite
+     * @param renderer
+     * @param image
+     * @param sprite
+     */
     public void displaySprite(Renderer renderer, Image image, Sprite sprite){
         renderer.drawImage(image, sprite.getX(), sprite.getY());
     }
@@ -160,6 +220,9 @@ public class GameClient {
         //GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
     }
 
+    /** changes scene to appropriate end screen
+     * @param gameClients to calculate final position
+     */
     public void changeToGameOver(ArrayList<GameClient> gameClients){
         if ((gameClients.size() == 1)&&(isAlive == false)){
             GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
@@ -208,15 +271,17 @@ public class GameClient {
 
 
     /**
-     * Moves the character on the x-axis
+     * moveX method is the method moving the character in the x-axis
      * @param value the value of how much the character will move
-     * @param platformSprites list of all the platforms
-     * @param enemies list of all the enemies
-     * @param groundSprites list of all the ground
-     * @param movingPlatforms list of all the moving platforms
+     * @param level used to retrieve sprites
+     * @param gameClients used to determine position
      */
+    public void moveX(int value, Level level, ArrayList<GameClient> gameClients){
+        ArrayList<MovingPlatform> movingPlatforms = level.getMovingPlatforms();
+        ArrayList<Sprite> platformSprites = level.getPlatformSprites();
+        ArrayList<Enemy> enemies = level.getEnemies();
+        ArrayList<Sprite> groundSprites = level.getGroundSprites();
 
-    public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level, ArrayList<GameClient> gameClients){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
             sprite.setAnimatedImage(AnimationType.RUNNING, Direction.FORWARD, characterColour);
@@ -273,6 +338,12 @@ public class GameClient {
         }
     }
 
+    /** finds if the current opponents have finished the level,
+     *  and returns the updated game client array
+     * @param gameClients
+     * @param endSprites
+     * @return new array of game clients
+     */
     public ArrayList<GameClient> findIfFinished(ArrayList<GameClient> gameClients,ArrayList<Sprite> endSprites){
         for (GameClient gc : gameClients){
             for (Sprite es:endSprites) {
@@ -284,17 +355,19 @@ public class GameClient {
         return gameClients;
     }
 
-    /**
-     * Moves the character on the y-axis
-     * @param value the value of how much the character will move
-     * @param platformSprites list of all the platforms
-     * @param lavaSprites list of all the water
-     * @param enemies list of all the enemies
-     * @param groundSprites list of all the ground
-     * @param movingPlatforms list of all the moving platforms
-     */
 
-    public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> lavaSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level,ArrayList<GameClient> gameClients){
+    /**
+     * moveY method is the method moving the character in the y-axis
+     * @param value the value of how much the character will move
+     * @param level used to retrieve sprites
+     * @param gameClients used to determine position
+     */
+    public void moveY(int value, Level level,ArrayList<GameClient> gameClients){
+        ArrayList<MovingPlatform> movingPlatforms = level.getMovingPlatforms();
+        ArrayList<Sprite> platformSprites = level.getPlatformSprites();
+        ArrayList<Sprite> lavaSprites= level.getLavaSprites();
+        ArrayList<Enemy> enemies = level.getEnemies();
+        ArrayList<Sprite> groundSprites = level.getGroundSprites();
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {
             for (Sprite platform : platformSprites) {

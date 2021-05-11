@@ -21,6 +21,11 @@ public class Level implements Serializable {
     Image end = new Image("img/game/end.png");
     public int width;
 
+
+    /**creates a level object using the defined width and 2d array list of nodes
+     * @param width
+     * @param nodeArrayLists 2d array list of the nodes
+     */
     public Level(int width, ArrayList<ArrayList<Node>> nodeArrayLists) {
         this.width = width;
         int blockHeight = 12;
@@ -109,6 +114,10 @@ public class Level implements Serializable {
         }
     }
 
+    /**returns a 2d array list of nodes suitable to generate a level with
+     * @param width
+     * @return 2d array list of the nodes
+     */
     public static ArrayList<ArrayList<Node>> getRandomNodes (int width){
         int blockHeight = 12;
         ArrayList<ArrayList<Node>> nodeArrayLists = new ArrayList<>();
@@ -148,35 +157,67 @@ public class Level implements Serializable {
         }
         return nodeArrayLists;
     }
-
+    /**
+     * getLavaSprites getter method returning lava sprites
+     * @return array list of lava sprites
+     */
     public ArrayList<Sprite> getLavaSprites() {
         return this.lavaSprites;
     }
 
+    /**
+     * getEndSprites getter method returning end sprites
+     * @return array list of end sprites
+     */
     public ArrayList<Sprite> getEndSprites() {
         return this.endSprites;
     }
 
+    /**
+     * getPlatformSprites getter method returning platform sprites
+     * @return array list of platform sprites
+     */
     public ArrayList<Sprite> getPlatformSprites() {
         return this.platformSprites;
     }
 
+    /**
+     * getEnemies getter method returning enemies
+     * @return array list of enemies
+     */
     public ArrayList<Enemy> getEnemies() {
         return this.enemies;
     }
 
+    /**
+     * getMovingPlatforms getter method returning moving platforms
+     * @return array list of moving platforms
+     */
     public ArrayList<MovingPlatform> getMovingPlatforms() {
         return this.movingPlatforms;
     }
 
+
+    /**
+     * getGroundSprites getter method returning ground spites
+     * @return array list of ground sprites
+     */
     public ArrayList<Sprite> getGroundSprites() {
         return this.groundSprites;
     }
-
+    /**
+     * getWidth getter method returning the level width
+     * @return int holding value of the level width
+     */
     public int getWidth() {
         return this.width;
     }
 
+    /**returns a static 2d array list that every player will have
+     * useful for multiplayer use as all players will have this level
+     * without needing to generate and send a level around
+     * @return
+     */
     public static ArrayList<ArrayList<Node>> getLevel1 (){
         ArrayList<ArrayList<Node>> nodeArrayLists = new ArrayList<>();
         ArrayList<Node> row1 = new ArrayList<>(Arrays.asList(Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.AIR, Node.END));

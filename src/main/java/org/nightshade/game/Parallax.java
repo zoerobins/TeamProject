@@ -71,6 +71,12 @@ public class Parallax {
         }
     }
 
+    /**changes the corodinates of all the images,
+     * moving them along in the background of the game
+     * @param imageXPositions
+     * @param index
+     * @param changeX
+     */
     private void moveHelper(ArrayList<Integer> imageXPositions, int index, int changeX) {
         int imageXPosition = imageXPositions.get(index);
         if (imageXPosition > -scaledWidth) {
@@ -80,6 +86,10 @@ public class Parallax {
         }
     }
 
+    /**draws all the images to the screen
+     * @param renderer
+     * @param xViewCoordinate
+     */
     public void render(Renderer renderer, int xViewCoordinate) {
         int y = 0;
         int scaledHeight = 720;

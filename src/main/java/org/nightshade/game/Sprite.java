@@ -43,18 +43,32 @@ public class Sprite {
         this.y = y;
     }
 
+    /**getter method for image
+     * @return
+     */
     public Image getImage() {
         return this.image;
     }
 
+
+    /**getter method for animated image
+     * @return
+     */
     public AnimatedImage getAnimatedImage() {
         return this.animatedImage;
     }
 
+    /**getter method for height
+     * @return
+     */
     public double getHeight() {
         return height;
     }
 
+
+    /**getter method for width
+     * @return
+     */
     public double getWidth() {
         return width;
     }
@@ -69,18 +83,30 @@ public class Sprite {
         this.y = y;
     }
 
+    /**setter method for x
+     * @param x
+     */
     public void setX(double x) {
         this.x = x;
     }
 
+    /**setter method for y
+     * @param y
+     */
     public void setY(double y) {
         this.y = y;
     }
 
+    /**getter method for y
+     * @return
+     */
     public int getY() {
         return (int) y;
     }
 
+    /**getter method for x
+     * @return
+     */
     public int getX() {
         return (int) x;
     }

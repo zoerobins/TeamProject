@@ -65,7 +65,7 @@ public class Client {
     }
 
     /**Changes the scene to the appropriate game over screen and ends game
-     * @param aiPlayers
+     * @param aiPlayers used to determine the final position
      */
     public void changeToGameOver(ArrayList<AI> aiPlayers){
         if ((aiPlayers.size() == 0)&&(isAlive == false)){
@@ -224,6 +224,7 @@ public class Client {
 
     /**
      * kill method ends the game after the player has touched a fatal object
+     * @param aiPlayers used to determine final position
      */
     public void kill(ArrayList<AI> aiPlayers) {
         if (!deathSoundPlayed) {
@@ -240,6 +241,7 @@ public class Client {
      * moveX method is the method moving the character in the x-axis
      * @param value the value of how much the character will move
      * @param level used to retrieve sprites
+     * @param aiPlayers used to determine position
      */
     public void moveX(int value, Level level, ArrayList<AI> aiPlayers){
         boolean isMovingRight = value > 0;
@@ -336,6 +338,7 @@ public class Client {
      * moveY method is the method moving the character in the y-axis
      * @param value the value of how much the character will move
      * @param level used to retrieve sprites
+     * @param aiPlayers used to determine position
      */
     public void moveY(int value, Level level, ArrayList<AI> aiPlayers) {
         boolean movingDown = value > 0;

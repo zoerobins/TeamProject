@@ -2,6 +2,9 @@ package org.nightshade.multiplayer;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * defines the set of nodes available for our game to display
+ */
 public enum Node {
     AIR,
     PLATFORM,
@@ -14,6 +17,14 @@ public enum Node {
     POWERUP,
     END;
 
+    /**
+     * getRandomNode is tge method generating the track, obstacles, moving platforms,
+     * water, enemies, ground, power ups and lava in the level
+     * @param i
+     * @param j
+     * @param width
+     * @return air, platform, moving platform, ground, lava, enemy power or end
+     */
     public static Node getRandomNode(int i, int j, int width) {
         //random number between 1 and 100
         int randomNumber = ThreadLocalRandom.current().nextInt(0, 100 + 1);

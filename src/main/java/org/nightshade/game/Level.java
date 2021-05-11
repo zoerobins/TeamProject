@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public class Level {
     private final ArrayList<Sprite> platformSprites;
     private final ArrayList<Sprite> lavaSprites;
