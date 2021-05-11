@@ -161,7 +161,7 @@ public class GameClient {
     }
 
     public void changeToGameOver(ArrayList<GameClient> gameClients){
-        if ((gameClients.size() == 1)&&(isAlive == false)){
+        if ((gameClients.size() == 1) && (!isAlive)){
             GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
         }
 
@@ -184,7 +184,7 @@ public class GameClient {
             for (GameClient gc : gameClients) {
                 if(gc.getName().equals(this.getName())){
                     //
-                }else if (gc.isAlive) {
+                }else if (gc.isAlive && (gc.getX() > this.getX())) {
                     position += 1;
                 }
             }

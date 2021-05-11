@@ -120,7 +120,7 @@ public class Game {
         try {
             if ((loopRun%2 == 0) && !((localGameClient.getX() == localGameClient.getPreviousX())&&(localGameClient.getY() == localGameClient.getPreviousY()))) {
                 client.getClientLogic().sendToServer(localGameClient.getName(), localGameClient.getX(), localGameClient.getY(), localGameClient.isAlive());
-                System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
+                //System.out.println("sent " + localGameClient.getName() + " x: "+localGameClient.getX()+" y: "+localGameClient.getY());
 
                 client.getClientLogic().receiveMoveMsgs();
                 if(loopRun>2) {
@@ -128,7 +128,7 @@ public class Game {
                 }
                 msgsList = client.getClientLogic().getMsgsList();
                 for(PlayerMoveMsg moveMsg : msgsList) {
-                    System.out.println("received " + moveMsg.getName() + " x: "+moveMsg.getX()+" y: "+moveMsg.getY() + " alive: "+moveMsg.isAlive());
+                    //System.out.println("received " + moveMsg.getName() + " x: "+moveMsg.getX()+" y: "+moveMsg.getY() + " alive: "+moveMsg.isAlive());
                     if ((!(moveMsg.getName().equals(localGameClient.getName())))){
                         if(moveMsg.isAlive()) {
                             for (GameClient gameClient : gameClients) {
@@ -140,7 +140,7 @@ public class Game {
                                 }
                             }
                         } else {
-                            System.out.println("player dead: " + moveMsg.getName());
+                            //System.out.println("player dead: " + moveMsg.getName());
                         }
                     }
                 }
