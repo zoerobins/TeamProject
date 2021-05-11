@@ -215,6 +215,7 @@ public class GameClient {
      * @param groundSprites list of all the ground
      * @param movingPlatforms list of all the moving platforms
      */
+
     public void moveX(int value, ArrayList<Sprite> platformSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level, ArrayList<GameClient> gameClients){
         boolean isMovingRight = value > 0;
         if (isMovingRight) {
@@ -292,6 +293,7 @@ public class GameClient {
      * @param groundSprites list of all the ground
      * @param movingPlatforms list of all the moving platforms
      */
+
     public void moveY(int value, ArrayList<Sprite> platformSprites, ArrayList<Sprite> lavaSprites, ArrayList<Enemy> enemies, ArrayList<Sprite> groundSprites, ArrayList<MovingPlatform> movingPlatforms, Level level,ArrayList<GameClient> gameClients){
         boolean movingDown = value > 0;
         for (int i = 0; i < Math.abs(value); i++) {

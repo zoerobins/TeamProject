@@ -310,8 +310,14 @@ public class Client {
                 }
             }
 
-            if ((this.getSprite().getX() + this.getSprite().getWidth()) >= ((level.getWidth()-1)*60) ){
+            if ((this.getSprite().getX() + this.getSprite().getWidth()) >= ((level.getWidth()-1)*60) ) {
                 changeToGameOver(aiPlayers);
+            }
+
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.intersects(sprite)) {
+                    System.out.println("finish");
+                }
             }
 
             double newX;
@@ -393,6 +399,12 @@ public class Client {
                 }
             }
 
+            for (Sprite endSprite : level.getEndSprites()) {
+                if (endSprite.intersects(sprite)) {
+                    System.out.println("finish");
+                }
+            }
+
             double newY;
             if (movingDown) {
                 newY = sprite.getY() + 1;
@@ -404,3 +416,5 @@ public class Client {
         }
     }
 }
+
+

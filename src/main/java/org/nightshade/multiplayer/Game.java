@@ -109,6 +109,7 @@ public class Game {
             }
             if (input.contains("RIGHT") && localGameClient.getSprite().getX() <= (levelWidth * blockWidth) - 5) {
                 localGameClient.moveX(5, platformSprites, enemies, groundSprites, movingPlatforms, level,gameClients);
+
             }
             if (localGameClient.getVelocity().getY() < 10) {
                 localGameClient.setVelocity(localGameClient.getVelocity().add(0, 1));
