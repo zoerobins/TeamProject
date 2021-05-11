@@ -107,7 +107,7 @@ public class Client {
             GuiHandler.stage.setScene(GuiHandler.gameOverScreenW);
         }
 
-        //SinglePlayerController.game.backgroundMusic.stopBackgroundMusic();
+        SinglePlayerController.game.backgroundMusic.stopBackgroundMusic();
         SinglePlayerController.game = null;
 
 
@@ -211,7 +211,7 @@ public class Client {
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
-            //spotEffects.playSound(soundFile, true, volume);
+            spotEffects.playSound(soundFile, true, volume);
             if (this.ability == Ability.JUMPBOOST){
                 velocity = velocity.add(0, -40);
             }else {
@@ -229,7 +229,7 @@ public class Client {
     public void kill(ArrayList<AI> aiPlayers) {
         if (!deathSoundPlayed) {
             File soundFile = new File("src/main/resources/audio/die.mp3");
-            //spotEffects.playSoundUntilEnd(soundFile, true, volume);
+            spotEffects.playSoundUntilEnd(soundFile, true, volume);
         }
 
 
@@ -270,7 +270,7 @@ public class Client {
             for (Sprite ground : level.getGroundSprites()) {
                 if (ground.intersects(sprite)){
                     File soundFile = new File("src/main/resources/audio/step.mp3");
-                    //spotEffects.playSoundUntilEnd(soundFile, true, volume);
+                    spotEffects.playSoundUntilEnd(soundFile, true, volume);
                     if(isMovingRight){
                         sprite.setX(sprite.getX() - 1);
                     } else {

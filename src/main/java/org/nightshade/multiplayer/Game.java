@@ -179,11 +179,9 @@ public class Game {
      */
     public void loop(long currentNanoTime) {
         double time = (currentNanoTime - startNanoTime) / 1000000000.0;
-/*
+
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
-
- */
 
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
@@ -204,14 +202,12 @@ public class Game {
                 largestGameClientX = gc.getX();
             }
         }
-/*
+
         if (largestGameClientX - cloud.getX() > 2000) {
             cloud.setX(largestGameClientX - 2000);
         } else {
             cloud.setX(cloud.getX() + 2);
         }
-
- */
 
         renderer.drawImage(cloud.getImage(), cloud.getX(), 50);
         moveClients();

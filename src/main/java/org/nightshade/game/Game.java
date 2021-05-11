@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class Game {
     private final Scene scene;
-    private final int LEVEL_WIDTH = 20;
+    private final int LEVEL_WIDTH = 120;
     private final int BLOCK_WIDTH = 60;
     private int xViewCoordinate = 0;
     private int animationIndex = 0;
@@ -55,11 +55,11 @@ public class Game {
         scene = new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT);
         stage.setScene(scene);
         stage.show();
-/*
+
         double volume = SettingsController.bgSliderVal / 100;
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.startBackgroundMusic(new File("src/main/resources/audio/background_music.mp3"), volume);
-*/
+
         Image cloudImage = new Image("img/game/cloud.png");
         powerupTextBackground = new Image("img/game/powerup_text_background.png");
         cloudSprite = new Sprite(cloudImage, -2300, 50);
@@ -140,11 +140,10 @@ public class Game {
     public void loop(long currentNanoTime) {
 
         double time = (currentNanoTime - startNanoTime) / 1000000000.0;
-/*
+
         parallax.move();
         parallax.render(renderer, xViewCoordinate);
 
- */
         renderSprites(level.getPlatformSprites());
         renderSprites(level.getGroundSprites());
         renderSprites(level.getEndSprites());

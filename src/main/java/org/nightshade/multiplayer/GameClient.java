@@ -198,7 +198,7 @@ public class GameClient {
     public void jump() {
         if (canJump) {
             File soundFile = new File("src/main/resources/audio/jump_0" + random.nextInt(6) + ".mp3");
-            //spotEffects.playSound(soundFile, true, volume);
+            spotEffects.playSound(soundFile, true, volume);
             //spotEffects.playSound(soundFile, true);
             velocity = velocity.add(0, -30);
             canJump = false;
@@ -211,10 +211,10 @@ public class GameClient {
     public void kill() {
         if (!deathSoundPlayed) {
             File soundFile = new File("src/main/resources/audio/die.mp3");
-            //spotEffects.playSoundUntilEnd(soundFile, true, volume);
+            spotEffects.playSoundUntilEnd(soundFile, true, volume);
         }
         File soundFile = new File("src/main/resources/audio/die.mp3");
-        //spotEffects.playSoundUntilEnd(soundFile, true, volume);
+        spotEffects.playSoundUntilEnd(soundFile, true, volume);
         //spotEffects.playSoundUntilEnd(soundFile, true);
         isAlive =false;
         //GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
@@ -264,7 +264,7 @@ public class GameClient {
             GuiHandler.stage.setScene(GuiHandler.gameOverScreenW);
         }
 
-        //SinglePlayerController.game.backgroundMusic.stopBackgroundMusic();
+        //MultiPlayerController.game.backgroundMusic.stopBackgroundMusic();
         //SinglePlayerController.game = null;
     }
 
@@ -301,7 +301,7 @@ public class GameClient {
             for (Sprite ground : groundSprites) {
                 if (ground.intersects(sprite)){
                     File soundFile = new File("src/main/resources/audio/step.mp3");
-                    //spotEffects.playSoundUntilEnd(soundFile, true, volume);
+                    spotEffects.playSoundUntilEnd(soundFile, true, volume);
                     if(isMovingRight){
                         getSprite().setX(getSprite().getX() - 1);
                     } else {
