@@ -316,12 +316,6 @@ public class Client {
                 changeToGameOver(aiPlayers);
             }
 
-            for (Sprite endSprite : level.getEndSprites()) {
-                if (endSprite.intersects(sprite)) {
-                    System.out.println("finish");
-                }
-            }
-
             double newX;
             if (isMovingRight) {
                 newX = sprite.getX() + speed;
@@ -399,12 +393,6 @@ public class Client {
                         getSprite().setY(getSprite().getY() - 1);
                         setCanJump(true);
                     }
-                }
-            }
-
-            for (Sprite endSprite : level.getEndSprites()) {
-                if (endSprite.intersects(sprite)) {
-                    System.out.println("finish");
                 }
             }
 

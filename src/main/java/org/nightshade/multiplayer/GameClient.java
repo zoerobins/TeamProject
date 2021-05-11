@@ -224,7 +224,7 @@ public class GameClient {
      * @param gameClients to calculate final position
      */
     public void changeToGameOver(ArrayList<GameClient> gameClients){
-        if ((gameClients.size() == 1)&&(isAlive == false)){
+        if ((gameClients.size() == 1) && (!isAlive)){
             GuiHandler.stage.setScene(GuiHandler.gameOverScreen);
         }
 
@@ -233,18 +233,17 @@ public class GameClient {
             //level complete screen (no position)
         }
 
-        int position = gameClients.size();
+        int position = 1;
 
         if(isAlive) {
             for (GameClient gc : gameClients) {
                 if(gc.getName().equals(this.name)){
                     //
-                }else if (!gc.getFinished()) {
-                    position -= 1;
+                }else if (gc.getFinished()) {
+                    position += 1;
                 }
             }
         }else{
-            position = 1;
             for (GameClient gc : gameClients) {
                 if(gc.getName().equals(this.getName())){
                     //
@@ -324,7 +323,7 @@ public class GameClient {
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)){
                     kill();
-                    gameClients = findIfFinished(gameClients, level.getEndSprites());
+                    gameClients = findIfFinished(gameClients, level);
                     changeToGameOver(gameClients);
                     return;
                 }
@@ -338,16 +337,18 @@ public class GameClient {
         }
     }
 
+
     /** finds if the current opponents have finished the level,
      *  and returns the updated game client array
      * @param gameClients
-     * @param endSprites
+     * @param level
      * @return new array of game clients
      */
-    public ArrayList<GameClient> findIfFinished(ArrayList<GameClient> gameClients,ArrayList<Sprite> endSprites){
+    public ArrayList<GameClient> findIfFinished(ArrayList<GameClient> gameClients,Level level){
+        ArrayList<Sprite> endSprites = level.getEndSprites();
         for (GameClient gc : gameClients){
             for (Sprite es:endSprites) {
-                if (gc.getSprite().intersects(es)) {
+                if (gc.getSprite().getX()+gc.getSprite().getWidth()>= (level.width-1)*60) {
                     gc.setFinished(true);
                 }
             }
@@ -389,7 +390,7 @@ public class GameClient {
                     getSprite().setY(getSprite().getY() + 1);
                     if(lava.intersects(sprite.getX(), sprite.getY()-60, (int) Math. round(sprite.getWidth()), (int) Math. round(sprite.getHeight()))){
                         kill();
-                        gameClients = findIfFinished(gameClients, level.getEndSprites());
+                        gameClients = findIfFinished(gameClients, level);
                         changeToGameOver(gameClients);
                         deathSoundPlayed = true;
                     }
@@ -406,7 +407,7 @@ public class GameClient {
             for (Enemy enemy : enemies) {
                 if (enemy.getSprite().intersects(sprite)) {
                     kill();
-                    gameClients = findIfFinished(gameClients, level.getEndSprites());
+                    gameClients = findIfFinished(gameClients, level);
                     changeToGameOver(gameClients);
                     return;
                 }
