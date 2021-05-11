@@ -150,6 +150,7 @@ public class Game {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
         loopRun++;
 
     }
@@ -198,6 +199,7 @@ public class Game {
             boolean intersectsCloud = clientSprite.intersects(cloud.getX() - 90, cloud.getY(), (int) cloud.getWidth(), (int) cloud.getHeight());
             if (intersectsCloud) {
                 localGameClient.kill();
+                localGameClient.changeToGameOver(localGameClient.findIfFinished(gameClients, level));
             }
         }
         for (Enemy enemy : level.getEnemies()) {
