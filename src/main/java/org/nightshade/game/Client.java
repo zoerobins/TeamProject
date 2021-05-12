@@ -122,22 +122,6 @@ public class Client {
     }
 
     /**
-     * setFinished setter method for setting the finished state of the character
-     * @param finished boolean holding whether the game client has finished the level or not
-     */
-    public void setFinished(boolean finished){
-        this.finished = finished;
-    }
-
-    /**
-     * getFinished getter method returning the finished state of the character
-     * @return finished state of the character
-     */
-    public boolean getFinished() {
-        return finished;
-    }
-
-    /**
      * isAlive a method returning whether the character is alive or not
      * @return boolean if the character is alive or not
      */
@@ -171,7 +155,7 @@ public class Client {
 
     /**
      * displaySprite a method displaying the image of the character
-     * @param renderer
+     * @param renderer the game renderer
      * @param image the image of the character
      * @param sprite the character
      */

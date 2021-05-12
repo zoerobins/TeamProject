@@ -43,32 +43,21 @@ public class Sprite {
         this.y = y;
     }
 
-    /**getter method for image
-     * @return
-     */
+
     public Image getImage() {
         return this.image;
     }
 
 
-    /**getter method for animated image
-     * @return
-     */
     public AnimatedImage getAnimatedImage() {
         return this.animatedImage;
     }
 
-    /**getter method for height
-     * @return
-     */
     public double getHeight() {
         return height;
     }
 
 
-    /**getter method for width
-     * @return
-     */
     public double getWidth() {
         return width;
     }

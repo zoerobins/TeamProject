@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import org.nightshade.ai.AI;
 import org.nightshade.ai.AILogic;
 import org.nightshade.audio.BackgroundMusic;
-import org.nightshade.gui.GuiHandler;
 import org.nightshade.gui.SettingsController;
 import org.nightshade.renderer.Renderer;
 

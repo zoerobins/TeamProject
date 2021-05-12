@@ -88,7 +88,7 @@ public class Parallax {
 
     /**draws all the images to the screen
      * @param renderer
-     * @param xViewCoordinate
+     * @param xViewCoordinate tracks x coordinate to draw images
      */
     public void render(Renderer renderer, int xViewCoordinate) {
         int y = 0;
